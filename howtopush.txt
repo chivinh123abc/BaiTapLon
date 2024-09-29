@@ -1,0 +1,3 @@
+git add <tên_file>
+git commit -m "Thêm file <tên_file>"
+git push origin main

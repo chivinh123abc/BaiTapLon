@@ -43,6 +43,17 @@ typedef struct MonHoc
     MonHoc *right;
 } *DanhSachMonHoc;
 
+DanhSachMonHoc khoiTaoDanhSachMonHocMoi(char maMH[], char tenMH[], DanhSachCauHoiThi ds_cauhoithi)
+{
+    DanhSachMonHoc ds_monhoc = new MonHoc;
+    strcpy(ds_monhoc->maMH, maMH);
+    strcpy(ds_monhoc->tenMH, tenMH);
+    ds_monhoc->left = nullptr;
+    ds_monhoc->right = nullptr;
+    ds_monhoc->ds_cauhoithi = ds_cauhoithi;
+    return ds_monhoc;
+}
+
 void themMonHoc(DanhSachMonHoc &ds_monhoc)
 {
 }
