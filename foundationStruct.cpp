@@ -54,10 +54,6 @@ DanhSachMonHoc khoiTaoDanhSachMonHocMoi(char maMH[], char tenMH[], DanhSachCauHo
     return ds_monhoc;
 }
 
-void themMonHoc(DanhSachMonHoc &ds_monhoc)
-{
-}
-
 //-----PART 2------------------------------------------------------------------
 //-----DiemThi------------------------------------------------------------------
 typedef struct DiemThi
