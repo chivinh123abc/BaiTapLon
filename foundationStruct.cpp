@@ -31,6 +31,26 @@ DanhSachVatTu newDanhSachVatTu(char maVT[], char tenVT[], char dVT[])
     return ds_vattu;
 }
 
+void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
+{
+    if (root == nullptr)
+    {
+        root = newVatTu;
+    }
+    else if (strcmp(newVatTu->maVT, root->maVT) < 0)
+    {
+        insertDanhSachVatTu(root->left, newVatTu);
+    }
+    else if (strcmp(newVatTu->maVT, root->maVT) > 0)
+    {
+        insertDanhSachVatTu(root->right, newVatTu);
+    }
+    else
+    {
+        cout << "Ma vat tu " << newVatTu->maVT << " da ton tai!" << endl;
+    }
+}
+
 //--------PART 2-------------------------------------------------
 //---------Danh Sach Chi Tiet Hoa Don------------------------------------------------
 typedef struct CT_HoaDon
