@@ -20,12 +20,13 @@ typedef struct VatTu
 } *DanhSachVatTu;
 
 // Khoi tao danh sach vat tu moi
-DanhSachVatTu newDanhSachVatTu(char maVT[], char tenVT[], char dVT[])
+DanhSachVatTu newDanhSachVatTu(char maVT[], char tenVT[], char dVT[], int soLuongTon)
 {
     DanhSachVatTu ds_vattu = new VatTu;
     strcpy(ds_vattu->maVT, maVT);
     strcpy(ds_vattu->tenVT, tenVT);
     strcpy(ds_vattu->dVT, dVT);
+    ds_vattu->soLuongTon = soLuongTon;
     ds_vattu->left = nullptr;
     ds_vattu->right = nullptr;
     return ds_vattu;
@@ -48,6 +49,80 @@ void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
     else
     {
         cout << "Ma vat tu " << newVatTu->maVT << " da ton tai!" << endl;
+    }
+}
+
+// Bo sung cho viec tim so nhat cua ham ben phai
+void removeCase3(DanhSachVatTu &root, DanhSachVatTu &rp)
+{
+    if (rp->left != nullptr)
+    {
+        removeCase3(root, rp->left);
+    }
+    else
+    {
+        strcpy(root->maVT, rp->maVT);
+        strcpy(root->tenVT, rp->tenVT);
+        strcpy(root->dVT, rp->dVT);
+        root->soLuongTon = rp->soLuongTon;
+
+        if (rp->right == nullptr)
+        {
+            delete rp;
+        }
+        else
+        {
+            DanhSachVatTu t = rp->right;
+            strcpy(rp->maVT, t->maVT);
+            strcpy(rp->tenVT, t->tenVT);
+            strcpy(rp->dVT, t->dVT);
+            rp->soLuongTon = t->soLuongTon;
+            rp->right = t->right;
+            delete t;
+        }
+    }
+}
+
+void removeFromDanhSachVatTu(char maVT[], DanhSachVatTu &root)
+{
+    if (root == nullptr)
+    {
+        cout << "Khong tim thay!!!" << endl;
+    }
+    else if (strcmp(maVT, root->maVT) < 0)
+    {
+        removeFromDanhSachVatTu(maVT, root->left);
+    }
+    else if (strcmp(maVT, root->maVT) > 0)
+    {
+        removeFromDanhSachVatTu(maVT, root->right);
+    }
+    else
+    {
+        DanhSachVatTu rp = root;
+        if (rp->right == nullptr)
+        {
+            root = rp->left;
+        }
+        else if (rp->left == nullptr)
+        {
+            root = rp->right;
+        }
+        else
+        {
+            removeCase3(root, rp->right);
+        }
+        // delete rp;
+    }
+}
+
+void printDanhSachVatTu(DanhSachVatTu root)
+{
+    if (root != nullptr)
+    {
+        printDanhSachVatTu(root->left);
+        cout << "Ma Vat Tu: " << root->maVT << ", Ten Vat Tu: " << root->tenVT << ", DVT: " << root->dVT << ", SL ton: " << root->soLuongTon << endl;
+        printDanhSachVatTu(root->right);
     }
 }
 
@@ -125,5 +200,26 @@ DanhSachNhanVien dsNhanVien[MAX_NHANVIEN];
 
 int main()
 {
+    DanhSachVatTu root = nullptr;
+
+    // Them mot so vat tu vao danh sach
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT005", "Vat Tu 5", "Cai", 25));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT002", "Vat Tu 2", "Cai", 20));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT001", "Vat Tu 1", "Cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT003", "Vat Tu 3", "Chiec", 15));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT006", "Vat Tu 6", "Bo", 5));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT007", "Vat Tu 7", "Hop", 30));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT008", "Vat Tu 8", "Bo", 12));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT004", "Vat Tu 4", "Cai", 18));
+
+    cout << "Danh sach vat tu truoc khi xoa:" << endl;
+    printDanhSachVatTu(root);
+
+    // Xoa nut goc (VT005) co ca trai va phai
+    removeFromDanhSachVatTu("VT005", root);
+
+    cout << "\nDanh sach vat tu sau khi xoa:" << endl;
+    printDanhSachVatTu(root);
+
     return 0;
 }
