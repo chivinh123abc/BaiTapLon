@@ -51,7 +51,8 @@ void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
     }
 }
 
-//--------PART 2-------------------------------------------------
+//**************************************************************************************
+//------------------PART 2-------------------------------------------------
 //---------Danh Sach Chi Tiet Hoa Don------------------------------------------------
 typedef struct CT_HoaDon
 {
@@ -74,6 +75,164 @@ DanhSach_CT_HoaDon newDanhSachCTHoaDon(char maVT[11], int soLuong, float donGia,
     ds_cthoadon->next = nullptr;
     return ds_cthoadon;
 }
+//--------Kiểm tra mã vật tư có trùng hay không trong danh sách chi tiết hóa đơn--------- Cần tìm cách sài cho nhiều cái 
+bool KiemTraMaVT_CTHD(DanhSach_CT_HoaDon ds_cthoadon, const char maVT[11])
+{
+    while (ds_cthoadon != nullptr)
+    {
+        if (strcmp(ds_cthoadon->maVT, maVT) == 0)
+        {
+        	cout << "Ma vat tu da ton tai trong chi tiet hoa don!" << endl;
+            return true; // Mã vật tư đã tồn tại
+        }
+        ds_cthoadon = ds_cthoadon->next;
+    }
+    return false; // Mã vật tư không trùng
+}
+//--------Thêm chi tiết hóa đơn vào danh sách (không trùng mã vật tư)----------
+bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, float donGia, float vAT)
+{
+    if (KiemTraMaVT_CTHD(ds_cthoadon, maVT)==true)
+    {
+        return false; // Không thêm được vì mã vật tư bị trùng
+    }
+
+    DanhSach_CT_HoaDon CT_HoaDonMoi = newDanhSachCTHoaDon(maVT, soLuong, donGia, vAT);
+
+    // Thêm chi tiết mới vào đầu danh sách liên kết
+    CT_HoaDonMoi->next = ds_cthoadon;
+    ds_cthoadon = CT_HoaDonMoi;
+    return true; // Thêm thành công
+}
+//----------Bubble Sort------Của Chi tiết hóa đơn-----------------------------------------------
+/*Dễ triển khai với danh sách liên kết: Không cần phải truy cập trực tiếp vào các chỉ số (index) như trong mảng. Ta chỉ cần so sánh và hoán đổi con trỏ trong danh sách.
+Đơn giản và dễ hiểu: Dù hiệu quả không cao cho các danh sách lớn, nhưng vì chi tiết hóa đơn thường không nhiều, Bubble Sort vẫn có thể chấp nhận được.*/
+// --------- Hàm hoán đổi 2 chi tiết hóa đơn ---------
+void HoanDoiChiTietHoaDon(CT_HoaDon *a, CT_HoaDon *b){/*Tại sao lại hoán đổi từng thành phần? Mà không  hóan đổi 2 nodes 
+trực tiếp vì dslk đơn không quản lí bằng trị số được nên việc hoán đổi rất khó xác định và cho dù có muốn
+thì duyệt tới thì cái phần địa chỉ next nó như đuôi rắn cắt ra là nó lấy luôn mấy thằng phía sau đổi tới lui rất phức tạp*/
+    swap(a->maVT, b->maVT);
+    swap(a->soLuong, b->soLuong);
+    swap(a->donGia, b->donGia);
+    swap(a->vAT, b->vAT);
+}
+//------------KT CT_HoaDon co rong khong--------
+bool Empty_CTHD(DanhSach_CT_HoaDon ds_cthoadon){
+	if (ds_cthoadon == nullptr) cout<<"Danh sach hoa don rong!\n";
+    return true;
+}
+// --------- Sắp xếp nổi bọt theo mã vật tư ---------
+void SapXep_CTHD_TheoMaVT(DanhSach_CT_HoaDon &ds_cthoadon)
+{
+    bool swapped;
+    CT_HoaDon *ptr1;         	//Tmp ptr 
+    CT_HoaDon *lptr = nullptr; //last ptr
+
+    // Kiểm tra nếu danh sách rỗng
+    if (Empty_CTHD(ds_cthoadon)==true) return;
+    do
+    {
+        swapped = false;
+        ptr1 = ds_cthoadon;
+
+        while (ptr1->next != lptr)
+        {
+            // So sánh theo mã vật tư
+            if (strcmp(ptr1->maVT, ptr1->next->maVT) > 0)
+            {
+                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1; // Giới hạn lại đoạn đã được sắp xếp
+    } while (swapped);
+}
+
+// --------- Sắp xếp nổi bọt theo số lượng ---------
+void SapXep_CTHD_TheoSoLuong(DanhSach_CT_HoaDon &ds_cthoadon)
+{
+    bool swapped;
+    CT_HoaDon *ptr1;
+    CT_HoaDon *lptr = nullptr;
+
+   if (Empty_CTHD(ds_cthoadon)==true) return;
+
+    do
+    {
+        swapped = false;
+        ptr1 = ds_cthoadon;
+
+        while (ptr1->next != lptr)
+        {
+            // So sánh theo số lượng
+            if (ptr1->soLuong > ptr1->next->soLuong)
+            {
+                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
+}
+
+// --------- Sắp xếp nổi bọt theo đơn giá ---------
+void SapXep_CTHD_TheoDonGia(DanhSach_CT_HoaDon &ds_cthoadon)
+{
+    bool swapped;
+    CT_HoaDon *ptr1;
+    CT_HoaDon *lptr = nullptr;
+
+    if (Empty_CTHD(ds_cthoadon)==true) return;
+
+    do
+    {
+        swapped = false;
+        ptr1 = ds_cthoadon;
+
+        while (ptr1->next != lptr)
+        {
+            // So sánh theo đơn giá
+            if (ptr1->donGia > ptr1->next->donGia)
+            {
+                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
+}
+
+// --------- Sắp xếp nổi bọt theo VAT ---------
+void SapXep_CTHD_TheoVAT(DanhSach_CT_HoaDon &ds_cthoadon)
+{
+    bool swapped;
+    CT_HoaDon *ptr1;
+    CT_HoaDon *lptr = nullptr;
+
+   if (Empty_CTHD(ds_cthoadon)==true) return;
+
+    do
+    {
+        swapped = false;
+        ptr1 = ds_cthoadon;
+
+        while (ptr1->next != lptr)
+        {
+            // So sánh theo VAT
+            if (ptr1->vAT > ptr1->next->vAT)
+            {
+                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
+}
+//**************************************************************************************
 
 //--------Danh Sach Hoa Don-------------------------------------------------
 typedef struct HoaDon
