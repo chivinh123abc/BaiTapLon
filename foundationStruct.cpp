@@ -61,7 +61,20 @@ typedef struct DiemThi
     char maMH[16];
     float diem;
     DiemThi *next;
-} DanhSachDiemThi;
+} *DanhSachDiemThi;
+
+float LamTronSo(float &diem)
+{
+    diem = round(diem * 10) / 10;
+    return diem;
+};
+
+DanhSachDiemThi DiemThiMoi(char maMH[], float diem)
+{
+    DanhSachDiemThi ds_diemthi = new DiemThi;
+    strcpy(ds_diemthi->maMH, maMH);
+    ds_diemthi->diem = LamTronSo(diem);
+}
 
 //------Sinh vien-----------------------------------------------------------------
 typedef struct SinhVien
