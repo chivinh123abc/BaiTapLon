@@ -78,6 +78,7 @@ void removeCase3(DanhSachVatTu &root, DanhSachVatTu &rp)
             strcpy(rp->dVT, t->dVT);
             rp->soLuongTon = t->soLuongTon;
             rp->right = t->right;
+            rp->left = t->left;
             delete t;
         }
     }
