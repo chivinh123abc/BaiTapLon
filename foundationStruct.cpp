@@ -146,6 +146,22 @@ void preorderMaVT_DanhSachVatTu(DanhSachVatTu root)
 
 void inorderMaVT_DanhSachVatTu(DanhSachVatTu root)
 {
+    if (root != nullptr)
+    {
+        inorderMaVT_DanhSachVatTu(root->left);
+        cout << root->maVT << " ";
+        inorderMaVT_DanhSachVatTu(root->right);
+    }
+}
+
+void postorderMaVT_DanhSachVatTu(DanhSachVatTu root)
+{
+    if (root != nullptr)
+    {
+        postorderMaVT_DanhSachVatTu(root->left);
+        postorderMaVT_DanhSachVatTu(root->right);
+        cout << root->maVT << " ";
+    }
 }
 
 //------------------PART 2-------------------------------------------------
@@ -408,6 +424,10 @@ int main()
 
     cout << "\nDanh sach vat tu sau khi xoa theo preorder:" << endl;
     preorderMaVT_DanhSachVatTu(root);
+    cout << "\nDanh sach vat tu sau khi xoa theo inorder:" << endl;
+    inorderMaVT_DanhSachVatTu(root);
+    cout << "\nDanh sach vat tu sau khi xoa theo postorder:" << endl;
+    postorderMaVT_DanhSachVatTu(root);
 
     return 0;
 }
