@@ -15,8 +15,9 @@ typedef struct VatTu
     char tenVT[51]; // Tên vật tư
     char dVT[21];   // Đơn vị tính
     int soLuongTon; // Số lượng tồn
-    VatTu *left;    // Con trỏ trái cho cây nhị phân
-    VatTu *right;   // Con trỏ phải cho cây nhị phân
+    int bf;         // Balance factor
+    VatTu *left;
+    VatTu *right;
 } *DanhSachVatTu;
 
 // Khoi tao danh sach vat tu moi
@@ -27,9 +28,76 @@ DanhSachVatTu newDanhSachVatTu(char maVT[], char tenVT[], char dVT[], int soLuon
     strcpy(ds_vattu->tenVT, tenVT);
     strcpy(ds_vattu->dVT, dVT);
     ds_vattu->soLuongTon = soLuongTon;
+    ds_vattu->bf = 0;
     ds_vattu->left = nullptr;
     ds_vattu->right = nullptr;
     return ds_vattu;
+}
+
+int height(DanhSachVatTu root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    return 1 + max(height(root->left), height(root->right));
+}
+
+int updateBalanceFactor(DanhSachVatTu root)
+{
+    if (root = nullptr)
+    {
+        return 0;
+    }
+    return height(root->left) - height(root->right);
+};
+
+// 2 ham rotate la phu nen khong can them tham tri
+DanhSachVatTu rotateRight(DanhSachVatTu root)
+{
+    // xoay ve ben phai thi can cho root lien ket vao ben phai root moi
+    // sau do cho phan lien ket ben phai ban dau cua root moi  lien ket vao
+    DanhSachVatTu newroot = root->left;
+    root->left = newroot->right;
+    newroot->left = root;
+    root->bf = updateBalanceFactor(root);
+    newroot->bf = updateBalanceFactor(newroot);
+
+    return newroot;
+};
+
+DanhSachVatTu rotateLeft(DanhSachVatTu root)
+{
+    DanhSachVatTu newroot = root->right;
+    root->right = newroot->left;
+    newroot->left = root;
+    root->bf = updateBalanceFactor(root);
+    newroot->bf = updateBalanceFactor(newroot);
+
+    return newroot;
+}
+
+DanhSachVatTu balanceTree(DanhSachVatTu root)
+{
+    updateBalanceFactor(root);
+
+    if (root->bf > 1)
+    {
+        if (root->left->bf < 0)
+        {
+            root->left = rotateLeft(root->left);
+        }
+        return rotateRight(root);
+    }
+    else if (root->bf < -1)
+    {
+        if (root->right->bf > 0)
+        {
+            root->right = rotateRight(root->right);
+        }
+        return rotateRight(root);
+    }
+    return root;
 }
 
 void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
@@ -49,7 +117,11 @@ void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
     else
     {
         cout << "Ma vat tu " << newVatTu->maVT << " da ton tai!" << endl;
+        return;
     }
+
+    // can bang sau khi chen
+    root = balanceTree(root);
 }
 
 // Bo sung cho viec tim so nhat cua ham ben phai
@@ -113,7 +185,11 @@ void removeFromDanhSachVatTu(char maVT[], DanhSachVatTu &root)
         {
             removeCase3(root, rp->right);
         }
-        // delete rp;
+    }
+
+    if (root != nullptr)
+    {
+        root = balanceTree(root);
     }
 }
 
