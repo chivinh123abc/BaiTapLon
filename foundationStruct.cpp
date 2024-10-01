@@ -117,14 +117,35 @@ void removeFromDanhSachVatTu(char maVT[], DanhSachVatTu &root)
     }
 }
 
-void printDanhSachVatTu(DanhSachVatTu root)
+DanhSachVatTu searchMaVT_DanhSachVatTu(DanhSachVatTu root, char maVT[])
+{
+    DanhSachVatTu current = root;
+    while (current != nullptr && (strcmp(current->maVT, maVT) != 0))
+    {
+        if (strcmp(current->maVT, maVT) < 0)
+        {
+            current = current->left;
+        }
+        else
+        {
+            current = current->right;
+        }
+    }
+    return current;
+}
+
+void preorderMaVT_DanhSachVatTu(DanhSachVatTu root)
 {
     if (root != nullptr)
     {
-        printDanhSachVatTu(root->left);
-        cout << "Ma Vat Tu: " << root->maVT << ", Ten Vat Tu: " << root->tenVT << ", DVT: " << root->dVT << ", SL ton: " << root->soLuongTon << endl;
-        printDanhSachVatTu(root->right);
+        cout << root->maVT << " ";
+        preorderMaVT_DanhSachVatTu(root->left);
+        preorderMaVT_DanhSachVatTu(root->right);
     }
+}
+
+void inorderMaVT_DanhSachVatTu(DanhSachVatTu root)
+{
 }
 
 //------------------PART 2-------------------------------------------------
@@ -179,6 +200,7 @@ bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, floa
     ds_cthoadon = CT_HoaDonMoi;
     return true; // Thêm thành công
 }
+
 //----------Bubble Sort------Của Chi tiết hóa đơn-----------------------------------------------
 /*Dễ triển khai với danh sách liên kết: Không cần phải truy cập trực tiếp vào các chỉ số (index) như trong mảng. Ta chỉ cần so sánh và hoán đổi con trỏ trong danh sách.
 Đơn giản và dễ hiểu: Dù hiệu quả không cao cho các danh sách lớn, nhưng vì chi tiết hóa đơn thường không nhiều, Bubble Sort vẫn có thể chấp nhận được.*/
@@ -379,13 +401,13 @@ int main()
     insertDanhSachVatTu(root, newDanhSachVatTu("VT004", "Vat Tu 4", "Cai", 18));
 
     cout << "Danh sach vat tu truoc khi xoa:" << endl;
-    printDanhSachVatTu(root);
+    preorderMaVT_DanhSachVatTu(root);
 
     // Xoa nut goc (VT005) co ca trai va phai
     removeFromDanhSachVatTu("VT005", root);
 
-    cout << "\nDanh sach vat tu sau khi xoa:" << endl;
-    printDanhSachVatTu(root);
+    cout << "\nDanh sach vat tu sau khi xoa theo preorder:" << endl;
+    preorderMaVT_DanhSachVatTu(root);
 
     return 0;
 }
