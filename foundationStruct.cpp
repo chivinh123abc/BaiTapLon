@@ -45,7 +45,7 @@ int height(DanhSachVatTu root)
 
 int updateBalanceFactor(DanhSachVatTu root)
 {
-    if (root = nullptr)
+    if (root == nullptr)
     {
         return 0;
     }
@@ -485,6 +485,9 @@ int main()
     // Them mot so vat tu vao danh sach
     insertDanhSachVatTu(root, newDanhSachVatTu("VT005", "Vat Tu 5", "Cai", 25));
     insertDanhSachVatTu(root, newDanhSachVatTu("VT002", "Vat Tu 2", "Cai", 20));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT001", "Vat Tu 1", "Cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT010", "Vat Tu 1", "Cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("VT014", "Vat Tu 1", "Cai", 10));
     insertDanhSachVatTu(root, newDanhSachVatTu("VT001", "Vat Tu 1", "Cai", 10));
     insertDanhSachVatTu(root, newDanhSachVatTu("VT003", "Vat Tu 3", "Chiec", 15));
     insertDanhSachVatTu(root, newDanhSachVatTu("VT006", "Vat Tu 6", "Bo", 5));
