@@ -59,7 +59,7 @@ DanhSachVatTu rotateRight(DanhSachVatTu root)
     // sau do cho phan lien ket ben phai ban dau cua root moi  lien ket vao
     DanhSachVatTu newroot = root->left;
     root->left = newroot->right;
-    newroot->left = root;
+    newroot->right = root;
     root->bf = updateBalanceFactor(root);
     newroot->bf = updateBalanceFactor(newroot);
 
@@ -79,7 +79,7 @@ DanhSachVatTu rotateLeft(DanhSachVatTu root)
 
 DanhSachVatTu balanceTree(DanhSachVatTu root)
 {
-    updateBalanceFactor(root);
+    root->bf = updateBalanceFactor(root);
 
     if (root->bf > 1)
     {
@@ -95,7 +95,7 @@ DanhSachVatTu balanceTree(DanhSachVatTu root)
         {
             root->right = rotateRight(root->right);
         }
-        return rotateRight(root);
+        return rotateLeft(root);
     }
     return root;
 }
@@ -483,23 +483,24 @@ int main()
     DanhSachVatTu root = nullptr;
 
     // Them mot so vat tu vao danh sach
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT005", "Vat Tu 5", "Cai", 25));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT002", "Vat Tu 2", "Cai", 20));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT001", "Vat Tu 1", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT010", "Vat Tu 1", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT014", "Vat Tu 1", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT001", "Vat Tu 1", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT003", "Vat Tu 3", "Chiec", 15));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT006", "Vat Tu 6", "Bo", 5));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT007", "Vat Tu 7", "Hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT008", "Vat Tu 8", "Bo", 12));
-    insertDanhSachVatTu(root, newDanhSachVatTu("VT004", "Vat Tu 4", "Cai", 18));
+    insertDanhSachVatTu(root, newDanhSachVatTu("05", "Vat Tu 5", "Cai", 25));
+    insertDanhSachVatTu(root, newDanhSachVatTu("04", "Vat Tu 2", "Cai", 20));
+    insertDanhSachVatTu(root, newDanhSachVatTu("01", "Vat Tu 1", "Cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("02", "Vat Tu 1", "Cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("10", "Vat Tu 1", "Cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("03", "Vat Tu 3", "Chiec", 15));
+    insertDanhSachVatTu(root, newDanhSachVatTu("06", "Vat Tu 6", "Bo", 5));
+    insertDanhSachVatTu(root, newDanhSachVatTu("07", "Vat Tu 7", "Hop", 30));
+    insertDanhSachVatTu(root, newDanhSachVatTu("08", "Vat Tu 8", "Bo", 12));
+    insertDanhSachVatTu(root, newDanhSachVatTu("14", "Vat Tu 4", "Cai", 18));
 
-    cout << "Danh sach vat tu truoc khi xoa:" << endl;
+    cout << "Danh sach vat tu truoc khi xoa preorder:" << endl;
     preorderMaVT_DanhSachVatTu(root);
+    cout << "\nDanh sach vat tu trc khi xoa theo postorder:" << endl;
+    postorderMaVT_DanhSachVatTu(root);
 
     // Xoa nut goc (VT005) co ca trai va phai
-    removeFromDanhSachVatTu("VT005", root);
+    removeFromDanhSachVatTu("05", root);
 
     cout << "\nDanh sach vat tu sau khi xoa theo preorder:" << endl;
     preorderMaVT_DanhSachVatTu(root);
@@ -507,6 +508,9 @@ int main()
     inorderMaVT_DanhSachVatTu(root);
     cout << "\nDanh sach vat tu sau khi xoa theo postorder:" << endl;
     postorderMaVT_DanhSachVatTu(root);
+
+    cout << endl;
+    cout << root->maVT << endl;
 
     return 0;
 }
