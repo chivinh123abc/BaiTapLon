@@ -7,6 +7,7 @@
 using namespace std;
 
 const int MAX_NHANVIEN = 500;
+const int MENU_ITEMS = 4;
 
 //-------PART 1----------------------------------------------------------------
 //------Danh Sach Vat Tu------------------------------------------------------------
@@ -248,6 +249,98 @@ void inDanhSachVatTuTheoTenVT(DanhSachVatTu root)
         inDanhSachVatTuTheoTenVT(root->left);
         cout << "Ma VT: " << root->maVT << ", Ten vat tu: " << root->tenVT << ", Don vi tinh: " << root->dVT << ", So luong ton: " << root->soLuongTon << endl;
         inDanhSachVatTuTheoTenVT(root->right);
+    }
+}
+
+char menuName[MENU_ITEMS][51]{
+    "1. Them vat tu",
+    "2. Xoa vat tu",
+    "3. Hieu chinh vat tu",
+    "0. Exit"
+    //
+};
+
+// them/xoa/hieu chinh thong tin vat tu,
+// rieng so luong ton chi cho phep nhap khi do la vat tu moi them
+void updateMenu(DanhSachVatTu &root)
+{
+    int choose = -1;
+    cout << "---------------------------------------------------" << endl;
+
+    // Hiển thị menu
+    for (int i = 0; i < MENU_ITEMS; i++)
+    {
+        cout << menuName[i] << endl;
+    }
+    cout << "What you want to do : ";
+
+    bool running = true;
+
+    while (running)
+    {
+        choose = getch();
+
+        switch (choose)
+        {
+        case '1':
+        {
+            cout << endl;
+            cout << "Them thong tin vat tu: " << endl;
+
+            char inputMaVT[11];
+            int count = 0;
+            bool done = false;
+
+            cout << "Nhap ma vat tu (toi da 10 ky tu): ";
+            while (!done)
+            {
+                char ch = getch();
+
+                if (ch == 13 && count > 0)
+                {
+                    done = true;
+                }
+                else if (ch == '\b' && count > 0)
+                {
+                    cout << "\b \b";
+                    count--;
+                    inputMaVT[count] = '\0';
+                }
+                else if (isalnum(ch) && count < 10)
+                {
+                    cout << ch;
+                    inputMaVT[count++] = ch;
+                }
+            }
+            inputMaVT[count] = '\0';
+            cout << "\nMa vat tu nhap: " << inputMaVT << endl;
+            break;
+        }
+        case '2':
+            cout << "Xoa vat tu" << endl;
+            break;
+        case '3':
+            cout << "Hieu chinh vat tu" << endl;
+            // Thêm logic hiệu chỉnh vật tư
+            break;
+        case '0':
+            cout << "Thoat chuong trinh" << endl;
+            running = false;
+            break;
+        case 13:
+            cout << "Thoat chuong trinh" << endl;
+            running = false;
+            break;
+        default:
+            cout << "\nInvalid choice. Please try again." << endl;
+            break;
+        }
+
+        // Hiển thị lại menu nếu không thoát
+        if (running)
+        {
+            cout << "What you want to do : ";
+        }
     }
 }
 
@@ -506,23 +599,7 @@ int main()
     insertDanhSachVatTu(root, newDanhSachVatTu("08", "08", "Bo", 12));
     insertDanhSachVatTu(root, newDanhSachVatTu("14", "14", "Cai", 18));
 
-    cout << "Danh sach vat tu truoc khi xoa preorder:" << endl;
-    preorderTenVT_DanhSachVatTu(root);
-    cout << "\nDanh sach vat tu trc khi xoa theo postorder:" << endl;
-    postorderTenVT_DanhSachVatTu(root);
-
-    // Xoa nut goc (VT005) co ca trai va phai
-    removeFromDanhSachVatTu("05", root);
-
-    cout << "\nDanh sach vat tu sau khi xoa theo preorder:" << endl;
-    preorderTenVT_DanhSachVatTu(root);
-    cout << "\nDanh sach vat tu sau khi xoa theo inorder:" << endl;
-    inorderTenVT_DanhSachVatTu(root);
-    cout << "\nDanh sach vat tu sau khi xoa theo ten vt:" << endl;
-    inDanhSachVatTuTheoTenVT(root);
-
-    cout << endl;
-    cout << root->tenVT << endl;
+    updateMenu(root);
 
     return 0;
 }
