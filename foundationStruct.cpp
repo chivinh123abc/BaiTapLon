@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <cmath>
+#include <conio.h>
 #include "mylib.h"
 
 using namespace std;
@@ -193,7 +194,7 @@ void removeFromDanhSachVatTu(char tenVT[], DanhSachVatTu &root)
     }
 }
 
-DanhSachVatTu searchMaVT_DanhSachVatTu(DanhSachVatTu root, char tenVT[])
+DanhSachVatTu searchTenVT_DanhSachVatTu(DanhSachVatTu root, char tenVT[])
 {
     DanhSachVatTu current = root;
     while (current != nullptr && (strcmp(current->tenVT, tenVT) != 0))
@@ -237,6 +238,16 @@ void postorderTenVT_DanhSachVatTu(DanhSachVatTu root)
         postorderTenVT_DanhSachVatTu(root->left);
         postorderTenVT_DanhSachVatTu(root->right);
         cout << root->tenVT << " ";
+    }
+}
+
+void inDanhSachVatTuTheoTenVT(DanhSachVatTu root)
+{
+    if (root != nullptr)
+    {
+        inDanhSachVatTuTheoTenVT(root->left);
+        cout << "Ma VT: " << root->maVT << ", Ten vat tu: " << root->tenVT << ", Don vi tinh: " << root->dVT << ", So luong ton: " << root->soLuongTon << endl;
+        inDanhSachVatTuTheoTenVT(root->right);
     }
 }
 
@@ -507,11 +518,11 @@ int main()
     preorderTenVT_DanhSachVatTu(root);
     cout << "\nDanh sach vat tu sau khi xoa theo inorder:" << endl;
     inorderTenVT_DanhSachVatTu(root);
-    cout << "\nDanh sach vat tu sau khi xoa theo postorder:" << endl;
-    postorderTenVT_DanhSachVatTu(root);
+    cout << "\nDanh sach vat tu sau khi xoa theo ten vt:" << endl;
+    inDanhSachVatTuTheoTenVT(root);
 
     cout << endl;
-    cout << root->maVT << endl;
+    cout << root->tenVT << endl;
 
     return 0;
 }
