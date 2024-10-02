@@ -367,9 +367,22 @@ DanhSach_CT_HoaDon newDanhSachCTHoaDon(char maVT[11], int soLuong, float donGia,
     ds_cthoadon->next = nullptr;
     return ds_cthoadon;
 }
+// Kiểm tra danh sách chi tiết hóa đơn có rỗng không
+bool Empty_CTHD(DanhSach_CT_HoaDon ds_cthoadon)
+{
+    if (ds_cthoadon == nullptr)
+    {
+        cout << "Danh sach chi tiet hoa don rong!\n";
+        return true;
+    }
+    return false;
+}
+
 //--------Kiểm tra mã vật tư có trùng hay không trong danh sách chi tiết hóa đơn--------- Cần tìm cách sài cho nhiều cái
 bool KiemTraMaVT_CTHD(DanhSach_CT_HoaDon ds_cthoadon, const char maVT[11])
 {
+    if (Empty_CTHD(ds_cthoadon))
+        return false;
     while (ds_cthoadon != nullptr)
     {
         if (strcmp(ds_cthoadon->maVT, maVT) == 0)
@@ -396,141 +409,274 @@ bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, floa
     ds_cthoadon = CT_HoaDonMoi;
     return true; // Thêm thành công
 }
-
-//----------Bubble Sort------Của Chi tiết hóa đơn-----------------------------------------------
-/*Dễ triển khai với danh sách liên kết: Không cần phải truy cập trực tiếp vào các chỉ số (index) như trong mảng. Ta chỉ cần so sánh và hoán đổi con trỏ trong danh sách.
-Đơn giản và dễ hiểu: Dù hiệu quả không cao cho các danh sách lớn, nhưng vì chi tiết hóa đơn thường không nhiều, Bubble Sort vẫn có thể chấp nhận được.*/
-// --------- Hàm hoán đổi 2 chi tiết hóa đơn ---------
-void HoanDoiChiTietHoaDon(CT_HoaDon *a, CT_HoaDon *b)
-{ /*Tại sao lại hoán đổi từng thành phần? Mà không  hóan đổi 2 nodes
-trực tiếp vì dslk đơn không quản lí bằng trị số được nên việc hoán đổi rất khó xác định và cho dù có muốn
-thì duyệt tới thì cái phần địa chỉ next nó như đuôi rắn cắt ra là nó lấy luôn mấy thằng phía sau đổi tới lui rất phức tạp*/
-    swap(a->maVT, b->maVT);
-    swap(a->soLuong, b->soLuong);
-    swap(a->donGia, b->donGia);
-    swap(a->vAT, b->vAT);
-}
-//------------KT CT_HoaDon co rong khong--------
-bool Empty_CTHD(DanhSach_CT_HoaDon ds_cthoadon)
+//----------Xóa chi tiết hóa đơn theo mã vật tư---------------
+bool Xoa_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, const char maVT[11])
 {
     if (ds_cthoadon == nullptr)
-        cout << "Danh sach hoa don rong!\n";
-    return true;
-}
-// --------- Sắp xếp nổi bọt theo mã vật tư ---------
-void SapXep_CTHD_TheoMaVT(DanhSach_CT_HoaDon &ds_cthoadon)
-{
-    bool swapped;
-    CT_HoaDon *ptr1;           // Tmp ptr
-    CT_HoaDon *lptr = nullptr; // last ptr
-
-    // Kiểm tra nếu danh sách rỗng
-    if (Empty_CTHD(ds_cthoadon) == true)
-        return;
-    do
     {
-        swapped = false;
-        ptr1 = ds_cthoadon;
-
-        while (ptr1->next != lptr)
-        {
-            // So sánh theo mã vật tư
-            if (strcmp(ptr1->maVT, ptr1->next->maVT) > 0)
-            {
-                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
-        }
-        lptr = ptr1; // Giới hạn lại đoạn đã được sắp xếp
-    } while (swapped);
-}
-
-// --------- Sắp xếp nổi bọt theo số lượng ---------
-void SapXep_CTHD_TheoSoLuong(DanhSach_CT_HoaDon &ds_cthoadon)
-{
-    bool swapped;
-    CT_HoaDon *ptr1;
-    CT_HoaDon *lptr = nullptr;
-
-    if (Empty_CTHD(ds_cthoadon) == true)
-        return;
-
-    do
+        cout << "Danh sach chi tiet hoa don rong, khong the xoa!" << endl;
+        return false;
+    }
+    // Nếu node đầu tiên có mã vật tư cần xóa
+    if (strcmp(ds_cthoadon->maVT, maVT) == 0)
     {
-        swapped = false;
-        ptr1 = ds_cthoadon;
+        DanhSach_CT_HoaDon temp = ds_cthoadon;
+        ds_cthoadon = ds_cthoadon->next; // Cập nhật lại đầu danh sách
+        delete temp;                     // Giải phóng bộ nhớ
+        cout << "Da xoa chi tiet hoa don co ma vat tu: " << maVT << endl;
+        return true;
+    }
+    // Tìm node có mã vật tư cần xóa
+    DanhSach_CT_HoaDon prev = ds_cthoadon;
+    DanhSach_CT_HoaDon curr = ds_cthoadon->next;
 
-        while (ptr1->next != lptr)
+    while (curr != nullptr)
+    {
+        if (strcmp(curr->maVT, maVT) == 0)
         {
-            // So sánh theo số lượng
-            if (ptr1->soLuong > ptr1->next->soLuong)
-            {
-                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
+            prev->next = curr->next; // Bỏ qua node cần xóa
+            delete curr;             // Giải phóng bộ nhớ
+            cout << "Da xoa chi tiet hoa don co ma vat tu: " << maVT << endl;
+            return true;
         }
-        lptr = ptr1;
-    } while (swapped);
+        prev = curr;
+        curr = curr->next;
+    }
+
+    cout << "Khong tim thay chi tiet hoa don co ma vat tu: " << maVT << endl;
+    return false; // Không tìm thấy mã vật tư cần xóa
+}
+//-------------Hàm in danh sách chi tiết hóa đơn---------------
+void InChiTietCTHoaDon(CT_HoaDon *ct)
+{
+    cout << "Ma VT: " << ct->maVT
+         << ", So luong: " << ct->soLuong
+         << ", Don gia: " << ct->donGia
+         << ", VAT: " << ct->vAT << "%" << endl;
 }
 
-// --------- Sắp xếp nổi bọt theo đơn giá ---------
-void SapXep_CTHD_TheoDonGia(DanhSach_CT_HoaDon &ds_cthoadon)
+// Hàm in danh sách chi tiết hóa đơn
+void InDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon)
 {
-    bool swapped;
-    CT_HoaDon *ptr1;
-    CT_HoaDon *lptr = nullptr;
-
-    if (Empty_CTHD(ds_cthoadon) == true)
-        return;
-
-    do
+    if (ds_cthoadon == nullptr)
     {
-        swapped = false;
-        ptr1 = ds_cthoadon;
+        cout << "Danh sach chi tiet hoa don rong!" << endl;
+        return;
+    }
 
-        while (ptr1->next != lptr)
-        {
-            // So sánh theo đơn giá
-            if (ptr1->donGia > ptr1->next->donGia)
-            {
-                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
-        }
-        lptr = ptr1;
-    } while (swapped);
+    cout << "Danh sach chi tiet hoa don:" << endl;
+    while (ds_cthoadon != nullptr)
+    {
+        InChiTietCTHoaDon(ds_cthoadon); // Gọi hàm in chi tiết
+        ds_cthoadon = ds_cthoadon->next;
+    }
 }
 
-// --------- Sắp xếp nổi bọt theo VAT ---------
-void SapXep_CTHD_TheoVAT(DanhSach_CT_HoaDon &ds_cthoadon)
+//----------Merge Sort------Của Chi tiết hóa đơn-----------------------------------------------
+/*Dễ triển khai với danh sách liên kết: Không cần phải truy cập trực tiếp vào các chỉ số (index) như trong mảng. Ta chỉ cần so sánh và hoán đổi con trỏ trong danh sách.
+Đơn giản và dễ hiểu: */
+
+// Hàm tìm vị trí giữa của danh sách liên kết
+CT_HoaDon *TimViTriGiua(CT_HoaDon *head)
 {
-    bool swapped;
-    CT_HoaDon *ptr1;
-    CT_HoaDon *lptr = nullptr;
 
-    if (Empty_CTHD(ds_cthoadon) == true)
-        return;
+    if (head == nullptr || head->next == nullptr)
+        return head;
 
-    do
+    CT_HoaDon *slow = head;       // Con trỏ slow đi từng bước một
+    CT_HoaDon *fast = head->next; // Con trỏ fast đi hai bước. Khi fast đến cuối danh sách, slow sẽ nằm ở giữa.
+
+    // Di chuyển fast nhanh hơn slow
+    while (fast != nullptr && fast->next != nullptr)
     {
-        swapped = false;
-        ptr1 = ds_cthoadon;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+//------------Merge Sort theo mã vật tư-------------------
+// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo tiêu chí mã vật tư
+CT_HoaDon *HopNhatTheoMaVT(CT_HoaDon *trai, CT_HoaDon *phai)
+{
+    // Trường hợp cơ bản
+    if (trai == nullptr)
+        return phai;
+    if (phai == nullptr)
+        return trai;
 
-        while (ptr1->next != lptr)
-        {
-            // So sánh theo VAT
-            if (ptr1->vAT > ptr1->next->vAT)
-            {
-                HoanDoiChiTietHoaDon(ptr1, ptr1->next);
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
-        }
-        lptr = ptr1;
-    } while (swapped);
+    // So sánh mã vật tư và gộp lại
+    if (strcmp(trai->maVT, phai->maVT) <= 0)
+    {
+        trai->next = HopNhatTheoMaVT(trai->next, phai);
+        return trai;
+    }
+    else
+    {
+        phai->next = HopNhatTheoMaVT(trai, phai->next);
+        return phai;
+    }
+}
+
+CT_HoaDon *MergeSortTheoMaVT(CT_HoaDon *head)
+{
+    // Trường hợp cơ bản: danh sách rỗng hoặc có 1 phần tử
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    // Tìm vị trí giữa của danh sách
+    CT_HoaDon *giua = TimViTriGiua(head);
+    CT_HoaDon *nuaSau = giua->next;
+    giua->next = nullptr; // Chia danh sách
+
+    // Đệ quy gọi MergeSort trên hai nửa
+    CT_HoaDon *trai = MergeSortTheoMaVT(head);
+    CT_HoaDon *phai = MergeSortTheoMaVT(nuaSau);
+
+    // Gộp hai nửa đã sắp xếp lại với nhau
+    return HopNhatTheoMaVT(trai, phai);
+}
+//------------Merge Sort theo số lượng----------------
+// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo số lượng
+CT_HoaDon *HopNhatTheoSoLuong(CT_HoaDon *trai, CT_HoaDon *phai)
+{
+    if (trai == nullptr)
+        return phai;
+    if (phai == nullptr)
+        return trai;
+
+    if (trai->soLuong <= phai->soLuong)
+    {
+        trai->next = HopNhatTheoSoLuong(trai->next, phai);
+        return trai;
+    }
+    else
+    {
+        phai->next = HopNhatTheoSoLuong(trai, phai->next);
+        return phai;
+    }
+}
+
+CT_HoaDon *MergeSortTheoSoLuong(CT_HoaDon *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    CT_HoaDon *giua = TimViTriGiua(head);
+    CT_HoaDon *nuaSau = giua->next;
+    giua->next = nullptr;
+
+    CT_HoaDon *trai = MergeSortTheoSoLuong(head);
+    CT_HoaDon *phai = MergeSortTheoSoLuong(nuaSau);
+
+    return HopNhatTheoSoLuong(trai, phai);
+}
+//----------Merge Sort theo đơn giá-----------
+// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo đơn giá
+CT_HoaDon *HopNhatTheoDonGia(CT_HoaDon *trai, CT_HoaDon *phai)
+{
+    if (trai == nullptr)
+        return phai;
+    if (phai == nullptr)
+        return trai;
+
+    if (trai->donGia <= phai->donGia)
+    {
+        trai->next = HopNhatTheoDonGia(trai->next, phai);
+        return trai;
+    }
+    else
+    {
+        phai->next = HopNhatTheoDonGia(trai, phai->next);
+        return phai;
+    }
+}
+
+CT_HoaDon *MergeSortTheoDonGia(CT_HoaDon *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    CT_HoaDon *giua = TimViTriGiua(head);
+    CT_HoaDon *nuaSau = giua->next;
+    giua->next = nullptr;
+
+    CT_HoaDon *trai = MergeSortTheoDonGia(head);
+    CT_HoaDon *phai = MergeSortTheoDonGia(nuaSau);
+
+    return HopNhatTheoDonGia(trai, phai);
+}
+
+//------------Merge Sort theo VAT--------------------
+// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo VAT
+CT_HoaDon *HopNhatTheoVAT(CT_HoaDon *trai, CT_HoaDon *phai)
+{
+    if (trai == nullptr)
+        return phai;
+    if (phai == nullptr)
+        return trai;
+
+    if (trai->vAT <= phai->vAT)
+    {
+        trai->next = HopNhatTheoVAT(trai->next, phai);
+        return trai;
+    }
+    else
+    {
+        phai->next = HopNhatTheoVAT(trai, phai->next);
+        return phai;
+    }
+}
+
+CT_HoaDon *MergeSortTheoVAT(CT_HoaDon *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    CT_HoaDon *giua = TimViTriGiua(head);
+    CT_HoaDon *nuaSau = giua->next;
+    giua->next = nullptr;
+
+    CT_HoaDon *trai = MergeSortTheoVAT(head);
+    CT_HoaDon *phai = MergeSortTheoVAT(nuaSau);
+
+    return HopNhatTheoVAT(trai, phai);
+}
+//------------Hàm tổng quát sắp xếp theo tiêu chí được chọn----------
+DanhSach_CT_HoaDon SapXepDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon, int tieuChi)
+{
+    switch (tieuChi)
+    {
+    case 1:
+        return MergeSortTheoMaVT(ds_cthoadon);
+    case 2:
+        return MergeSortTheoSoLuong(ds_cthoadon);
+    case 3:
+        return MergeSortTheoDonGia(ds_cthoadon);
+    case 4:
+        return MergeSortTheoVAT(ds_cthoadon);
+    default:
+        cout << "Tieu chi sap xep khong hop le!" << endl;
+        return ds_cthoadon;
+        // Ví dụ cách sài: ds_cthoadon = SapXepDanhSachCTHoaDon(ds_cthoadon, tieuchi);
+    }
+}
+
+// Hàm đảo ngược danh sách CT_HoaDon
+DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
+{
+    DanhSach_CT_HoaDon prev = nullptr;
+    DanhSach_CT_HoaDon current = head;
+    DanhSach_CT_HoaDon next = nullptr;
+
+    while (current != nullptr)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+
+    return prev; // Trả về đầu danh sách đã bị đảo ngược
 }
 //**************************************************************************************
 
