@@ -284,23 +284,24 @@ void updateMenu(DanhSachVatTu &root)
     cout << "---------------------------------------------------" << endl;
 
     // Hiển thị menu
-    for (int i = 0; i < MENU_ITEMS; i++)
-    {
-        cout << menuName[i] << endl;
-    }
-    cout << "What you want to do : ";
 
     bool running = true;
 
     while (running)
     {
+
+        for (int i = 0; i < MENU_ITEMS; i++)
+        {
+            cout << menuName[i] << endl;
+        }
+        cout << "What you want to do" << endl;
+
         choose = getch();
 
         switch (choose)
         {
         case '1':
         {
-            cout << endl;
             cout << "Them thong tin vat tu: " << endl;
 
             char inputMaVT[51];
@@ -425,7 +426,7 @@ void updateMenu(DanhSachVatTu &root)
                 cout << "Ten vat tu nhap: " << inputTenVT << endl;
                 cout << "DVT nhap: " << inputDVT << endl;
                 cout << "Soluongton nhap: " << inputC_SoLuongTon << endl;
-                cout << "Soluongton nhap: " << inputSoLuongTon << endl;
+                cout << "Soluongton nhap main: " << inputSoLuongTon << endl;
 
                 DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
                 insertDanhSachVatTu(root, dsvt_moi);
@@ -434,32 +435,64 @@ void updateMenu(DanhSachVatTu &root)
             break;
         }
         case '2':
+        {
             cout << "In vat tu" << endl;
             inDanhSachVatTuTheoTenVT(root);
             break;
+        }
         case '3':
+        {
             cout << "Hieu chinh vat tu" << endl;
             break;
+        }
         case '4':
-            cout << "Xoa Vat Tu" << endl;
-            break;
-        case '0':
-            cout << "Thoat chuong trinh" << endl;
-            running = false;
-            break;
-        case 13:
-            cout << "Thoat chuong trinh" << endl;
-            running = false;
-            break;
-        default:
-            cout << "\nInvalid choice. Please try again." << endl;
+        {
+            cout << "Xoa Vat Tu Theo" << endl;
+            char inputTenVT[51];
+            int count = 0;
+            bool done = false;
+            cout << "Nhap Ten Vat Tu: ";
+            while (!done)
+            {
+                char ch = getch();
+                if (count > 0 && ch == 13)
+                {
+                    done = true;
+                }
+                else if (ch == '\b' && count > 0)
+                {
+                    cout << "\b \b";
+                    inputTenVT[--count] = '\0';
+                }
+                else if (isalnum(ch) && count < 50)
+                {
+                    ch = tolower(ch);
+                    cout << ch;
+                    inputTenVT[count++] = ch;
+                }
+            }
+            inputTenVT[count] = '\0';
+            cout << endl;
+            removeFromDanhSachVatTu(inputTenVT, root);
             break;
         }
-
-        // Hiển thị lại menu nếu không thoát
-        if (running)
+        case '0':
         {
-            cout << "What you want to do : ";
+            cout << "Thoat chuong trinh" << endl;
+            running = false;
+            break;
+        }
+        case 13:
+        {
+            cout << "Thoat chuong trinh" << endl;
+            running = false;
+            break;
+        }
+        default:
+        {
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
         }
     }
 }
