@@ -7,7 +7,7 @@
 using namespace std;
 
 const int MAX_NHANVIEN = 500;
-const int MENU_ITEMS = 4;
+const int MENU_ITEMS = 5;
 
 //-------PART 1----------------------------------------------------------------
 //------Danh Sach Vat Tu------------------------------------------------------------
@@ -15,7 +15,7 @@ typedef struct VatTu
 {
     char maVT[11];  // Mã vật tư
     char tenVT[51]; // Tên vật tư
-    char dVT[21];   // Đơn vị tính
+    char dVT[11];   // Đơn vị tính
     int soLuongTon; // Số lượng tồn
     int bf;         // Balance factor
     VatTu *left;
@@ -200,7 +200,7 @@ DanhSachVatTu searchTenVT_DanhSachVatTu(DanhSachVatTu root, char tenVT[])
     DanhSachVatTu current = root;
     while (current != nullptr && (strcmp(current->tenVT, tenVT) != 0))
     {
-        if (strcmp(current->tenVT, tenVT) < 0)
+        if (strcmp(current->tenVT, tenVT) > 0)
         {
             current = current->left;
         }
@@ -210,6 +210,21 @@ DanhSachVatTu searchTenVT_DanhSachVatTu(DanhSachVatTu root, char tenVT[])
         }
     }
     return current;
+}
+
+bool isContainMaVT_DanhSachVatTu(DanhSachVatTu root, char maVT[])
+{
+    if (root == nullptr)
+    {
+        return false;
+    }
+
+    if (strcmp(root->maVT, maVT) == 0)
+    {
+        return true;
+    }
+
+    return isContainMaVT_DanhSachVatTu(root->left, maVT) || isContainMaVT_DanhSachVatTu(root->right, maVT);
 }
 
 void preorderTenVT_DanhSachVatTu(DanhSachVatTu root)
@@ -254,8 +269,9 @@ void inDanhSachVatTuTheoTenVT(DanhSachVatTu root)
 
 char menuName[MENU_ITEMS][51]{
     "1. Them vat tu",
-    "2. Xoa vat tu",
+    "2. Hien thi vat tu",
     "3. Hieu chinh vat tu",
+    "4. Xoa vat tu",
     "0. Exit"
     //
 };
@@ -287,7 +303,7 @@ void updateMenu(DanhSachVatTu &root)
             cout << endl;
             cout << "Them thong tin vat tu: " << endl;
 
-            char inputMaVT[11];
+            char inputMaVT[51];
             int count = 0;
             bool done = false;
 
@@ -302,26 +318,130 @@ void updateMenu(DanhSachVatTu &root)
                 }
                 else if (ch == '\b' && count > 0)
                 {
+                    // lui ve 1 nut de in ky tu trang sau do lai lui tiep de tiep tuc
                     cout << "\b \b";
-                    count--;
-                    inputMaVT[count] = '\0';
+                    inputMaVT[--count] = '\0';
                 }
                 else if (isalnum(ch) && count < 10)
                 {
+                    ch = tolower(ch);
                     cout << ch;
                     inputMaVT[count++] = ch;
                 }
             }
             inputMaVT[count] = '\0';
-            cout << "\nMa vat tu nhap: " << inputMaVT << endl;
+            cout << endl;
+
+            if (isContainMaVT_DanhSachVatTu(root, inputMaVT))
+            {
+                cout << "Cay da ton tai vat tu voi maVT la " << inputMaVT << " nen khong the them gia tri " << endl;
+            }
+            else
+            {
+                char inputTenVT[51];
+                count = 0;
+                done = false;
+
+                cout << "Nhap Ten Vat Tu: ";
+                while (!done)
+                {
+                    char ch = getch();
+                    if (count > 0 && ch == 13)
+                    {
+                        done = true;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        cout << "\b \b";
+                        inputTenVT[--count] = '\0';
+                    }
+                    else if (isalnum(ch) && count < 50)
+                    {
+                        ch = tolower(ch);
+                        cout << ch;
+                        inputTenVT[count++] = ch;
+                    }
+                }
+                inputTenVT[count] = '\0';
+                cout << endl;
+
+                char inputDVT[11];
+                count = 0;
+                done = false;
+
+                cout << "Nhap don vi tinh: ";
+                while (!done)
+                {
+                    char ch = getch();
+                    if (ch == 13 && count > 0)
+                    {
+                        done = true;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        cout << "\b \b";
+                        inputDVT[--count] = '\0';
+                    }
+                    else if (isalnum(ch) && count < 10)
+                    {
+                        ch = tolower(ch);
+                        cout << ch;
+                        inputDVT[count++] = ch;
+                    }
+                }
+                inputDVT[count] = '\0';
+                cout << endl;
+
+                char inputC_SoLuongTon[10];
+                count = 0;
+                done = false;
+
+                cout << "Nhap so luong ton: ";
+
+                while (!done)
+                {
+                    char ch = getch();
+                    if (ch == 13 && count > 0)
+                    {
+                        done = true;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        cout << "\b \b";
+                        inputC_SoLuongTon[--count] = '\0';
+                    }
+                    else if (isdigit(ch) && count < 9)
+                    {
+                        cout << ch;
+                        inputC_SoLuongTon[count++] = ch;
+                    }
+                }
+                cout << endl;
+                inputC_SoLuongTon[count] = '\0';
+
+                int inputSoLuongTon = stoi(inputC_SoLuongTon);
+
+                cout << "Ma vat tu nhap: " << inputMaVT << endl;
+                cout << "Ten vat tu nhap: " << inputTenVT << endl;
+                cout << "DVT nhap: " << inputDVT << endl;
+                cout << "Soluongton nhap: " << inputC_SoLuongTon << endl;
+                cout << "Soluongton nhap: " << inputSoLuongTon << endl;
+
+                DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
+                insertDanhSachVatTu(root, dsvt_moi);
+            }
+
             break;
         }
         case '2':
-            cout << "Xoa vat tu" << endl;
+            cout << "In vat tu" << endl;
+            inDanhSachVatTuTheoTenVT(root);
             break;
         case '3':
             cout << "Hieu chinh vat tu" << endl;
-            // Thêm logic hiệu chỉnh vật tư
+            break;
+        case '4':
+            cout << "Xoa Vat Tu" << endl;
             break;
         case '0':
             cout << "Thoat chuong trinh" << endl;
@@ -733,17 +853,17 @@ int main()
     DanhSachVatTu root = nullptr;
 
     // Them mot so vat tu vao danh sach
-    insertDanhSachVatTu(root, newDanhSachVatTu("05", "05", "Cai", 25));
-    insertDanhSachVatTu(root, newDanhSachVatTu("04", "04", "Cai", 20));
-    insertDanhSachVatTu(root, newDanhSachVatTu("01", "01", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("02", "02", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("10", "10", "Cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("03", "03", "Chiec", 15));
-    insertDanhSachVatTu(root, newDanhSachVatTu("06", "06", "Bo", 5));
-    insertDanhSachVatTu(root, newDanhSachVatTu("07", "07", "Hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("07", "07", "Hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("08", "08", "Bo", 12));
-    insertDanhSachVatTu(root, newDanhSachVatTu("14", "14", "Cai", 18));
+    insertDanhSachVatTu(root, newDanhSachVatTu("05", "05", "cai", 25));
+    insertDanhSachVatTu(root, newDanhSachVatTu("04", "04", "cai", 20));
+    insertDanhSachVatTu(root, newDanhSachVatTu("01", "01", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("02", "02", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("10", "10", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("03", "03", "chiec", 15));
+    insertDanhSachVatTu(root, newDanhSachVatTu("06", "06", "bo", 5));
+    insertDanhSachVatTu(root, newDanhSachVatTu("07", "07", "hop", 30));
+    insertDanhSachVatTu(root, newDanhSachVatTu("07", "07", "hop", 30));
+    insertDanhSachVatTu(root, newDanhSachVatTu("08", "08", "bo", 12));
+    insertDanhSachVatTu(root, newDanhSachVatTu("14", "14", "cai", 18));
 
     updateMenu(root);
 
