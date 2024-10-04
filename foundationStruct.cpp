@@ -250,6 +250,21 @@ bool isContainMaVT_DanhSachVatTu(DanhSachVatTu root, char maVT[])
     return isContainMaVT_DanhSachVatTu(root->left, maVT) || isContainMaVT_DanhSachVatTu(root->right, maVT);
 }
 
+bool isContainTenVT_DanhSachVatTu(DanhSachVatTu root, char tenVT[])
+{
+    if (root == nullptr)
+    {
+        return false;
+    }
+
+    if (strcmp(root->tenVT, tenVT) == 0)
+    {
+        return true;
+    }
+
+    return isContainTenVT_DanhSachVatTu(root->left, tenVT) || isContainTenVT_DanhSachVatTu(root->right, tenVT);
+}
+
 void preorderTenVT_DanhSachVatTu(DanhSachVatTu root)
 {
     if (root != nullptr)
@@ -459,13 +474,11 @@ void updateMenu(DanhSachVatTu &root)
         }
         case '2':
         {
-            cout << "In vat tu" << endl;
             inDanhSachVatTuTheoTenVT(root);
             break;
         }
         case '3':
         {
-            cout << "hieu chinh vat tu" << endl;
             char inputMaVT[11];
             int count = 0;
             bool done = false;
@@ -528,81 +541,88 @@ void updateMenu(DanhSachVatTu &root)
                 }
                 cout << endl;
 
-                char inputDVT[11];
-                count = 0;
-                done = false;
-
-                cout << "Nhap don vi tinh: ";
-                while (!done)
+                if (isContainTenVT_DanhSachVatTu(root, inputTenVT))
                 {
-                    char ch = getch();
-                    if (ch == 13 && count >= 0)
-                    {
-                        inputDVT[count] = '\0';
-                        done = true;
-                    }
-                    else if (ch == '\b' && count > 0)
-                    {
-                        cout << "\b \b";
-                        inputDVT[--count] = '\0';
-                    }
-                    else if (isalnum(ch) && count < 10)
-                    {
-                        ch = tolower(ch);
-                        cout << ch;
-                        inputDVT[count++] = ch;
-                    }
-                }
-                cout << endl;
-
-                char inputC_SoLuongTon[10];
-                count = 0;
-                done = false;
-
-                cout << "Nhap so luong ton: ";
-
-                while (!done)
-                {
-                    char ch = getch();
-                    if (ch == 13 && count >= 0)
-                    {
-                        inputC_SoLuongTon[count] = '\0';
-                        done = true;
-                    }
-                    else if (ch == '\b' && count > 0)
-                    {
-                        cout << "\b \b";
-                        inputC_SoLuongTon[--count] = '\0';
-                    }
-                    else if (isdigit(ch) && count < 9)
-                    {
-                        cout << ch;
-                        inputC_SoLuongTon[count++] = ch;
-                    }
-                }
-                cout << endl;
-                int inputSoLuongTon;
-                if (strlen(inputTenVT) == 0)
-                {
-                    strcpy(inputTenVT, foundVT->tenVT);
-                }
-
-                if (strlen(inputDVT) == 0)
-                {
-                    strcpy(inputDVT, foundVT->dVT);
-                }
-
-                if (strlen(inputC_SoLuongTon) == 0)
-                {
-                    inputSoLuongTon = foundVT->soLuongTon;
+                    cout << "Ten vat tu da ton tai khong the tiep tuc chinh sua" << endl;
                 }
                 else
                 {
-                    inputSoLuongTon = stoi(inputC_SoLuongTon);
-                }
+                    char inputDVT[11];
+                    count = 0;
+                    done = false;
 
-                removeFromDanhSachVatTu(foundVT->tenVT, root);
-                insertDanhSachVatTu(root, newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon));
+                    cout << "Nhap don vi tinh: ";
+                    while (!done)
+                    {
+                        char ch = getch();
+                        if (ch == 13 && count >= 0)
+                        {
+                            inputDVT[count] = '\0';
+                            done = true;
+                        }
+                        else if (ch == '\b' && count > 0)
+                        {
+                            cout << "\b \b";
+                            inputDVT[--count] = '\0';
+                        }
+                        else if (isalnum(ch) && count < 10)
+                        {
+                            ch = tolower(ch);
+                            cout << ch;
+                            inputDVT[count++] = ch;
+                        }
+                    }
+                    cout << endl;
+
+                    char inputC_SoLuongTon[10];
+                    count = 0;
+                    done = false;
+
+                    cout << "Nhap so luong ton: ";
+
+                    while (!done)
+                    {
+                        char ch = getch();
+                        if (ch == 13 && count >= 0)
+                        {
+                            inputC_SoLuongTon[count] = '\0';
+                            done = true;
+                        }
+                        else if (ch == '\b' && count > 0)
+                        {
+                            cout << "\b \b";
+                            inputC_SoLuongTon[--count] = '\0';
+                        }
+                        else if (isdigit(ch) && count < 9)
+                        {
+                            cout << ch;
+                            inputC_SoLuongTon[count++] = ch;
+                        }
+                    }
+                    cout << endl;
+                    int inputSoLuongTon;
+                    if (strlen(inputTenVT) == 0)
+                    {
+                        strcpy(inputTenVT, foundVT->tenVT);
+                    }
+
+                    if (strlen(inputDVT) == 0)
+                    {
+                        strcpy(inputDVT, foundVT->dVT);
+                    }
+
+                    if (strlen(inputC_SoLuongTon) == 0)
+                    {
+                        inputSoLuongTon = foundVT->soLuongTon;
+                    }
+                    else
+                    {
+                        inputSoLuongTon = stoi(inputC_SoLuongTon);
+                    }
+
+                    removeFromDanhSachVatTu(foundVT->tenVT, root);
+                    insertDanhSachVatTu(root, newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon));
+                }
             }
             break;
         }
