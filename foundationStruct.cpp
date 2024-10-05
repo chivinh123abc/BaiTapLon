@@ -53,4 +53,6 @@ typedef struct NhanVien
     char ten[21];             // Tên
     char phai[5];             // Phái (Nam/Nữ)
     DanhSachHoaDon ds_hoadon; // Danh sách hóa đơn
-} *DanhSachNhanVien;          // Danh sách nhân viên tối đa 500 người
+    int pos;                  // so SV cua danh sach
+    NhanVien *node[MAX_NHANVIEN];
+} *DanhSachNhanVien; // Danh sách nhân viên tối đa 500 người

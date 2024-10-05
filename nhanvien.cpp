@@ -8,6 +8,7 @@ DanhSachNhanVien newDanhSachNhanVien(char maNV[], char ho[], char ten[], char ph
     strcpy(ds_nhanvien->ho, ho);
     strcpy(ds_nhanvien->ten, ten);
     strcpy(ds_nhanvien->phai, phai);
+    ds_nhanvien->pos = 0;
     ds_nhanvien->ds_hoadon = ds_hoadon;
     return ds_nhanvien;
 };
