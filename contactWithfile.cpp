@@ -9,7 +9,7 @@ void saveVatTuToFile(DanhSachVatTu root, ofstream &outFile)
 
     saveVatTuToFile(root->left, outFile);
     char res[101];
-    sprintf(res, "#%s|%s|%s|%d", root->tenVT, root->maVT, root->dVT, root->soLuongTon);
+    sprintf(res, "#%s|%s|%s|%d", root->maVT, root->tenVT, root->dVT, root->soLuongTon);
     outFile << res << endl;
     saveVatTuToFile(root->right, outFile);
 }
