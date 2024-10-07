@@ -699,17 +699,17 @@ int main()
 {
     DanhSachVatTu root = nullptr;
 
-    // insertDanhSachVatTu(root, newDanhSachVatTu("05", "05", "cai", 25));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("04", "04", "cai", 20));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("01", "01", "cai", 10));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("02", "02", "cai", 10));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("10", "10", "cai", 10));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("03", "03", "chiec", 15));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("06", "06", "bo", 5));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("07", "07", "hop", 30));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("07", "07", "hop", 30));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("08", "08", "bo", 12));
-    // insertDanhSachVatTu(root, newDanhSachVatTu("14", "14", "cai", 18));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000001", "05", "cai", 25));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000002", "04", "cai", 20));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000003", "01", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000004", "02", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000005", "10", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000006", "03", "chiec", 15));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000007", "06", "bo", 5));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000008", "12", "hop", 30));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000009", "07", "hop", 30));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000010", "08", "bo", 12));
+    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000011", "14", "cai", 18));
 
     updateMenu(root);
 
