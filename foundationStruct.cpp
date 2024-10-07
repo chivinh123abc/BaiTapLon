@@ -3,6 +3,7 @@
 #include <cmath>
 #include <conio.h>
 #include "mylib.h"
+#include <fstream>
 
 using namespace std;
 
