@@ -19,8 +19,8 @@ int main()
     DanhSachVatTu root = nullptr;
 
     insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000001", "05", "cai", 25));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000002", "04", "cai", 20));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000003", "01", "cai", 10));
+    insertDanhSachVatTu(root, newDanhSachVatTu("nt-0000002", "04", "cai", 20));
+    insertDanhSachVatTu(root, newDanhSachVatTu("gd-0000003", "01", "cai", 10));
     insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000004", "02", "cai", 10));
     insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000005", "10", "cai", 10));
     insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000006", "03", "chiec", 15));
