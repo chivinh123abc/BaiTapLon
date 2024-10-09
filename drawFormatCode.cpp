@@ -1,0 +1,144 @@
+#include "mylib.h"
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+void SetNormalColor()
+{
+    SetColor(0xF);
+    SetBGColor(0x0);
+}
+
+void drawRectangle(int x, int y, int width, int height)
+{
+    for (int ix = x; ix <= x + width; ix++)
+    {
+        gotoxy(ix, y);
+        cout << char(196);
+        gotoxy(ix, y + height);
+        cout << char(196);
+    }
+    for (int iy = y; iy <= y + height; iy++)
+    {
+        gotoxy(x, iy);
+        cout << char(179);
+        gotoxy(x + width, iy);
+        cout << char(179);
+    }
+    gotoxy(x, y);
+    cout << char(218);
+    gotoxy(x, y + height);
+    cout << char(192);
+    gotoxy(x + width, y);
+    cout << char(191);
+    gotoxy(x + width, y + height);
+    cout << char(217);
+}
+
+void drawRectangleReverse(int x, int y, int x2, int height)
+{
+    for (int ix = x; ix >= x2; ix--)
+    {
+        gotoxy(ix, y);
+        cout << char(196);
+        gotoxy(ix, y + height);
+        cout << char(196);
+    }
+    for (int iy = y; iy <= y + height; iy++)
+    {
+        gotoxy(x, iy);
+        cout << char(179);
+        gotoxy(x2, iy);
+        cout << char(179);
+    }
+    gotoxy(x, y);
+    cout << char(191);
+    gotoxy(x, y + height);
+    cout << char(217);
+    gotoxy(x2, y);
+    cout << char(218);
+    gotoxy(x2, y + height);
+    cout << char(192);
+}
+
+void drawLietKeHoaDon()
+{
+    int currentWidth = getConsoleWidth();
+    int currentHeight = getConsoleHeight();
+    int previousWidth = 0;
+    int previousHeight = 0;
+    int x = 1;
+    int y = 0;
+
+    while (true)
+    {
+        currentWidth = getConsoleWidth();
+        currentHeight = getConsoleHeight();
+
+        if (currentWidth != previousWidth || currentHeight != previousHeight)
+        {
+            clrscr();
+            drawRectangle(x, y, currentWidth - 2, 2);
+            drawRectangle(x, y + 2, ceil(currentWidth * 0.5) - 1, 2);
+            drawRectangleReverse(currentWidth - 1, y + 2, ceil(currentWidth * 0.5), 2);
+            drawRectangle(x, y + 4, ceil(currentWidth * 0.2), 2);
+            drawRectangle(x + ceil(currentWidth * 0.2), y + 4, ceil(currentWidth * 0.2), 2);
+            drawRectangle(x + ceil(currentWidth * 0.2) * 2, y + 4, ceil(currentWidth * 0.2), 2);
+            drawRectangle(x + ceil(currentWidth * 0.2) * 3, y + 4, ceil(currentWidth * 0.2), 2);
+            drawRectangleReverse(currentWidth - 1, y + 4, ceil(currentWidth * 0.2) * 4 + 1, 2);
+            //
+            gotoxy(x, y + 2);
+            cout << char(195);
+            gotoxy(currentWidth - 1, y + 2);
+            cout << char(180);
+            gotoxy(currentWidth - 1, y + 4);
+            cout << char(180);
+            //
+            gotoxy(ceil(currentWidth * 0.5), y + 2);
+            cout << char(194);
+            gotoxy(ceil(currentWidth * 0.5), y + 4);
+            cout << char(193);
+            gotoxy(x, y + 4);
+            cout << char(195);
+            gotoxy(x + ceil(currentWidth * 0.2), y + 4);
+            cout << char(194);
+            gotoxy(x + ceil(currentWidth * 0.2) * 2, y + 4);
+            cout << char(194);
+            gotoxy(x + ceil(currentWidth * 0.2) * 3, y + 4);
+            cout << char(194);
+            gotoxy(x + ceil(currentWidth * 0.2) * 4, y + 4);
+            cout << char(194);
+            gotoxy(x + ceil(currentWidth * 0.2), y + 6);
+            cout << char(193);
+            gotoxy(x + ceil(currentWidth * 0.2) * 2, y + 6);
+            cout << char(193);
+            gotoxy(x + ceil(currentWidth * 0.2) * 3, y + 6);
+            cout << char(193);
+            gotoxy(x + ceil(currentWidth * 0.2) * 4, y + 6);
+            cout << char(193);
+
+            previousWidth = currentWidth;
+            previousHeight = currentHeight;
+        }
+
+        if (_kbhit())
+        {
+            char c = getch();
+            if (c == 13)
+            {
+                break;
+            }
+        }
+    }
+}
+
+int main()
+{
+    SetNormalColor();
+    drawLietKeHoaDon();
+
+    int x;
+    cin >> x;
+    return 0;
+}

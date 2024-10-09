@@ -352,14 +352,14 @@ void updateMenu(DanhSachVatTu &root)
                 case '1':
                 {
 
-                    dinhDangMaVatTu(inputMaVT, "sx", idGlobalCount);
+                    dinhDangMaVatTu(inputMaVT, "sd", idGlobalCount);
                     cout << "maVT cua ban la " << inputMaVT << endl;
                     done = true;
                     break;
                 }
                 case '2':
                 {
-                    dinhDangMaVatTu(inputMaVT, "xd", idGlobalCount);
+                    dinhDangMaVatTu(inputMaVT, "sx", idGlobalCount);
                     cout << inputMaVT << endl;
                     done = true;
                     break;

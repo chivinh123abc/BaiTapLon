@@ -4,6 +4,7 @@
 #include <dos.h>
 #include <string.h>
 #include <windows.h>
+#include <cmath>
 
 #define Enter 13
 // const int WHITE=15;
@@ -104,6 +105,27 @@ void SetBGColor(WORD color)
 
     SetConsoleTextAttribute(hConsoleOutput, wAttributes);
 }
+
+int getConsoleWidth()
+{
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+    {
+        return csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    }
+    return 80;
+}
+
+int getConsoleHeight()
+{
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+    {
+        return csbi.srWindow.Bottom - csbi.srWindow.Top + 1; // Chiều cao window
+    }
+    return 25; // Kích thước mặc định nếu có lỗi
+}
+
 void clrscr()
 {
     system("cls");

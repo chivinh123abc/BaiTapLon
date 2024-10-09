@@ -61,13 +61,13 @@ void insertVatTuByFile(DanhSachVatTu &root, const char *fileName)
     cout << "Da xong" << endl;
 }
 
-int main()
-{
-    DanhSachVatTu root = nullptr;
+// int main()
+// {
+//     DanhSachVatTu root = nullptr;
 
-    insertVatTuByFile(root, "vattu.txt");
-    inDanhSachVatTuTheoTenVT(root);
-    saveVatTuToFile(root, "vattu.txt");
+//     insertVatTuByFile(root, "vattu.txt");
+//     inDanhSachVatTuTheoTenVT(root);
+//     saveVatTuToFile(root, "vattu.txt");
 
-    return 0;
-}
+//     return 0;
+// }
