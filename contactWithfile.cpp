@@ -1,46 +1,73 @@
 #include "vattu.cpp"
 
-void saveVatTuToFile(DanhSachVatTu root, ofstream &outFile)
+void saveVatTuSupporter(DanhSachVatTu root, ofstream &outFile)
 {
-    if (root == nullptr)
+    if (root != nullptr)
     {
+        saveVatTuSupporter(root->left, outFile);
+        char res[101];
+        sprintf(res, "%s|%s|%s|%d", root->maVT, root->tenVT, root->dVT, root->soLuongTon);
+        outFile << res << endl;
+        saveVatTuSupporter(root->right, outFile);
+    }
+}
+
+void saveVatTuToFile(DanhSachVatTu root, const char *fileName)
+{
+
+    ofstream outFile(fileName);
+
+    if (!outFile.is_open())
+    {
+        cout << "Khong the mo file!" << endl;
         return;
     }
 
-    saveVatTuToFile(root->left, outFile);
-    char res[101];
-    sprintf(res, "#%s|%s|%s|%d", root->maVT, root->tenVT, root->dVT, root->soLuongTon);
-    outFile << res << endl;
-    saveVatTuToFile(root->right, outFile);
+    saveVatTuSupporter(root, outFile);
+    outFile.close();
+    cout << "Thanh cong" << endl;
+}
+
+// hien tai chi tach theo tung dong
+void insertVatTuByFileSupporter(DanhSachVatTu &root, ifstream &inFile)
+{
+    char buffer[256];
+    while (inFile.getline(buffer, 256))
+    {
+        char inputMaVatTu[11];
+        char inputTenVT[51];
+        char inputDVT[11];
+        int inputSoLuongTon;
+
+        sscanf(buffer, "%[^|]|%[^|]|%[^|]|%d", inputMaVatTu, inputTenVT, inputDVT, &inputSoLuongTon);
+
+        insertDanhSachVatTu(root, newDanhSachVatTu(inputMaVatTu, inputTenVT, inputDVT, inputSoLuongTon));
+    }
+}
+
+void insertVatTuByFile(DanhSachVatTu &root, const char *fileName)
+{
+    ifstream inFile(fileName);
+
+    if (!inFile.is_open())
+    {
+        cout << "Khong the mo file" << endl;
+        return;
+    }
+
+    insertVatTuByFileSupporter(root, inFile);
+
+    inFile.close();
+    cout << "Da xong" << endl;
 }
 
 int main()
 {
     DanhSachVatTu root = nullptr;
 
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000001", "05", "cai", 25));
-    insertDanhSachVatTu(root, newDanhSachVatTu("nt-0000002", "04", "cai", 20));
-    insertDanhSachVatTu(root, newDanhSachVatTu("gd-0000003", "01", "cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000004", "02", "cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000005", "10", "cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000006", "03", "chiec", 15));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000007", "06", "bo", 5));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000008", "12", "hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000009", "07", "hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000010", "08", "bo", 12));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000011", "14", "cai", 18));
-
-    ofstream outFile("output.txt");
-    if (outFile.is_open())
-    {
-        saveVatTuToFile(root, outFile);
-        outFile.close();
-        cout << "Ghi thanh cong" << endl;
-    }
-    else
-    {
-        cout << "Khong The Mo Tep" << endl;
-    }
+    insertVatTuByFile(root, "vattu.txt");
+    inDanhSachVatTuTheoTenVT(root);
+    saveVatTuToFile(root, "vattu.txt");
 
     return 0;
 }
