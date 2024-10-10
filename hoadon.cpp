@@ -1,4 +1,5 @@
 #include "foundationStruct.cpp"
+#include "vattu.cpp"
 
 // Khoi tao danh sach Chi Tiet Hoa Don moi;
 
@@ -337,6 +338,11 @@ DanhSachHoaDon newHoaDon(char soHD[], char ngayLapHoaDon[], LoaiHoaDon loai, Dan
     return ds_hoadon;
 }
 
+void dinhDangSoHoaDon(char rel[21], int &soThuTuSoHD)
+{
+    sprintf(rel, "hd-%07d", soThuTuSoHD);
+}
+
 DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
 {
     if (First == nullptr)
@@ -408,6 +414,127 @@ DanhSachHoaDon LapHoaDon(DanhSachHoaDon &First, char soHD[], char ngayLapHoaDon[
         cout << "Loai hoa don khong hop le!" << endl;
     }
     return First;
+}
+
+// luu y sau khi confirm hoa don chan chac dc nhap
+// thi phai dung lenh nay de cap nhat vat tu
+// QUAN TRONG!!!QUAN TRONG!!!QUANTRONG
+// QUAN TRONG!!!QUAN TRONG!!!QUANTRONG
+// QUAN TRONG!!!QUAN TRONG!!!QUANTRONG
+void CapNhatVatTuKhiNhapXuatHoaDon(DanhSachVatTu &root, DanhSachHoaDon &hd)
+{
+    if (hd == nullptr)
+    {
+        return;
+    }
+    if (hd->loai == n)
+    {
+        DanhSach_CT_HoaDon current = hd->ds_ct_hoadon;
+        while (current != nullptr)
+        {
+            if (!isContainMaVT_DanhSachVatTu(root, current->maVT))
+            {
+                DanhSachVatTu new_vattu = new VatTu;
+                cout << "Day la vat tu moi duoc them vao!!" << endl;
+                cout << "Vui long cung cap them thong tin cua vat tu nay" << endl;
+
+                char inputTenVT[51];
+                char inputDonViTinh[11];
+                bool done = false;
+                int count = 0;
+                while (!done)
+                {
+                    char c = getch();
+                    if (c == 13 && c > 0)
+                    {
+                        inputTenVT[count] = '\0';
+                        done = true;
+                    }
+                    else if (c == '\b' && c > 0)
+                    {
+                        cout << "\b \b";
+                        inputTenVT[--count] = '\0';
+                    }
+                    else if (isalnum(c) && c < 50)
+                    {
+                        c = tolower(c);
+                        cout << c;
+                        inputTenVT[count++] = c;
+                    }
+                }
+                done = false;
+                count = 0;
+                while (!done)
+                {
+                    char c = getch();
+                    if (c == 13 && c > 0)
+                    {
+                        inputDonViTinh[count] = '\0';
+                        done = true;
+                    }
+                    else if (c == '\b' && c > 0)
+                    {
+                        cout << "\b \b";
+                        inputDonViTinh[--count] = '\0';
+                    }
+                    else if (isalnum(c) && c < 10)
+                    {
+                        c = tolower(c);
+                        cout << c;
+                        inputDonViTinh[count++] = c;
+                    }
+                }
+                new_vattu = newDanhSachVatTu(current->maVT, inputTenVT, inputDonViTinh, current->soLuong);
+                insertDanhSachVatTu(root, new_vattu);
+            }
+            else
+            {
+                DanhSachVatTu vattu = searchMaVT_DanhSachVatTu(root, current->maVT);
+                updateSoLuongTon(vattu, vattu->soLuongTon + current->soLuong);
+            }
+            current = current->next;
+        }
+    }
+    else if (hd->loai == x)
+    {
+        if (root == nullptr)
+        {
+            cout << "Khong co gi trong DanhSachVatTu nen khong the xuat" << endl;
+            return;
+        }
+        else
+        {
+            DanhSach_CT_HoaDon current = hd->ds_ct_hoadon;
+            while (current != nullptr)
+            {
+                if (isContainMaVT_DanhSachVatTu(root, current->maVT))
+                {
+                    DanhSachVatTu vattu = searchMaVT_DanhSachVatTu(root, current->maVT);
+                    if (vattu != nullptr)
+                    {
+                        int phanDu = vattu->soLuongTon - current->soLuong;
+                        if (phanDu < 0)
+                        {
+                            cout << "Khong du so luong de xuat " << vattu->tenVT << endl;
+                        }
+                        else if (phanDu == 0)
+                        {
+                            removeFromDanhSachVatTu(vattu->tenVT, root);
+                        }
+                        else
+                        {
+                            updateSoLuongTon(vattu, phanDu);
+                        }
+                    }
+                    else
+                    {
+                        cout << "MaVT " << current->maVT << " khong ton tai trong DanhSachVatTu." << endl;
+                    }
+                }
+                current = current->next;
+            }
+        }
+    }
 }
 
 int main()

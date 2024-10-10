@@ -13,6 +13,15 @@ DanhSachVatTu newDanhSachVatTu(const char maVT[], const char tenVT[], const char
     return ds_vattu;
 }
 
+void updateSoLuongTon(DanhSachVatTu &vt, int soLuong)
+{
+    if (vt == nullptr)
+    {
+        return;
+    }
+    vt->soLuongTon = soLuong;
+}
+
 void dinhDangMaVatTu(char rel[11], const char dinhDang[3], int &soThuTuMaVT)
 {
     char maVTmoi[11];
@@ -338,52 +347,8 @@ void updateMenu(DanhSachVatTu &root)
             int count = 0;
             bool done = false;
 
-            while (!done)
-            {
-                cout << "Chon loai vat tu ban muon them (esc to stop)" << endl;
-                for (int i = 0; i < VATTU_ITEMS; i++)
-                {
-                    cout << " " << vattuName[i] << endl;
-                }
-
-                choice = getch();
-                switch (choice)
-                {
-                case '1':
-                {
-
-                    dinhDangMaVatTu(inputMaVT, "sd", idVatTuGlobalCount);
-                    cout << "maVT cua ban la " << inputMaVT << endl;
-                    done = true;
-                    break;
-                }
-                case '2':
-                {
-                    dinhDangMaVatTu(inputMaVT, "sx", idVatTuGlobalCount);
-                    cout << inputMaVT << endl;
-                    done = true;
-                    break;
-                }
-                case '3':
-                {
-                    dinhDangMaVatTu(inputMaVT, "td", idVatTuGlobalCount);
-                    cout << "maVT cua ban la " << inputMaVT << endl;
-                    done = true;
-                    break;
-                }
-                case 27:
-                {
-                    done = true;
-                    cout << "Ban da dung viec nhap input " << endl;
-                    goto start;
-                }
-                default:
-                {
-                    cout << "invalid value" << endl;
-                    break;
-                }
-                }
-            }
+            dinhDangMaVatTu(inputMaVT, "vt", idVatTuGlobalCount);
+            cout << "maVT cua ban la " << inputMaVT << endl;
 
             if (isContainMaVT_DanhSachVatTu(root, inputMaVT))
             {
@@ -655,6 +620,7 @@ void updateMenu(DanhSachVatTu &root)
                 char ch = getch();
                 if (count > 0 && ch == 13)
                 {
+                    inputTenVT[count] = '\0';
                     done = true;
                 }
                 else if (ch == '\b' && count > 0)
@@ -669,7 +635,7 @@ void updateMenu(DanhSachVatTu &root)
                     inputTenVT[count++] = ch;
                 }
             }
-            inputTenVT[count] = '\0';
+
             cout << endl;
             removeFromDanhSachVatTu(inputTenVT, root);
             break;
@@ -689,23 +655,23 @@ void updateMenu(DanhSachVatTu &root)
     }
 }
 
-int main()
-{
-    DanhSachVatTu root = nullptr;
+// int main()
+// {
+//     DanhSachVatTu root = nullptr;
 
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000001", "05", "cai", 25));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000002", "04", "cai", 20));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000003", "01", "cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000004", "02", "cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000005", "10", "cai", 10));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000006", "03", "chiec", 15));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000007", "06", "bo", 5));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000008", "12", "hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000009", "07", "hop", 30));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000010", "08", "bo", 12));
-    insertDanhSachVatTu(root, newDanhSachVatTu("xd-0000011", "14", "cai", 18));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000001", "05", "cai", 25));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000002", "04", "cai", 20));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000003", "01", "cai", 10));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000004", "02", "cai", 10));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000005", "10", "cai", 10));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000006", "03", "chiec", 15));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000007", "06", "bo", 5));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000008", "12", "hop", 30));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000009", "07", "hop", 30));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000010", "08", "bo", 12));
+//     insertDanhSachVatTu(root, newDanhSachVatTu("vt-0000011", "14", "cai", 18));
 
-    updateMenu(root);
+//     updateMenu(root);
 
-    return 0;
-}
+//     return 0;
+// }
