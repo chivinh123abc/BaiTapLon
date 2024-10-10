@@ -44,7 +44,7 @@ bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, floa
 {
     if (KiemTraMaVT_CTHD(ds_cthoadon, maVT) == true)
     {
-        return false; // Không thêm được vì mã vật tư bị trùng
+        return false;
     }
 
     DanhSach_CT_HoaDon CT_HoaDonMoi = newDanhSachCTHoaDon(maVT, soLuong, donGia, vAT);
@@ -327,7 +327,7 @@ DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
 //-------------******************************************************************************************************************-------------------------------------------------------------------------------------------------------------------
 // khoi tao danh sach Hoa Don moi
 
-DanhSachHoaDon newDanhSachHoaDon(char soHD[], char ngayLapHoaDon[21], char loai, DanhSach_CT_HoaDon ds_ct_hoadon)
+DanhSachHoaDon newDanhSachHoaDon(char soHD[], char ngayLapHoaDon[21], LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
 {
     DanhSachHoaDon ds_hoadon = new HoaDon;
     strcpy(ds_hoadon->soHD, soHD);

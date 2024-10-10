@@ -41,11 +41,17 @@ typedef struct CT_HoaDon
 } *DanhSach_CT_HoaDon;
 
 //--------Danh Sach Hoa Don-------------------------------------------------
+typedef enum LoaiHoaDon
+{
+    n,
+    x
+} LoaiHoaDon;
+
 typedef struct HoaDon
 {
     char soHD[21];                   // Số hóa đơn
     char ngayLapHoaDon[21];          // Ngày lập hóa đơn
-    char loai;                       // Loại hóa đơn: 'N' (phiếu nhập) hoặc 'X' (phiếu xuất)
+    LoaiHoaDon loai;                 // Loại hóa đơn: 'N' (phiếu nhập) hoặc 'X' (phiếu xuất)
     DanhSach_CT_HoaDon ds_ct_hoadon; // Danh sách chi tiết hóa đơn
     HoaDon *next;                    // Con trỏ đến hóa đơn tiếp theo
 } *DanhSachHoaDon;
@@ -58,7 +64,7 @@ typedef struct NhanVien
     char ten[21];             // Tên
     char phai[5];             // Phái (Nam/Nữ)
     DanhSachHoaDon ds_hoadon; // Danh sách hóa đơn
-    int pos;                  // so SV cua danh sach
+    int position;             // so thu tu SV cua danh sach
     NhanVien *node[MAX_NHANVIEN];
 } *DanhSachNhanVien;
 

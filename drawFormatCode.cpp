@@ -190,10 +190,83 @@ void drawLietKeHoaDon()
     }
 }
 
+void titleCuaThongKeDoanhThuNam(int x, int y, int ScreenWidth, int ScreenHeight)
+{
+    SetColor(0x3);
+    int x2 = strlen("BANG THONG KE DOANH THU NAM") / 2;
+    gotoxy(ceil(ScreenWidth * 0.5) - x2, y + 1);
+    cout << "BANG THONG KE DOANH THU NAM";
+    gotoxy(ceil(ScreenWidth * 0.25) - x2 / 3, y + 3);
+    cout << "Thang";
+    gotoxy(floor(ScreenWidth * 0.75) - x2 / 3, y + 3);
+    cout << "Doanh Thu";
+
+    gotoxy(x, ScreenHeight - 1);
+    cout << "ESC = Stop Program";
+
+    SetColor(0xF);
+}
+
+void drawThongKeDoanhThuNam()
+{
+    int currentWidth = getConsoleWidth();
+    int currentHeight = getConsoleHeight();
+    int previousWidth = 0;
+    int previousHeight = 0;
+    int x = 1;
+    int y = 0;
+
+    while (true)
+    {
+        currentWidth = getConsoleWidth();
+        currentHeight = getConsoleHeight();
+
+        if (currentWidth != previousWidth || currentHeight != previousHeight)
+        {
+            clrscr();
+            drawRectangle(x, y, currentWidth - 2, 2);
+            drawRectangle(x, y + 2, ceil(currentWidth * 0.5) - 1, 2);
+            drawRectangleReverse(currentWidth - 1, y + 2, ceil(currentWidth * 0.5), 2);
+            drawRectangle(x, y + 4, ceil(currentWidth * 0.5) - 1, 20);
+            drawRectangleReverse(currentWidth - 1, y + 4, ceil(currentWidth * 0.5), 20);
+            //
+            gotoxy(x, y + 2);
+            cout << char(195);
+            gotoxy(x, y + 4);
+            cout << char(195);
+            gotoxy(currentWidth - 1, y + 2);
+            cout << char(180);
+            gotoxy(currentWidth - 1, y + 4);
+            cout << char(180);
+            //
+            gotoxy(ceil(currentWidth * 0.5), y + 2);
+            cout << char(194);
+            gotoxy(ceil(currentWidth * 0.5), y + 4);
+            cout << char(197);
+            gotoxy(ceil(currentWidth * 0.5), y + 24);
+            cout << char(193);
+
+            titleCuaThongKeDoanhThuNam(x, y, currentWidth, currentHeight);
+            previousWidth = currentWidth;
+            previousHeight = currentHeight;
+        }
+
+        if (_kbhit())
+        {
+            char c = getch();
+            if (c == 27)
+            {
+                break;
+            }
+        }
+    }
+}
+
 int main()
 {
     SetNormalColor();
-    drawLietKeHoaDon();
+    // drawLietKeHoaDon();
+    drawThongKeDoanhThuNam();
 
     return 0;
 }
