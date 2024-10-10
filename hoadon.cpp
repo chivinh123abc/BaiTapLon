@@ -302,7 +302,6 @@ DanhSach_CT_HoaDon SapXepDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon, int ti
     default:
         cout << "Tieu chi sap xep khong hop le!" << endl;
         return ds_cthoadon;
-        // Ví dụ cách sài: ds_cthoadon = SapXepDanhSachCTHoaDon(ds_cthoadon, tieuchi);
     }
 }
 
@@ -327,7 +326,7 @@ DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
 //-------------******************************************************************************************************************-------------------------------------------------------------------------------------------------------------------
 // khoi tao danh sach Hoa Don moi
 
-DanhSachHoaDon newDanhSachHoaDon(char soHD[], char ngayLapHoaDon[21], LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
+DanhSachHoaDon newHoaDon(char soHD[], char ngayLapHoaDon[], LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
 {
     DanhSachHoaDon ds_hoadon = new HoaDon;
     strcpy(ds_hoadon->soHD, soHD);
@@ -336,4 +335,82 @@ DanhSachHoaDon newDanhSachHoaDon(char soHD[], char ngayLapHoaDon[21], LoaiHoaDon
     ds_hoadon->ds_ct_hoadon = ds_ct_hoadon;
     ds_hoadon->next = nullptr;
     return ds_hoadon;
+}
+
+DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
+{
+    if (First == nullptr)
+    {
+        First = hd;
+    }
+    else
+    {
+        if (hd->soHD < First->soHD)
+        {
+            hd->next = First;
+            First = hd;
+        }
+        else
+        {
+            HoaDon *current = First;
+            HoaDon *prev = nullptr;
+            while (current != nullptr && current->soHD < hd->soHD)
+            {
+                prev = current;
+                current = current->next;
+            }
+            //
+            prev->next = hd;
+            hd->next = current;
+        }
+    }
+    return First;
+}
+
+DanhSachHoaDon RemoveHoaDonTheoSoHD(DanhSachHoaDon &First, char soHD[])
+{
+    HoaDon *current = First;
+    HoaDon *prev = nullptr;
+
+    while (current != nullptr && (strcmp(current->soHD, soHD) != 0))
+    {
+        prev = current;
+        current = current->next;
+    }
+    if (current == nullptr)
+    {
+        cout << "SoHD khong ton tai trong DanhSach";
+    }
+    else
+    {
+        if (current == First)
+        {
+            First = First->next;
+        }
+        else
+        {
+            prev->next = current->next;
+        }
+
+        delete current;
+    }
+    return First;
+}
+
+DanhSachHoaDon LapHoaDon(DanhSachHoaDon &First, char soHD[], char ngayLapHoaDon[], LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
+{
+    if (loai == n || loai == x)
+    {
+        InsertHoaDonVaoDSHD(First, newHoaDon(soHD, ngayLapHoaDon, loai, ds_ct_hoadon));
+    }
+    else
+    {
+        cout << "Loai hoa don khong hop le!" << endl;
+    }
+    return First;
+}
+
+int main()
+{
+    DanhSachHoaDon ds_hoadon = nullptr;
 }

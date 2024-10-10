@@ -91,7 +91,7 @@ void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
     if (root == nullptr)
     {
         root = newVatTu;
-        idGlobalCount++;
+        idVatTuGlobalCount++;
     }
     else if (strcmp(newVatTu->tenVT, root->tenVT) < 0)
     {
@@ -352,21 +352,21 @@ void updateMenu(DanhSachVatTu &root)
                 case '1':
                 {
 
-                    dinhDangMaVatTu(inputMaVT, "sd", idGlobalCount);
+                    dinhDangMaVatTu(inputMaVT, "sd", idVatTuGlobalCount);
                     cout << "maVT cua ban la " << inputMaVT << endl;
                     done = true;
                     break;
                 }
                 case '2':
                 {
-                    dinhDangMaVatTu(inputMaVT, "sx", idGlobalCount);
+                    dinhDangMaVatTu(inputMaVT, "sx", idVatTuGlobalCount);
                     cout << inputMaVT << endl;
                     done = true;
                     break;
                 }
                 case '3':
                 {
-                    dinhDangMaVatTu(inputMaVT, "td", idGlobalCount);
+                    dinhDangMaVatTu(inputMaVT, "td", idVatTuGlobalCount);
                     cout << "maVT cua ban la " << inputMaVT << endl;
                     done = true;
                     break;

@@ -1,3 +1,4 @@
 #include "foundationStruct.h"
 
-int idGlobalCount = 1;
+int idVatTuGlobalCount = 1;
+int idHoaDonGlobalCount = 1;

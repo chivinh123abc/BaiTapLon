@@ -12,7 +12,8 @@ using namespace std;
 const int MAX_NHANVIEN = 500;
 const int MENU_ITEMS = 5;
 const int VATTU_ITEMS = 3;
-extern int idGlobalCount;
+extern int idVatTuGlobalCount;
+extern int idHoaDonGlobalCount;
 
 //-------PART 1----------------------------------------------------------------
 //------Danh Sach Vat Tu------------------------------------------------------------
