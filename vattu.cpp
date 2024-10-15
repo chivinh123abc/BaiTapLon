@@ -1,4 +1,5 @@
 #include "foundationStruct.cpp"
+#pragma once
 
 DanhSachVatTu newDanhSachVatTu(const char maVT[], const char tenVT[], const char dVT[], int soLuongTon)
 {

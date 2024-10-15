@@ -1,5 +1,7 @@
 #include "vattu.cpp"
-
+#include "nhanvien.cpp"
+#include "hoadon.cpp"
+// Part1 : VATTU------------------------
 void saveVatTuSupporter(DanhSachVatTu root, ofstream &outFile)
 {
     if (root != nullptr)
@@ -61,13 +63,74 @@ void insertVatTuByFile(DanhSachVatTu &root, const char *fileName)
     cout << "Da xong" << endl;
 }
 
-// int main()
-// {
-//     DanhSachVatTu root = nullptr;
+// Part1 : NHANVIEN------------------------
 
-//     insertVatTuByFile(root, "vattu.txt");
-//     inDanhSachVatTuTheoTenVT(root);
-//     saveVatTuToFile(root, "vattu.txt");
+void saveNhanVienSupporter(DanhSachNhanVien ds, ofstream &outFile, int soLuongNV)
+{
+    if (soLuongNV > 0)
+    {
+        for (int i = 0; i < soLuongNV; i++)
+        {
+            char res[101];
+            sprintf(res, "%s|%s|%s|%s", ds[i]->maNV, ds[i]->ho, ds[i]->ten, (ds[i]->phai == nam ? "nam" : "nu"));
+            outFile << res << endl;
+        }
+    }
+}
 
-//     return 0;
-// }
+void saveNhanVienToFile(DanhSachNhanVien ds, const char *fileName, int soLuongNV)
+{
+
+    ofstream outFile(fileName);
+    if (!outFile.is_open())
+    {
+        cout << "Khong the mo file!" << endl;
+        return;
+    }
+
+    saveNhanVienSupporter(ds, outFile, soLuongNV);
+    outFile.close();
+    cout << "Thanh cong" << endl;
+}
+
+void insertNhanVienByFileSupporter(DanhSachNhanVien &ds, ifstream &inFile, int &soLuongNV)
+{
+    char buffer[256];
+    while (inFile.getline(buffer, 256))
+    {
+        char inputMaNV[21];
+        char inputHo[11];
+        char inputTen[21];
+        char inputPhai1[4];
+        Phai inputPhai2;
+
+        sscanf(buffer, "%[^|]|%[^|]|%[^|]|%3s", inputMaNV, inputHo, inputTen, inputPhai1);
+        if (strcmp(inputPhai1, "nam") == 0)
+        {
+            inputPhai2 = nam;
+        }
+        else
+        {
+            inputPhai2 = nu;
+        }
+
+        cout << "Doc nhan vien: " << inputMaNV << ", " << inputHo << ", " << inputTen << ", " << (inputPhai2 == nam ? "nam" : "nu") << endl;
+
+        insertNhanVienToDSNV(ds, newNhanVien(inputMaNV, inputHo, inputTen, inputPhai2, nullptr), soLuongNV);
+    }
+}
+
+void insertNhanVienByFile(DanhSachNhanVien &ds, const char *fileName, int &soLuongNV)
+{
+    ifstream inFile(fileName);
+    if (!inFile.is_open())
+    {
+        cout << "Khong the mo file" << endl;
+        return;
+    }
+
+    insertNhanVienByFileSupporter(ds, inFile, soLuongNV);
+
+    inFile.close();
+    cout << "Da xong" << endl;
+}

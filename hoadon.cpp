@@ -1,4 +1,5 @@
 #include "foundationStruct.cpp"
+#pragma once
 #include "vattu.cpp"
 
 // Khoi tao danh sach Chi Tiet Hoa Don moi;
@@ -113,7 +114,7 @@ void InDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon)
     cout << "Danh sach chi tiet hoa don:" << endl;
     while (ds_cthoadon != nullptr)
     {
-        InChiTietCTHoaDon(ds_cthoadon); // Gọi hàm in chi tiết
+        InChiTietCTHoaDon(ds_cthoadon);
         ds_cthoadon = ds_cthoadon->next;
     }
 }
@@ -327,11 +328,11 @@ DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
 //-------------******************************************************************************************************************-------------------------------------------------------------------------------------------------------------------
 // khoi tao danh sach Hoa Don moi
 
-DanhSachHoaDon newHoaDon(char soHD[], char ngayLapHoaDon[], LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
+DanhSachHoaDon newHoaDon(char soHD[], Date date, LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
 {
     DanhSachHoaDon ds_hoadon = new HoaDon;
     strcpy(ds_hoadon->soHD, soHD);
-    strcpy(ds_hoadon->ngayLapHoaDon, ngayLapHoaDon);
+    ds_hoadon->date = date;
     ds_hoadon->loai = loai;
     ds_hoadon->ds_ct_hoadon = ds_ct_hoadon;
     ds_hoadon->next = nullptr;
@@ -403,11 +404,11 @@ DanhSachHoaDon RemoveHoaDonTheoSoHD(DanhSachHoaDon &First, char soHD[])
     return First;
 }
 
-DanhSachHoaDon LapHoaDon(DanhSachHoaDon &First, char soHD[], char ngayLapHoaDon[], LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
+DanhSachHoaDon LapHoaDon(DanhSachHoaDon &First, char soHD[], Date date, LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
 {
     if (loai == n || loai == x)
     {
-        InsertHoaDonVaoDSHD(First, newHoaDon(soHD, ngayLapHoaDon, loai, ds_ct_hoadon));
+        InsertHoaDonVaoDSHD(First, newHoaDon(soHD, date, loai, ds_ct_hoadon));
     }
     else
     {
@@ -505,6 +506,8 @@ void CapNhatVatTuKhiNhapXuatHoaDon(DanhSachVatTu &root, DanhSachHoaDon &hd)
         else
         {
             DanhSach_CT_HoaDon current = hd->ds_ct_hoadon;
+            bool duYeuCau = true;
+
             while (current != nullptr)
             {
                 if (isContainMaVT_DanhSachVatTu(root, current->maVT))
@@ -515,29 +518,124 @@ void CapNhatVatTuKhiNhapXuatHoaDon(DanhSachVatTu &root, DanhSachHoaDon &hd)
                         int phanDu = vattu->soLuongTon - current->soLuong;
                         if (phanDu < 0)
                         {
+                            duYeuCau = false;
                             cout << "Khong du so luong de xuat " << vattu->tenVT << endl;
-                        }
-                        else if (phanDu == 0)
-                        {
-                            removeFromDanhSachVatTu(vattu->tenVT, root);
-                        }
-                        else
-                        {
-                            updateSoLuongTon(vattu, phanDu);
                         }
                     }
                     else
                     {
-                        cout << "MaVT " << current->maVT << " khong ton tai trong DanhSachVatTu." << endl;
+                        duYeuCau = false;
+                        cout << "MaVT " << current->maVT << " khong ton tai trong DanhSachVatTu" << endl;
                     }
                 }
                 current = current->next;
+            }
+
+            if (duYeuCau)
+            {
+                current = hd->ds_ct_hoadon;
+                while (current != nullptr)
+                {
+                    DanhSachVatTu vattu = searchMaVT_DanhSachVatTu(root, current->maVT);
+                    int phanDu = vattu->soLuongTon - current->soLuong;
+                    if (phanDu == 0)
+                    {
+                        removeFromDanhSachVatTu(vattu->tenVT, root);
+                    }
+                    else
+                    {
+                        updateSoLuongTon(vattu, phanDu);
+                    }
+                    current = current->next;
+                }
+            }
+            else
+            {
+                cout << "Xuat hoa don bi huy do co vat tu khong du so luong." << endl;
+                cout << "Day la chi tiet so luong cua nhung vattu trong hoa don cua ban" << endl;
+
+                current = hd->ds_ct_hoadon;
+                while (current != nullptr)
+                {
+                    DanhSachVatTu vattu = searchMaVT_DanhSachVatTu(root, current->maVT);
+                    if (vattu == nullptr)
+                    {
+                        cout << "MaVT " << current->maVT << " khong ton tai trong DanhSachVatTu!" << endl;
+                    }
+                    else
+                    {
+                        cout << "MaVT " << current->maVT << " - So luong ton: " << vattu->soLuongTon << endl;
+                    }
+                    current = current->next;
+                }
             }
         }
     }
 }
 
-int main()
+// chua test duoc
+void InHoaDonTheoSoHD(DanhSachHoaDon FirstDS, DanhSachNhanVien ds_nv, DanhSachVatTu ds_vt, char soHD[21], int soLuongNV)
 {
-    DanhSachHoaDon ds_hoadon = nullptr;
+    if (soLuongNV == 0)
+    {
+        cout << "Khong co nhan vien nao nhap hoa don hoac hoa don khong ton tai" << endl;
+        return;
+    }
+
+    for (int i = 0; i < soLuongNV; i++)
+    {
+        HoaDon *current_hd = ds_nv[i]->ds_hoadon;
+
+        while (current_hd != nullptr && (strcmp(current_hd->soHD, soHD) != 0))
+        {
+            current_hd = current_hd->next;
+        }
+
+        if (current_hd != nullptr)
+        {
+            CT_HoaDon *current_ct = current_hd->ds_ct_hoadon;
+            if (current_ct == nullptr)
+            {
+                cout << "Hoa don rong" << endl;
+                return;
+            }
+
+            int tongTriGia = 0;
+
+            cout << "-------------------- HOA DON --------------------" << endl;
+            cout << "So Hoa Don: " << soHD << endl;
+            cout << "Ngay: " << current_hd->date.day << "/"
+                 << current_hd->date.month << "/"
+                 << current_hd->date.year << endl;
+            cout << "Nhan Vien: " << ds_nv[i]->ho << " " << ds_nv[i]->ten << endl;
+            cout << "Loai Hoa Don: " << (current_hd->loai == n ? "Nhap" : "Xuat") << endl;
+            cout << "------------------------------------------------" << endl;
+
+            while (current_ct != nullptr)
+            {
+                VatTu *vattu = searchMaVT_DanhSachVatTu(ds_vt, current_ct->maVT);
+                if (vattu != nullptr)
+                {
+                    int triGia = current_ct->soLuong * current_ct->donGia;
+                    tongTriGia += triGia;
+                    cout << "Ten VT: " << vattu->tenVT
+                         << ", So Luong: " << current_ct->soLuong
+                         << ", Don Gia: " << current_ct->donGia
+                         << ", Tri Gia: " << triGia << endl;
+                }
+                else
+                {
+                    cout << "Vat tu voi ma " << current_ct->maVT << " khong ton tai" << endl;
+                }
+                current_ct = current_ct->next;
+            }
+
+            cout << "------------------------------------------------" << endl;
+            cout << "Tong Tri Gia Hoa Don: " << tongTriGia << endl;
+            cout << "------------------------------------------------" << endl;
+
+            return;
+        }
+    }
+    cout << "Khong tim thay hoa don voi soHD: " << soHD << endl;
 }

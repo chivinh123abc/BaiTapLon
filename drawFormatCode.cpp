@@ -2,14 +2,9 @@
 #include <iostream>
 #include <conio.h>
 #include <cmath>
+#pragma once;
 
 using namespace std;
-
-void SetNormalColor()
-{
-    SetColor(0xF);
-    SetBGColor(0x0);
-}
 
 void drawRectangle(int x, int y, int width, int height)
 {
@@ -229,7 +224,7 @@ void drawThongKeDoanhThuNam()
             drawRectangleReverse(currentWidth - 1, y + 2, ceil(currentWidth * 0.5), 2);
             drawRectangle(x, y + 4, ceil(currentWidth * 0.5) - 1, 20);
             drawRectangleReverse(currentWidth - 1, y + 4, ceil(currentWidth * 0.5), 20);
-            //
+
             gotoxy(x, y + 2);
             cout << char(195);
             gotoxy(x, y + 4);
@@ -260,13 +255,4 @@ void drawThongKeDoanhThuNam()
             }
         }
     }
-}
-
-int main()
-{
-    SetNormalColor();
-    // drawLietKeHoaDon();
-    drawThongKeDoanhThuNam();
-
-    return 0;
 }

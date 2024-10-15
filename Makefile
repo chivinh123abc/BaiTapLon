@@ -1,2 +1,2 @@
 all:
-	g++ -o drawFormatCode drawFormatCode.cpp
+	g++ -o main main.cpp

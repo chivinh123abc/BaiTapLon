@@ -1,11 +1,9 @@
-#ifndef FOUNDATIONSTRUCT_H
-#define FOUNDATIONSTRUCT_H
-
 #include <iostream>
 #include <cstring>
 #include <cmath>
 #include <conio.h>
 #include <fstream>
+#pragma once
 
 using namespace std;
 
@@ -14,6 +12,7 @@ const int MENU_ITEMS = 5;
 const int VATTU_ITEMS = 3;
 extern int idVatTuGlobalCount;
 extern int idHoaDonGlobalCount;
+extern int soLuongNhanVienGlobalCount;
 
 //-------PART 1----------------------------------------------------------------
 //------Danh Sach Vat Tu------------------------------------------------------------
@@ -48,25 +47,36 @@ typedef enum LoaiHoaDon
     x
 } LoaiHoaDon;
 
+struct Date
+{
+    int day;
+    int month;
+    int year;
+};
+
 typedef struct HoaDon
 {
-    char soHD[21];                   // Số hóa đơn
-    char ngayLapHoaDon[21];          // Ngày lập hóa đơn
-    LoaiHoaDon loai;                 // Loại hóa đơn: 'N' (phiếu nhập) hoặc 'X' (phiếu xuất)
-    DanhSach_CT_HoaDon ds_ct_hoadon; // Danh sách chi tiết hóa đơn
-    HoaDon *next;                    // Con trỏ đến hóa đơn tiếp theo
+    char soHD[21];
+    Date date;
+    LoaiHoaDon loai;
+    DanhSach_CT_HoaDon ds_ct_hoadon = nullptr;
+    HoaDon *next;
 } *DanhSachHoaDon;
 
 //------Danh Sach Nhan Vien----------------------------------------------------
+
+typedef enum Phai
+{
+    nam,
+    nu
+} Phai;
+
 typedef struct NhanVien
 {
-    char maNV[21];            // Mã nhân viên
-    char ho[11];              // Họ
-    char ten[21];             // Tên
-    char phai[5];             // Phái (Nam/Nữ)
-    DanhSachHoaDon ds_hoadon; // Danh sách hóa đơn
-    int position;             // so thu tu SV cua danh sach
-    NhanVien *node[MAX_NHANVIEN];
-} *DanhSachNhanVien;
-
-#endif
+    char maNV[21];
+    char ho[11];
+    char ten[21];
+    Phai phai;
+    DanhSachHoaDon ds_hoadon = nullptr;
+    int position;
+} *DanhSachNhanVien[MAX_NHANVIEN];
