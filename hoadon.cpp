@@ -538,14 +538,7 @@ void CapNhatVatTuKhiNhapXuatHoaDon(DanhSachVatTu &root, DanhSachHoaDon &hd)
                 {
                     DanhSachVatTu vattu = searchMaVT_DanhSachVatTu(root, current->maVT);
                     int phanDu = vattu->soLuongTon - current->soLuong;
-                    if (phanDu == 0)
-                    {
-                        removeFromDanhSachVatTu(vattu->tenVT, root);
-                    }
-                    else
-                    {
-                        updateSoLuongTon(vattu, phanDu);
-                    }
+                    updateSoLuongTon(vattu, phanDu);
                     current = current->next;
                 }
             }
