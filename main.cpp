@@ -218,6 +218,181 @@ void DrawVatTuContactGuide()
     cout << char(180);
 }
 
+void NhapVatTu(DanhSachVatTu &ds_vt, int &idVatTuCount)
+{
+    drawRectangle(0, 0, 70, 2);
+    drawRectangle(0, 2, 70, 2);
+    //
+    gotoxy(0, 2);
+    cout << char(195);
+    gotoxy(70, 2);
+    cout << char(180);
+    //
+    gotoxy(24, 1);
+    cout << "Them thong tin vat tu" << endl;
+    int choice = -1;
+    char inputMaVT[11];
+    int count = 0;
+    bool done = false;
+
+    gotoxy(21, 3);
+    dinhDangMaVatTu(inputMaVT, "vt", idVatTuCount);
+    cout << "maVT cua ban la " << inputMaVT << endl;
+
+    char inputTenVT[51];
+    count = 0;
+    done = false;
+    //
+    drawRectangle(0, 4, 15, 2);
+    drawRectangle(15, 4, 55, 2);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(70, 4);
+    cout << char(180);
+    gotoxy(15, 4);
+    cout << char(194);
+    gotoxy(15, 6);
+    cout << char(193);
+    //
+    gotoxy(3, 5);
+    cout << "Ten Vat Tu";
+    gotoxy(18, 5);
+    while (!done)
+    {
+        char ch = getch();
+        if (count > 0 && ch == 13)
+        {
+            inputTenVT[count] = '\0';
+            done = true;
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            cout << "\b \b";
+            inputTenVT[--count] = '\0';
+        }
+        else if ((isalnum(ch) || ch == ' ') && count < 50)
+        {
+            cout << ch;
+            inputTenVT[count++] = ch;
+        }
+        else if (ch == ESC)
+        {
+            gotoxy(2, 11);
+            cout << "Quit";
+            return;
+        }
+    }
+    cout << endl;
+    //
+    if (isContainTenVT_DanhSachVatTu(ds_vt, inputTenVT))
+    {
+        gotoxy(2, 7);
+        SetErrorColor();
+        cout << "Cay da ton tai vat tu vs tenVT la " << inputTenVT << " nen khong the them gia tri " << endl;
+        SetNormalColor();
+    }
+    else
+    {
+        drawRectangle(0, 6, 15, 2);
+        drawRectangle(15, 6, 55, 2);
+        gotoxy(0, 6);
+        cout << char(195);
+        gotoxy(15, 6);
+        cout << char(197);
+        gotoxy(15, 8);
+        cout << char(193);
+        gotoxy(70, 6);
+        cout << char(180);
+        //
+        gotoxy(2, 7);
+        char inputDVT[11];
+        count = 0;
+        done = false;
+        cout << "Don Vi Tinh";
+
+        gotoxy(18, 7);
+        while (!done)
+        {
+            char ch = getch();
+            if (ch == 13 && count > 0)
+            {
+                inputDVT[count] = '\0';
+                done = true;
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputDVT[--count] = '\0';
+            }
+            else if ((isalnum(ch) || ch == ' ') && count < 10)
+            {
+                cout << ch;
+                inputDVT[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(2, 11);
+                cout << "Quit";
+                return;
+            }
+        }
+        cout << endl;
+
+        char inputC_SoLuongTon[10];
+        count = 0;
+        done = false;
+        //
+        drawRectangle(0, 8, 15, 2);
+        drawRectangle(15, 8, 55, 2);
+        gotoxy(0, 8);
+        cout << char(195);
+        gotoxy(15, 8);
+        cout << char(197);
+        gotoxy(15, 10);
+        cout << char(193);
+        gotoxy(70, 8);
+        cout << char(180);
+        //
+        gotoxy(2, 9);
+        cout << "So luong ton";
+        gotoxy(18, 9);
+
+        while (!done)
+        {
+            char ch = getch();
+            if (ch == 13 && count > 0)
+            {
+                inputC_SoLuongTon[count] = '\0';
+                done = true;
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputC_SoLuongTon[--count] = '\0';
+            }
+            else if (isdigit(ch) && count < 9)
+            {
+                cout << ch;
+                inputC_SoLuongTon[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(2, 11);
+                cout << "Quit";
+                return;
+            }
+        }
+        cout << endl;
+
+        int inputSoLuongTon = stoi(inputC_SoLuongTon);
+
+        DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
+        insertDanhSachVatTu(ds_vt, dsvt_moi);
+        gotoxy(2, 11);
+        cout << "Successful";
+    }
+}
+
 void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_cthd, DanhSachNhanVien &ds_nv, int &idVatTuCount, int &idHoaDonCount, int &soLuongNhanVienCount)
 {
     int choose1 = 0;
@@ -245,169 +420,7 @@ init:
             {
                 clrscr();
                 DrawVatTuContactGuide();
-                drawRectangle(0, 0, 70, 2);
-                drawRectangle(0, 2, 70, 2);
-                //
-                gotoxy(0, 2);
-                cout << char(195);
-                gotoxy(70, 2);
-                cout << char(180);
-                //
-                gotoxy(24, 1);
-                cout << "Them thong tin vat tu" << endl;
-                int choice = -1;
-                char inputMaVT[11];
-                int count = 0;
-                bool done = false;
-
-                gotoxy(21, 3);
-                dinhDangMaVatTu(inputMaVT, "vt", idVatTuCount);
-                cout << "maVT cua ban la " << inputMaVT << endl;
-
-                char inputTenVT[51];
-                count = 0;
-                done = false;
-                //
-                drawRectangle(0, 4, 15, 2);
-                drawRectangle(15, 4, 55, 2);
-                gotoxy(0, 4);
-                cout << char(195);
-                gotoxy(70, 4);
-                cout << char(180);
-                gotoxy(15, 4);
-                cout << char(194);
-                gotoxy(15, 6);
-                cout << char(193);
-                //
-                gotoxy(3, 5);
-                cout << "Ten Vat Tu";
-                gotoxy(18, 5);
-                while (!done)
-                {
-                    char ch = getch();
-                    if (count > 0 && ch == 13)
-                    {
-                        inputTenVT[count] = '\0';
-                        done = true;
-                    }
-                    else if (ch == '\b' && count > 0)
-                    {
-                        cout << "\b \b";
-                        inputTenVT[--count] = '\0';
-                    }
-                    else if ((isalnum(ch) || ch == ' ') && count < 50)
-                    {
-                        cout << ch;
-                        inputTenVT[count++] = ch;
-                    }
-                }
-                cout << endl;
-                //
-                if (isContainTenVT_DanhSachVatTu(ds_vt, inputTenVT))
-                {
-                    gotoxy(2, 7);
-                    SetErrorColor();
-                    cout << "Cay da ton tai vat tu vs tenVT la " << inputTenVT << " nen khong the them gia tri " << endl;
-                    SetNormalColor();
-                }
-                else
-                {
-                    drawRectangle(0, 6, 15, 2);
-                    drawRectangle(15, 6, 55, 2);
-                    gotoxy(0, 6);
-                    cout << char(195);
-                    gotoxy(15, 6);
-                    cout << char(197);
-                    gotoxy(15, 8);
-                    cout << char(193);
-                    gotoxy(70, 6);
-                    cout << char(180);
-                    //
-                    gotoxy(2, 7);
-                    char inputDVT[11];
-                    count = 0;
-                    done = false;
-                    cout << "Don Vi Tinh";
-
-                    gotoxy(18, 7);
-                    while (!done)
-                    {
-                        char ch = getch();
-                        if (ch == 13 && count > 0)
-                        {
-                            inputDVT[count] = '\0';
-                            done = true;
-                        }
-                        else if (ch == '\b' && count > 0)
-                        {
-                            cout << "\b \b";
-                            inputDVT[--count] = '\0';
-                        }
-                        else if ((isalnum(ch) || ch == ' ') && count < 10)
-                        {
-                            cout << ch;
-                            inputDVT[count++] = ch;
-                        }
-                        else if (count == 10)
-                        {
-                            //
-                            continue;
-                        }
-                    }
-                    cout << endl;
-
-                    char inputC_SoLuongTon[10];
-                    count = 0;
-                    done = false;
-                    //
-                    drawRectangle(0, 8, 15, 2);
-                    drawRectangle(15, 8, 55, 2);
-                    gotoxy(0, 8);
-                    cout << char(195);
-                    gotoxy(15, 8);
-                    cout << char(197);
-                    gotoxy(15, 10);
-                    cout << char(193);
-                    gotoxy(70, 8);
-                    cout << char(180);
-                    //
-                    gotoxy(2, 9);
-                    cout << "So luong ton";
-                    gotoxy(18, 9);
-
-                    while (!done)
-                    {
-                        char ch = getch();
-                        if (ch == 13 && count > 0)
-                        {
-                            inputC_SoLuongTon[count] = '\0';
-                            done = true;
-                        }
-                        else if (ch == '\b' && count > 0)
-                        {
-                            cout << "\b \b";
-                            inputC_SoLuongTon[--count] = '\0';
-                        }
-                        else if (isdigit(ch) && count < 9)
-                        {
-                            cout << ch;
-                            inputC_SoLuongTon[count++] = ch;
-                        }
-                        else if (count == 10)
-                        {
-                            //
-                            continue;
-                        }
-                    }
-                    cout << endl;
-
-                    int inputSoLuongTon = stoi(inputC_SoLuongTon);
-
-                    DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
-                    insertDanhSachVatTu(ds_vt, dsvt_moi);
-                    gotoxy(2, 11);
-                    cout << "Successful";
-                }
+                NhapVatTu(ds_vt, idVatTuCount);
                 Sleep(2000);
                 clrscr();
                 break;
