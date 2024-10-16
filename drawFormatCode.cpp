@@ -2,7 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <cmath>
-#pragma once;
+#pragma once
 
 using namespace std;
 
