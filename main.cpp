@@ -3,6 +3,7 @@
 #include "nhanvien.cpp"
 #include "hoadon.cpp"
 #include "main.h"
+#include <vector>
 
 const int firstItems = 4;
 const int seccondVatTuItems = 5;
@@ -287,42 +288,79 @@ void clearShowVatTuBoard()
     }
 };
 
-void NoiDungVatTu(DanhSachVatTu ds_vt, int viTri, char noidung[51])
+void NoiDungVatTu(DanhSachVatTu ds_vt, int viTri, char noidung[51], int &dem, int VatTuCount)
 {
+    // count = bien chay theo vong de lay so ma vat tu dang ton tai
     int count = 1;
+    // lay min va max o trang dau tien de thuan tien hon trong viec tinh toan va xu li loi
+    int firstMin = 1;
+    int firstMax = -1;
+    // max cua moi page co the co (dung de gioi han trang va xu li viec qua trang moi)
     int max = 15;
+    // vi tri cua ptr
     int choose = 1;
+    // maVT nhung viet bang chu khac de tranh bi trung
     char vtCode[11];
+    // tao vector de chua tung header cua page de viec quay nguoc de dang hon
+    vector<int> everyFirst;
+    // fPos dung de lay gia tri dau tien trong lan dau tien duyet
+    int fPos = 1;
+    // the hien trang hien tai dang o va dung de goi first cua ds moi page khi di nguoc
+    int Page = 1;
+    // vector chua maVt chi tiet moi page (capnhatlientuc)
+    vector<int> everyPageValue(15, 0);
+    int valuePos = 0;
+    //  Khoi tao co ban de khai bao
     unsigned char c;
     VatTu *current_vt = nullptr;
     //
 initial:
     clearShowVatTuBoard();
-    dinhDangMaVatTu(vtCode, "vt", count);
-    current_vt = searchMaVT_DanhSachVatTu(ds_vt, vtCode);
-    do
+
+    while (count <= max && count < VatTuCount)
     {
+        dinhDangMaVatTu(vtCode, "vt", count);
+        current_vt = searchMaVT_DanhSachVatTu(ds_vt, vtCode);
+
         if (current_vt != nullptr)
         {
             gotoxy(3, 21 - (max - count));
             cout << current_vt->maVT;
             gotoxy(18, 21 - (max - count));
             cout << current_vt->tenVT;
-            gotoxy(70, 21 - (max - count));
+            gotoxy(71, 21 - (max - count));
             cout << current_vt->dVT;
-            gotoxy(98, 21 - (max - count));
+            gotoxy(99, 21 - (max - count));
             cout << current_vt->soLuongTon;
+            everyPageValue[valuePos] = count;
+            valuePos++;
         }
         else
         {
-            cout << "Ma vat tu " << vtCode << " khong ton tai." << endl;
+            if (count == firstMin)
+            {
+                firstMin++;
+            }
+            if (count == fPos)
+            {
+                fPos++;
+            }
+            max++;
         }
+        //
+        if (fPos == count && Page > everyFirst.size())
+        {
+            everyFirst.push_back(fPos);
+        }
+        //
         count++;
-        dinhDangMaVatTu(vtCode, "vt", count);
-        current_vt = searchMaVT_DanhSachVatTu(ds_vt, vtCode);
-    } while (current_vt != nullptr && count <= max);
-
+    }
     //
+    if (firstMax == -1)
+    {
+        firstMax = max;
+    }
+
     count--;
     //
     gotoxy(16, 6 + choose);
@@ -388,26 +426,31 @@ initial:
             }
             case RIGHT_ARROW:
             {
-                if (count == max)
+                if (count == max && max < VatTuCount - 1)
                 {
                     gotoxy(16, 6 + choose);
                     cout << char(179) << " ";
                     choose = 1;
+                    Page++;
                     count = max + 1;
+                    fPos = count;
                     max = count + 14;
+                    valuePos = 0;
                     goto initial;
                 }
                 break;
             }
             case LEFT_ARROW:
             {
-                if (count > 15)
+                if (count > firstMax)
                 {
                     gotoxy(16, 6 + choose);
                     cout << char(179) << " ";
                     choose = 1;
-                    max = count - (15 - (max - count));
-                    count = max - 14;
+                    Page--;
+                    count = everyFirst[Page - 1];
+                    max = count + 14;
+                    valuePos = 0;
                     goto initial;
                 }
                 break;
@@ -417,9 +460,10 @@ initial:
         else if (c == ENTER)
         {
             char inputRel[11];
-            int pos = count - (15 - (max - count)) + choose;
+            int pos = everyPageValue[choose - 1];
             dinhDangMaVatTu(inputRel, "vt", pos);
             VatTu *rel = searchMaVT_DanhSachVatTu(ds_vt, inputRel);
+            dem = strlen(rel->tenVT);
             strcpy(noidung, rel->tenVT);
             return;
         }
@@ -430,7 +474,7 @@ initial:
     }
 }
 
-void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, int viTri, char noidung[51])
+void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, int viTri, char noidung[51], int &dem, int VatTuCount)
 {
     if (ds_vt == nullptr)
     {
@@ -444,28 +488,28 @@ void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, int viTri, char noidu
         SetColor(0xA);
         cout << "ENTER:";
         SetColor(0xF);
-        cout << " choose this tenVT  ";
+        cout << " Choose This TenVT  ";
         SetColor(0xA);
         cout << "UP_ARROW:";
         SetColor(0xF);
-        cout << " Move up  ";
+        cout << " Move Up  ";
         SetColor(0xA);
         cout << "DOWN_ARROW:";
         SetColor(0xF);
-        cout << " Move down";
+        cout << " Move Down";
         gotoxy(0, 28);
         SetColor(0xA);
         cout << "ESC:";
         SetColor(0xF);
-        cout << " Escape from board    ";
+        cout << " Escape From Board    ";
         SetColor(0xA);
         cout << "-->:";
         SetColor(0xF);
-        cout << " Move right    ";
+        cout << " Next List     ";
         SetColor(0xA);
         cout << "<--:";
         SetColor(0xF);
-        cout << " Move left       ";
+        cout << " Previous List   ";
         SetColor(0xF);
         //
         drawRectangle(0, 0, 118, 4);
@@ -518,7 +562,7 @@ void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, int viTri, char noidu
         gotoxy(97, 22);
         cout << char(193);
         /////////////////////////
-        NoiDungVatTu(ds_vt, viTri, noidung);
+        NoiDungVatTu(ds_vt, viTri, noidung, dem, VatTuCount);
     }
 }
 
@@ -819,12 +863,11 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             {
                 int soThuTu = 0;
                 clrscr();
-                HienThiVatTuDangCoTrongHieuChinh(ds_vt, soThuTu, inputTenVT);
+                HienThiVatTuDangCoTrongHieuChinh(ds_vt, soThuTu, inputTenVT, count, idVatTuGlobalCount);
                 clrscr();
                 HieuChinhVatTuDrawSupport();
                 DrawAdjustVatTuContactGuide();
                 gotoxy(18, 5);
-                count = strlen(inputTenVT);
                 if (count != 0)
                 {
                     cout << inputTenVT;
@@ -832,7 +875,7 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                 continue;
             }
         }
-        else if (count >= 0 && ch == 13)
+        else if (count > 0 && ch == 13)
         {
             inputTenVT[count] = '\0';
             trim(inputTenVT);
