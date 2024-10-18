@@ -428,6 +428,7 @@ void CapNhatVatTuKhiNhapXuatHoaDon(DanhSachVatTu &root, DanhSachHoaDon &hd)
     {
         return;
     }
+
     if (hd->loai == n)
     {
         DanhSach_CT_HoaDon current = hd->ds_ct_hoadon;
