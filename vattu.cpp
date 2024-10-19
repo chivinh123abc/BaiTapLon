@@ -102,6 +102,7 @@ void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
     {
         root = newVatTu;
         idVatTuGlobalCount++;
+        SoLuongVatTuGlobalCount++;
     }
     else if (strcmp(newVatTu->tenVT, root->tenVT) < 0)
     {
