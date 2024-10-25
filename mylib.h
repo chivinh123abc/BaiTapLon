@@ -126,6 +126,24 @@ int getConsoleHeight()
     return 25;
 }
 
+void hideCursor()
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    cursorInfo.bVisible = false; // ẩn con trỏ
+    SetConsoleCursorInfo(hConsole, &cursorInfo);
+}
+
+void showCursor()
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    cursorInfo.bVisible = true; // hiện con trỏ
+    SetConsoleCursorInfo(hConsole, &cursorInfo);
+}
+
 void clrscr()
 {
     system("cls");

@@ -25,7 +25,6 @@ void updateSoLuongTon(DanhSachVatTu &vt, int soLuong)
 
 void dinhDangMaVatTu(char rel[11], const char dinhDang[3], int &soThuTuMaVT)
 {
-    char maVTmoi[11];
     // dung sprintf dinh dang dai ma VT
     sprintf(rel, "%s-%07d", dinhDang, soThuTuMaVT);
 }

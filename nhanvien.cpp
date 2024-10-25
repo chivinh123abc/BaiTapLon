@@ -2,6 +2,11 @@
 #pragma once
 
 //
+void dinhDangMaNV(char rel[7], int &soThuTuMaNV)
+{
+    sprintf(rel, "NV-%03d", soThuTuMaNV);
+}
+
 NhanVien *newNhanVien(const char maNV[], const char ho[], const char ten[], Phai phai, DanhSachHoaDon ds_hoadon = nullptr)
 {
     NhanVien *ds_nhanvien = new NhanVien;
@@ -46,6 +51,7 @@ void insertNhanVienToDSNV(DanhSachNhanVien &ds_nv, NhanVien *nv, int &soLuongNV)
     }
     ds_nv[i + 1] = nv;
     soLuongNV++;
+    idNhanVienGlobalCount++;
 
     capNhatGiaTriViTri(ds_nv, soLuongNV);
 }

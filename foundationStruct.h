@@ -12,6 +12,7 @@ const int MENU_ITEMS = 5;
 const int VATTU_ITEMS = 3;
 extern int idVatTuGlobalCount;
 extern int idHoaDonGlobalCount;
+extern int idNhanVienGlobalCount;
 extern int soLuongNhanVienGlobalCount;
 
 //-------PART 1----------------------------------------------------------------
@@ -73,9 +74,9 @@ typedef enum Phai
 
 typedef struct NhanVien
 {
-    char maNV[21];
-    char ho[11];
-    char ten[21];
+    char maNV[7];
+    char ho[21];
+    char ten[11];
     Phai phai;
     DanhSachHoaDon ds_hoadon = nullptr;
     int position;
