@@ -19,7 +19,6 @@ bool Empty_CTHD(DanhSach_CT_HoaDon ds_cthoadon)
 {
     if (ds_cthoadon == nullptr)
     {
-        cout << "Danh sach chi tiet hoa don rong!\n";
         return true;
     }
     return false;
@@ -34,12 +33,11 @@ bool KiemTraMaVT_CTHD(DanhSach_CT_HoaDon ds_cthoadon, const char maVT[11])
     {
         if (strcmp(ds_cthoadon->maVT, maVT) == 0)
         {
-            cout << "Ma vat tu da ton tai trong chi tiet hoa don!" << endl;
-            return true; // Mã vật tư đã tồn tại
+            return true;
         }
         ds_cthoadon = ds_cthoadon->next;
     }
-    return false; // Mã vật tư không trùng
+    return false;
 }
 //--------Thêm chi tiết hóa đơn vào danh sách (không trùng mã vật tư)----------
 bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, float donGia, float vAT)
@@ -48,14 +46,44 @@ bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, floa
     {
         return false;
     }
-
     DanhSach_CT_HoaDon CT_HoaDonMoi = newDanhSachCTHoaDon(maVT, soLuong, donGia, vAT);
-
     // Thêm chi tiết mới vào đầu danh sách liên kết
     CT_HoaDonMoi->next = ds_cthoadon;
     ds_cthoadon = CT_HoaDonMoi;
     return true; // Thêm thành công
 }
+
+CT_HoaDon *timKiemCTHoaDon(DanhSach_CT_HoaDon head, const char *maVT)
+{
+    CT_HoaDon *current = head;
+
+    if (current == nullptr)
+    {
+        return nullptr;
+    }
+
+    while (current != nullptr)
+    {
+        if (strcmp(current->maVT, maVT) == 0)
+        {
+            return current;
+        }
+        current = current->next;
+    }
+    return nullptr;
+}
+
+bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, CT_HoaDon *&CT_HoaDonMoi)
+{
+    if (KiemTraMaVT_CTHD(ds_cthoadon, CT_HoaDonMoi->maVT))
+    {
+        return false;
+    }
+    CT_HoaDonMoi->next = ds_cthoadon;
+    ds_cthoadon = CT_HoaDonMoi;
+    return true;
+}
+
 //----------Xóa chi tiết hóa đơn theo mã vật tư---------------
 bool Xoa_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, const char maVT[11])
 {
@@ -97,9 +125,24 @@ bool Xoa_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, const char maVT[11])
 void InChiTietCTHoaDon(CT_HoaDon *ct)
 {
     cout << "Ma VT: " << ct->maVT
-         << ", So luong: " << ct->soLuong
-         << ", Don gia: " << ct->donGia
-         << ", VAT: " << ct->vAT << "%" << endl;
+         << ", So luong: " << ct->soLuong;
+    if (ct->donGia == -1)
+    {
+        cout << ", Don gia: NONE";
+    }
+    else
+    {
+        cout << ", Don gia: " << ct->donGia;
+    }
+
+    if (ct->vAT == -1)
+    {
+        cout << ", VAT: NONE" << endl;
+    }
+    else
+    {
+        cout << ", VAT: " << ct->vAT << "%" << endl;
+    }
 }
 
 // Hàm in danh sách chi tiết hóa đơn
@@ -339,9 +382,23 @@ DanhSachHoaDon newHoaDon(char soHD[], Date date, LoaiHoaDon loai, DanhSach_CT_Ho
     return ds_hoadon;
 }
 
+bool isContainSoHoaDon(DanhSachHoaDon danhSach, const char *soHoaDon)
+{
+    HoaDon *current = danhSach;
+    while (current != nullptr)
+    {
+        if (strcmp(current->soHD, soHoaDon) == 0)
+        {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
+
 void dinhDangSoHoaDon(char rel[21], int &soThuTuSoHD)
 {
-    sprintf(rel, "hd-%07d", soThuTuSoHD);
+    sprintf(rel, "HoaDonCongTy-%09d", soThuTuSoHD);
 }
 
 DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
@@ -352,7 +409,7 @@ DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
     }
     else
     {
-        if (hd->soHD < First->soHD)
+        if (hd->soHD <= First->soHD)
         {
             hd->next = First;
             First = hd;

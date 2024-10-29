@@ -113,7 +113,6 @@ void insertDanhSachVatTu(DanhSachVatTu &root, DanhSachVatTu newVatTu)
     }
     else
     {
-        cout << "Ten vat tu " << newVatTu->tenVT << " da ton tai!" << endl;
         return;
     }
 

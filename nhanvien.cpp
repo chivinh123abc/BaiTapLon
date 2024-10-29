@@ -68,6 +68,18 @@ int searchNhanVienFromDSNV(DanhSachNhanVien ds_nv, const char maNV[], int soLuon
     return -1;
 }
 
+bool isNhanVienInDSNV(DanhSachNhanVien ds_nv, const char maNV[], int soLuongNV)
+{
+    for (int i = 0; i < soLuongNV; i++)
+    {
+        if (strcmp(ds_nv[i]->maNV, maNV) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void removeNhanVienByMaNV(DanhSachNhanVien &ds_nv, const char maNV[], int &soLuongNV)
 {
     if (ds_nv == nullptr || soLuongNV == 0)

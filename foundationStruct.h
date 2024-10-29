@@ -74,7 +74,7 @@ typedef enum Phai
 
 typedef struct NhanVien
 {
-    char maNV[7];
+    char maNV[11];
     char ho[21];
     char ten[11];
     Phai phai;
