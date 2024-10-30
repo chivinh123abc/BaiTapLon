@@ -22,6 +22,7 @@ char *Pwd()
     S[i] = '\0';
     return S;
 }
+
 int CheckPwd()
 {
     int dem = 0;

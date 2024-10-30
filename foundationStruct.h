@@ -3,6 +3,7 @@
 #include <cmath>
 #include <conio.h>
 #include <fstream>
+#include <iomanip>
 #pragma once
 
 using namespace std;
@@ -36,8 +37,8 @@ typedef struct CT_HoaDon
 {
     char maVT[11]; // ma vat tu
     int soLuong;   // so luong
-    float donGia;  // don gia
-    float vAT;     // % VAT
+    double donGia; // don gia
+    double vAT;    // % VAT
     CT_HoaDon *next;
 } *DanhSach_CT_HoaDon;
 

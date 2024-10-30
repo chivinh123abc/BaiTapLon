@@ -4,7 +4,7 @@
 
 // Khoi tao danh sach Chi Tiet Hoa Don moi;
 
-DanhSach_CT_HoaDon newDanhSachCTHoaDon(char maVT[11], int soLuong, float donGia, float vAT)
+DanhSach_CT_HoaDon newDanhSachCTHoaDon(char maVT[11], int soLuong, double donGia, double vAT)
 {
     DanhSach_CT_HoaDon ds_cthoadon = new CT_HoaDon;
     strcpy(ds_cthoadon->maVT, maVT);
@@ -40,7 +40,7 @@ bool KiemTraMaVT_CTHD(DanhSach_CT_HoaDon ds_cthoadon, const char maVT[11])
     return false;
 }
 //--------Thêm chi tiết hóa đơn vào danh sách (không trùng mã vật tư)----------
-bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, float donGia, float vAT)
+bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, double donGia, double vAT)
 {
     if (KiemTraMaVT_CTHD(ds_cthoadon, maVT) == true)
     {
@@ -82,6 +82,13 @@ bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, CT_HoaDon *&CT_HoaDonMoi)
     CT_HoaDonMoi->next = ds_cthoadon;
     ds_cthoadon = CT_HoaDonMoi;
     return true;
+}
+
+void Them_CTHD_CanMultipleVariable(DanhSach_CT_HoaDon &ds_cthoadon, CT_HoaDon *&CT_HoaDonMoi)
+{
+    CT_HoaDonMoi->next = ds_cthoadon;
+    ds_cthoadon = CT_HoaDonMoi;
+    return;
 }
 
 //----------Xóa chi tiết hóa đơn theo mã vật tư---------------
@@ -132,8 +139,18 @@ void InChiTietCTHoaDon(CT_HoaDon *ct)
     }
     else
     {
-        cout << ", Don gia: " << ct->donGia;
+        cout << ", Don gia: ";
+        if (ct->donGia < 1 && ct->donGia > 0)
+        {
+            cout << "0";
+        }
+        cout << fixed << setprecision(3) << ct->donGia;
     }
+
+    //    if (donGia < 1 && donGia > 0) {
+    //         std::cout << "0"; // Thêm số 0 trước dấu '.'
+    //     }
+    //     std::cout << std::fixed << std::setprecision(5) << donGia;
 
     if (ct->vAT == -1)
     {
@@ -141,7 +158,12 @@ void InChiTietCTHoaDon(CT_HoaDon *ct)
     }
     else
     {
-        cout << ", VAT: " << ct->vAT << "%" << endl;
+        cout << ", VAT: ";
+        if (ct->vAT < 1 && ct->vAT > 0)
+        {
+            cout << "0";
+        }
+        cout << fixed << setprecision(3) << ct->vAT << "%" << endl;
     }
 }
 

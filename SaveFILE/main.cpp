@@ -2547,7 +2547,7 @@ void dateChooseTable(Date &date)
     return;
 }
 
-bool is_valid_float(const char input[])
+bool isValidDoule(const char input[])
 {
     int dot_count = 0;
     int len = strlen(input);
