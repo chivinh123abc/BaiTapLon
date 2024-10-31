@@ -82,3 +82,8 @@ typedef struct NhanVien
     DanhSachHoaDon ds_hoadon = nullptr;
     int position;
 } *DanhSachNhanVien[MAX_NHANVIEN];
+
+struct DoanhThuVT{
+	char ten[51];
+	double doanhthu=0;
+};
