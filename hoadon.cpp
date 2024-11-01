@@ -393,7 +393,7 @@ DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
 //-------------******************************************************************************************************************-------------------------------------------------------------------------------------------------------------------
 // khoi tao danh sach Hoa Don moi
 
-DanhSachHoaDon newHoaDon(char soHD[], Date date, LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
+DanhSachHoaDon newHoaDon(const char soHD[], Date date, LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
 {
     DanhSachHoaDon ds_hoadon = new HoaDon;
     strcpy(ds_hoadon->soHD, soHD);
@@ -423,6 +423,22 @@ void dinhDangSoHoaDon(char rel[21], int &soThuTuSoHD)
     sprintf(rel, "HoaDonCongTy-%09d", soThuTuSoHD);
 }
 
+int CompareDate(Date date1, Date date2)
+{
+    if (date1.year != date2.year)
+    {
+        return date1.year - date2.year;
+    }
+    else if (date1.month != date2.month)
+    {
+        return date1.month - date2.month;
+    }
+    else
+    {
+        return date1.day - date2.day;
+    }
+}
+
 DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
 {
     if (First == nullptr)
@@ -431,7 +447,7 @@ DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
     }
     else
     {
-        if (hd->soHD <= First->soHD)
+        if (CompareDate(hd->date, First->date) <= 0)
         {
             hd->next = First;
             First = hd;
@@ -440,12 +456,13 @@ DanhSachHoaDon InsertHoaDonVaoDSHD(DanhSachHoaDon &First, HoaDon *hd)
         {
             HoaDon *current = First;
             HoaDon *prev = nullptr;
-            while (current != nullptr && current->soHD < hd->soHD)
+
+            while (current != nullptr && CompareDate(current->date, hd->date) < 0)
             {
                 prev = current;
                 current = current->next;
             }
-            //
+
             prev->next = hd;
             hd->next = current;
         }

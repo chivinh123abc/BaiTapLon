@@ -51,7 +51,6 @@ void insertNhanVienToDSNV(DanhSachNhanVien &ds_nv, NhanVien *nv, int &soLuongNV)
     }
     ds_nv[i + 1] = nv;
     soLuongNV++;
-    idNhanVienGlobalCount++;
 
     capNhatGiaTriViTri(ds_nv, soLuongNV);
 }

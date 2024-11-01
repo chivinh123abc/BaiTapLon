@@ -4329,7 +4329,7 @@ letDelete:
     return;
 };
 
-void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien &ds_nv, int &idHoaDonCount, int soLuongNhanVienCount, const char maNV[])
+void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien &ds_nv, int soLuongNhanVienCount, const char maNV[])
 {
     unsigned char ch;
     int count = 0;
@@ -4672,11 +4672,6 @@ startLapHoaDon:
             }
             else if (choose3 == 2)
             {
-                // clearBottomScreen();
-                //     gotoxy(0, 10);
-                //     InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
-                //     ch = getch();
-                //     continue;
                 while (true)
                 {
                     clearBottomScreen();
@@ -4844,8 +4839,9 @@ startLapHoaDon:
                             current = current->next;
                         }
                         int vitriNV = searchNhanVienFromDSNV(ds_nv, maNV, soLuongNhanVienCount);
-                        ds_nv[vitriNV]->ds_hoadon = new_hd;
-                        InsertHoaDonVaoDSHD(ds_hd, new_hd);
+                        HoaDon *new_hd_copy = new HoaDon(*new_hd);
+                        InsertHoaDonVaoDSHD(ds_nv[vitriNV]->ds_hoadon, new_hd);
+                        InsertHoaDonVaoDSHD(ds_hd, new_hd_copy);
                         return;
                     }
                 }
@@ -4865,7 +4861,7 @@ startLapHoaDon:
     // cout << char(180);
 };
 
-void LapHoaDonXuat(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien &ds_nv, int &idHoaDonCount, int soLuongNhanVienCount, const char maNV[])
+void LapHoaDonXuat(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien &ds_nv, int soLuongNhanVienCount, const char maNV[])
 {
     unsigned char ch;
     int count = 0;
@@ -5209,20 +5205,20 @@ startLapHoaDon:
                 {
                     clearBottomScreen();
                     gotoxy(0, 20);
-                    InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
-                    getch();
-                    break;
-                    // cout << "Do you want to cancel this recipe(y:Yes, n: No): ";
-                    // ch = getch();
-                    // if (ch == 'n' || ch == 'N')
-                    // {
-                    //     clearBottomScreen();
-                    //     break;
-                    // }
-                    // else if (ch == 'y' || ch == 'Y')
-                    // {
-                    //     return;
-                    // }
+                    // InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
+                    // getch();
+                    // break;
+                    cout << "Do you want to cancel this recipe(y:Yes, n: No): ";
+                    ch = getch();
+                    if (ch == 'n' || ch == 'N')
+                    {
+                        clearBottomScreen();
+                        break;
+                    }
+                    else if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
                 }
                 continue;
             }
@@ -5244,9 +5240,26 @@ startLapHoaDon:
                         if (new_hd->ds_ct_hoadon == nullptr)
                         {
                             return;
-                        };
+                        }
+                        CT_HoaDon *current = new_hd->ds_ct_hoadon;
+                        while (current != nullptr)
+                        {
+                            // Khong can kiem tra cong kenh vi da loc dk luc tao;
+                            DanhSachVatTu vattu = searchMaVT_DanhSachVatTu(ds_vt, current->maVT);
+                            updateSoLuongTon(vattu, vattu->soLuongTon - current->soLuong);
 
-                        // xu ly du lieu
+                            current = current->next;
+                        }
+                        int vitriNV = searchNhanVienFromDSNV(ds_nv, maNV, soLuongNhanVienCount);
+                        //
+                        // ds_nv[vitriNV]->ds_hoadon = new_hd;
+                        // Co the dan den loi neu gan ca 2 cung luc tai vi dia chi next se chi co 1 va bi thay doi
+                        // CO THE THEM VAO 1 NEXT NX CHO HOA DON NHUNG BI PHIEN VA PHA CAU TRUC
+                        HoaDon *new_hd_copy = new HoaDon(*new_hd);
+                        InsertHoaDonVaoDSHD(ds_nv[vitriNV]->ds_hoadon, new_hd);
+                        InsertHoaDonVaoDSHD(ds_hd, new_hd_copy);
+                        return;
+                        // xu ly du lieu (chua gan)
                     }
                 }
             }
@@ -5254,7 +5267,7 @@ startLapHoaDon:
     }
 }
 
-void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_cthd, DanhSachNhanVien &ds_nv, int &idHoaDonCount, int &soLuongNhanVienCount)
+void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_cthd, DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
 {
     int choose1 = 0;
     int choose2 = 0;
@@ -5352,7 +5365,6 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 //     cout << "NONONONONO";
                 //     Sleep(3000);
                 // }
-
                 clrscr();
                 break;
             }
@@ -5378,7 +5390,6 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         case 2:
         {
             char inputMaNV[11];
-
             //
             if (!isNhanVien(ds_nv, inputMaNV, soLuongNhanVienGlobalCount))
             {
@@ -5397,19 +5408,20 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 gotoxy(30, 10);
                 if (choose2 == 0)
                 {
-                    LapHoaDonNhap(ds_vt, ds_hd, ds_nv, idHoaDonGlobalCount, soLuongNhanVienCount, inputMaNV);
+                    LapHoaDonNhap(ds_vt, ds_hd, ds_nv, soLuongNhanVienCount, inputMaNV);
                     clrscr();
                     continue;
                 }
                 else if (choose2 == 1)
                 {
-                    LapHoaDonXuat(ds_vt, ds_hd, ds_nv, idHoaDonGlobalCount, soLuongNhanVienCount, inputMaNV);
+                    LapHoaDonXuat(ds_vt, ds_hd, ds_nv, soLuongNhanVienCount, inputMaNV);
                     clrscr();
                     continue;
                 }
                 else if (choose2 == 2)
                 {
                     cout << "In HoaDon";
+                    clrscr();
                     continue;
                 }
                 else if (choose2 == -1)
@@ -5426,16 +5438,22 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         {
             gotoxy(30, 10);
             clrscr();
-            cout << "ThongKeDoanhThuNam!";
+            int pos = searchNhanVienFromDSNV(ds_nv, "1", soLuongNhanVienGlobalCount);
+            HoaDon *nowhd = ds_nv[pos]->ds_hoadon;
 
-            // int x = searchNhanVienFromDSNV(ds_nv, "nv-001", soLuongNhanVienGlobalCount);
-            // HoaDon *nowhd = ds_nv[x]->ds_hoadon;
-            // while (nowhd != nullptr)
-            // {
-            //     cout << nowhd->soHD << endl;
-            //     nowhd = nowhd->next;
-            // }
-            // char ch = getch();
+            if (nowhd == nullptr)
+            {
+                cout << "RONG";
+                DrawFirstUI(choose1);
+                break;
+            }
+
+            while (nowhd != nullptr)
+            {
+                cout << nowhd->soHD << endl;
+                nowhd = nowhd->next;
+            }
+            getch();
 
             DrawFirstUI(choose1);
             break;
@@ -5552,6 +5570,7 @@ int main()
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000073", "banh bao", "chiec", 1));
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000074", "banh beo", "chiec", 1));
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000075", "banh xeo", "chiec", 1));
+    //
 
-    menu(ds_vt, ds_hd, ds_cthd, ds_nv, idHoaDonGlobalCount, soLuongNhanVienGlobalCount);
+    menu(ds_vt, ds_hd, ds_cthd, ds_nv, soLuongNhanVienGlobalCount);
 }
