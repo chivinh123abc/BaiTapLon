@@ -19,7 +19,7 @@ extern int SoLuongVatTuGlobalCount;
 typedef struct VatTu
 {
     char maVT[11];  // ma vat tu
-    char tenVT[51]; // ten vat tu
+    char tenVT[21]; // ten vat tu
     char dVT[11];   // don vi tinh
     int soLuongTon; // so luong ton
     int bf;         // Balance factor
@@ -81,7 +81,8 @@ typedef struct NhanVien
     int position;
 } *DanhSachNhanVien[MAX_NHANVIEN];
 
-struct DoanhThuVT{
-	char ten[51];
-	double doanhthu=0;
+struct DoanhThuVT
+{
+    char ten[31];
+    double doanhthu = 0;
 };

@@ -611,7 +611,7 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
     }
     cout << endl;
 
-    char inputTenVT[51];
+    char inputTenVT[21];
     count = 0;
     //
     drawRectangle(0, 4, 15, 2);
@@ -668,7 +668,7 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             cout << "\b \b";
             inputTenVT[--count] = '\0';
         }
-        else if ((isalnum(ch) || ch == ' ') && count < 50)
+        else if ((isalnum(ch) || ch == ' ') && count < 20)
         {
             cout << ch;
             ch = tolower(ch);
@@ -1114,7 +1114,7 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
     cout << endl;
 
     VatTu *foundVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
-    char inputTenVT[51];
+    char inputTenVT[21];
     count = 0;
     //
     drawRectangle(0, 6, 15, 2);
@@ -1171,7 +1171,7 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             cout << "\b \b";
             inputTenVT[--count] = '\0';
         }
-        else if ((isalnum(ch) || ch == ' ') && count < 50)
+        else if ((isalnum(ch) || ch == ' ') && count < 20)
         {
             cout << ch;
             ch = tolower(ch);
@@ -4720,7 +4720,7 @@ startLapHoaDon:
                                 cout << current->maVT << " la vat tu moi duoc them vao!!";
                                 gotoxy(1, 20);
                                 cout << "Vui long cung cap them thong tin cua vat tu nay";
-                                char inputTenVT[51];
+                                char inputTenVT[21];
                                 //
                                 drawRectangle(0, 21, 15, 2);
                                 drawRectangle(15, 21, 55, 2);
@@ -4772,7 +4772,7 @@ startLapHoaDon:
                                         cout << "\b \b";
                                         inputTenVT[--count] = '\0';
                                     }
-                                    else if ((isalnum(ch) || ch == ' ') && count < 50)
+                                    else if ((isalnum(ch) || ch == ' ') && count < 20)
                                     {
                                         cout << ch;
                                         ch = tolower(ch);
@@ -4820,7 +4820,7 @@ startLapHoaDon:
                                         cout << "\b \b";
                                         inputDonViTinh[--count] = '\0';
                                     }
-                                    else if ((isalnum(ch) || ch == ' ') && count < 50)
+                                    else if ((isalnum(ch) || ch == ' ') && count < 10)
                                     {
                                         cout << ch;
                                         ch = tolower(ch);
@@ -5267,6 +5267,54 @@ startLapHoaDon:
     }
 }
 
+void InHoaDonTheoSoHoaDon(DanhSachHoaDon ds_hd)
+{
+    unsigned char ch;
+    char inputSoHD[21];
+    int count = 0;
+    //
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Accept  ";
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Change SoHD  ";
+    SetColor(0xA);
+    cout << "DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape From Board    ";
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "<--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+    //
+    drawRectangle(0, 0, 119, 2);
+    gotoxy(48, 1);
+    SetColor(0x4);
+    cout << "In Thong Tin Hoa Don Theo So Hoa Don";
+    SetColor(0xF);
+    drawRectangle(0, 2, 4, 2);
+    drawRectangle(4, 2, 4, 2);
+    //
+    while (true)
+    {
+        ch = getch();
+    }
+}
+
 void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_cthd, DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
 {
     int choose1 = 0;
@@ -5420,7 +5468,7 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 }
                 else if (choose2 == 2)
                 {
-                    cout << "In HoaDon";
+                    InHoaDonTheoSoHoaDon(ds_hd);
                     clrscr();
                     continue;
                 }
