@@ -72,4 +72,4 @@ vt-0000008|tu lanh|cai|100
 vt-0000005|tu quang|cai|100
 vt-0000013|tu xe|cai|100
 vt-0000044|tuong ot|chai|1
-vt-0000001|xe dap|chiec|100
+vt-0000001|xe dap|chiec|10000084

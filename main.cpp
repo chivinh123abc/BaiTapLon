@@ -2836,7 +2836,26 @@ void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
         {
             inputSoLuong[count] = '\0';
             new_ct_hd->soLuong = stoi(inputSoLuong);
-            break;
+            VatTu *vatTu = searchMaVT_DanhSachVatTu(ds_vt, new_ct_hd->maVT);
+
+            if (vatTu == nullptr)
+            {
+                break;
+            }
+
+            if (vatTu->soLuongTon + new_ct_hd->soLuong <= 999999999)
+            {
+                gotoxy(0, 17);
+                cout << "                                                 ";
+                break;
+            }
+            else
+            {
+                gotoxy(0, 17);
+                cout << "So Luong Vuot Qua Suc Chua Cua Kho (<999,999,999)";
+                gotoxy(18 + count, 15);
+                continue;
+            }
         }
         else if (ch == '\b' && count > 0)
         {
@@ -4346,7 +4365,7 @@ startLapHoaDon:
             if (isContainSoHoaDon(ds_hd, inputSoHoaDon))
             {
                 gotoxy(0, 9);
-                cout << "Ma HD Nay Da Ton Tai Nen Khong The Them";
+                cout << "So HD Nay Da Ton Tai Nen Khong The Them";
                 gotoxy(18 + count, 5);
                 continue;
             }
@@ -4641,9 +4660,6 @@ startLapHoaDon:
             else if (choose3 == 1)
             {
                 clearBottomScreen();
-                // gotoxy(0, 10);
-                // InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
-                // ch = getch();
                 XoaChiTietHoaDon(new_hd, ds_vt);
                 clearBottomScreen();
                 continue;
