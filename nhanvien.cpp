@@ -14,7 +14,6 @@ NhanVien *newNhanVien(const char maNV[], const char ho[], const char ten[], Phai
     strcpy(ds_nhanvien->ho, ho);
     strcpy(ds_nhanvien->ten, ten);
     ds_nhanvien->phai = phai;
-    ds_nhanvien->position = 0;
     ds_nhanvien->ds_hoadon = ds_hoadon;
     return ds_nhanvien;
 };
@@ -26,14 +25,6 @@ int soSanhNhanVien(NhanVien *nv1, NhanVien *nv2)
         return strcmp(nv1->ten, nv2->ten);
     }
     return strcmp(nv1->ho, nv2->ho);
-}
-
-void capNhatGiaTriViTri(DanhSachNhanVien &ds_nv, int &soLuongNV)
-{
-    for (int i = 0; i < soLuongNV; i++)
-    {
-        ds_nv[i]->position = i;
-    }
 }
 
 void insertNhanVienToDSNV(DanhSachNhanVien &ds_nv, NhanVien *nv, int &soLuongNV)
@@ -50,9 +41,9 @@ void insertNhanVienToDSNV(DanhSachNhanVien &ds_nv, NhanVien *nv, int &soLuongNV)
         ds_nv[i + 1] = ds_nv[i];
     }
     ds_nv[i + 1] = nv;
+    // note
+    // ds_nv[i + 2] = nullptr;
     soLuongNV++;
-
-    capNhatGiaTriViTri(ds_nv, soLuongNV);
 }
 
 int searchNhanVienFromDSNV(DanhSachNhanVien ds_nv, const char maNV[], int soLuongNV)
@@ -101,7 +92,6 @@ void removeNhanVienByMaNV(DanhSachNhanVien &ds_nv, const char maNV[], int &soLuo
     }
 
     soLuongNV--;
-    capNhatGiaTriViTri(ds_nv, soLuongNV);
 }
 
 void inDanhSachNhanVien(DanhSachNhanVien ds_nv, int soLuongNV)

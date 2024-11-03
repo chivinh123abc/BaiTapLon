@@ -4,7 +4,7 @@
 
 // Khoi tao danh sach Chi Tiet Hoa Don moi;
 
-DanhSach_CT_HoaDon newDanhSachCTHoaDon(char maVT[11], int soLuong, double donGia, double vAT)
+DanhSach_CT_HoaDon newDanhSachCTHoaDon(const char maVT[11], int soLuong, double donGia, double vAT)
 {
     DanhSach_CT_HoaDon ds_cthoadon = new CT_HoaDon;
     strcpy(ds_cthoadon->maVT, maVT);
@@ -40,7 +40,7 @@ bool KiemTraMaVT_CTHD(DanhSach_CT_HoaDon ds_cthoadon, const char maVT[11])
     return false;
 }
 //--------Thêm chi tiết hóa đơn vào danh sách (không trùng mã vật tư)----------
-bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, char maVT[11], int soLuong, double donGia, double vAT)
+bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, const char maVT[11], int soLuong, double donGia, double vAT)
 {
     // if (KiemTraMaVT_CTHD(ds_cthoadon, maVT) == true)
     // {
@@ -418,6 +418,20 @@ bool isContainSoHoaDon(DanhSachHoaDon danhSach, const char *soHoaDon)
     return false;
 }
 
+DanhSachHoaDon searchSoHoaDon(DanhSachHoaDon danhSach, const char *soHoaDon)
+{
+    HoaDon *current = danhSach;
+    while (current != nullptr)
+    {
+        if (strcmp(current->soHD, soHoaDon) == 0)
+        {
+            return current;
+        }
+        current = current->next;
+    }
+    return nullptr;
+}
+
 void dinhDangSoHoaDon(char rel[21], int &soThuTuSoHD)
 {
     sprintf(rel, "HoaDonCongTy-%09d", soThuTuSoHD);
@@ -728,4 +742,53 @@ void InHoaDonTheoSoHD(DanhSachHoaDon FirstDS, DanhSachNhanVien ds_nv, DanhSachVa
         }
     }
     cout << "Khong tim thay hoa don voi soHD: " << soHD << endl;
+}
+
+void swap(DoanhThuVT &a, DoanhThuVT &b)
+{
+    DoanhThuVT temp = a;
+    a = b;
+    b = temp;
+}
+
+int partition(DoanhThuVT arr[], int low, int high)
+{
+    long long pivot = arr[high].doanhthu; // Chọn phần tử cuối làm pivot
+    int i = low - 1;                      // Chỉ số cho phần tử nhỏ hơn
+
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j].doanhthu <= pivot)
+        {                         // Nếu phần tử nhỏ hơn hoặc bằng pivot
+            i++;                  // Tăng chỉ số cho phần tử nhỏ hơn
+            swap(arr[i], arr[j]); // Hoán đổi
+        }
+    }
+    swap(arr[i + 1], arr[high]); // Đưa pivot về vị trí đúng
+    return i + 1;                // Trả về chỉ số của pivot
+}
+
+void quickSortDoanhThu(DoanhThuVT arr[], int low, int high)
+{
+    if (low < high)
+    {
+        long long pivot = arr[high].doanhthu; // Chọn phần tử cuối làm pivot
+        int i = low - 1;                      // Chỉ số cho phần tử nhỏ hơn
+
+        // Phân vùng mảng
+        for (int j = low; j < high; j++)
+        {
+            if (arr[j].doanhthu <= pivot)
+            {                         // Nếu phần tử nhỏ hơn hoặc bằng pivot
+                i++;                  // Tăng chỉ số cho phần tử nhỏ hơn
+                swap(arr[i], arr[j]); // Hoán đổi
+            }
+        }
+        swap(arr[i + 1], arr[high]); // Đưa pivot về vị trí đúng
+        int pi = i + 1;              // Chỉ số của pivot
+
+        // Đệ quy sắp xếp các phần bên trái và bên phải
+        quickSortDoanhThu(arr, low, pi - 1);
+        quickSortDoanhThu(arr, pi + 1, high);
+    }
 }

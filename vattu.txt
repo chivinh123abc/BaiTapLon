@@ -1,12 +1,75 @@
-gd-0000003|01|cai|10
-xd-0000004|02|cai|10
-xd-0000006|03|chiec|15
-nt-0000002|04|cai|20
-xd-0000001|05|cai|25
-xd-0000007|06|bo|5
-xd-0000009|07|hop|30
-xd-0000010|08|bo|12
-xd-0000005|10|cai|10
-xd-0000008|12|hop|30
-xd-0000011|14|cai|18
-nt-0000012|Banh bao|Banh|29
+vt-0000028|ban an|chiec|100
+vt-0000006|ban ghe|cai|100
+vt-0000029|ban tra|chiec|100
+vt-0000073|banh bao|chiec|1
+vt-0000074|banh beo|chiec|1
+vt-0000072|banh xe|chiec|1
+vt-0000075|banh xeo|chiec|1
+vt-0000071|bao tay|cai|1
+vt-0000036|bat an|cai|1
+vt-0000067|bat an com|cai|1
+vt-0000068|bat canh|cai|1
+vt-0000024|bep dien|cai|100
+vt-0000022|bep ga|cai|100
+vt-0000018|bi ve|cai|1001
+vt-0000057|binh dung nuoc|cai|1
+vt-0000026|binh nuoc|cai|100
+vt-0000040|binh sua|cai|1
+vt-0000065|bo dao|bo|1
+vt-0000066|bo ly|bo|1
+vt-0000064|bo noi|bo|1
+vt-0000011|bon rua|cai|100
+vt-0000016|bong den|cai|100
+vt-0000035|cai nia|cai|100
+vt-0000034|cai thi|cai|100
+vt-0000033|chai nuoc|cai|100
+vt-0000058|chau cay|cai|1
+vt-0000052|chen nhua|cai|1
+vt-0000060|choi quet|cai|1
+vt-0000037|coc uong|cai|1
+vt-0000045|dau an|chai|1
+vt-0000010|de giuong|chiec|100
+vt-0000003|dien thoai|cai|100
+vt-0000021|dieu hoa|cai|100
+vt-0000015|dong ho|cai|100
+vt-0000048|duong|goi|1
+vt-0000069|gang tay|cai|1
+vt-0000012|ghe sofa|cai|100
+vt-0000027|ghe xep|cai|100
+vt-0000046|gia vi|goi|1
+vt-0000063|goi cafe|goi|1
+vt-0000050|hat nem|goi|1
+vt-0000055|hop dung thuc an|cai|1
+vt-0000056|hop giu nhiet|cai|1
+vt-0000062|ke bep|cai|1
+vt-0000032|ke chua do|cai|100
+vt-0000014|ke sach|cai|100
+vt-0000025|ket sat|cai|100
+vt-0000053|khan an|cai|1
+vt-0000070|khan giay|goi|1
+vt-0000039|khay dung thuc an|cai|1
+vt-0000061|khay lam banh|cai|1
+vt-0000054|khung banh|cai|1
+vt-0000031|khung tranh|cai|100
+vt-0000009|may giat|cai|100
+vt-0000019|may hut bui|cai|100
+vt-0000030|may pha ca phe|cai|100
+vt-0000002|may tinh|cai|100
+vt-0000023|may xay sinh to|cai|100
+vt-0000042|mon an nhanh|cai|1
+vt-0000041|mon trang mieng|cai|1
+vt-0000047|muoi|goi|1
+vt-0000043|my an lien|cai|1
+vt-0000020|quat dien|cai|100
+vt-0000038|ro trai cay|cai|1
+vt-0000004|sach|cuon|100
+vt-0000051|thia nhua|cai|1
+vt-0000059|thung rac|cai|1
+vt-0000049|tieu|goi|1
+vt-0000007|tivi|cai|1
+vt-0000017|tu lam|cai|100
+vt-0000008|tu lanh|cai|100
+vt-0000005|tu quang|cai|100
+vt-0000013|tu xe|cai|100
+vt-0000044|tuong ot|chai|1
+vt-0000001|xe dap|chiec|100

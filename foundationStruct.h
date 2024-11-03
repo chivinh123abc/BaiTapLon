@@ -78,11 +78,10 @@ typedef struct NhanVien
     char ten[11];
     Phai phai;
     DanhSachHoaDon ds_hoadon = nullptr;
-    int position;
 } *DanhSachNhanVien[MAX_NHANVIEN];
 
 struct DoanhThuVT
 {
-    char ten[31];
+    char maVT[11];
     double doanhthu = 0;
 };

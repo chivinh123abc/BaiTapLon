@@ -134,3 +134,128 @@ void insertNhanVienByFile(DanhSachNhanVien &ds, const char *fileName, int &soLuo
     inFile.close();
     cout << "Da xong" << endl;
 }
+
+void saveAllDataSupporter(DanhSachNhanVien ds, ofstream &outFile, int soLuongNV)
+{
+    if (soLuongNV > 0)
+    {
+        for (int i = 0; i < soLuongNV; i++)
+        {
+            char res[256];
+            sprintf(res, "#%s|%s|%s|%s", ds[i]->maNV, ds[i]->ho, ds[i]->ten, (ds[i]->phai == nam ? "nam" : "nu"));
+            outFile << res << endl;
+            DanhSachHoaDon currentHD = ds[i]->ds_hoadon;
+            while (currentHD != nullptr)
+            {
+                sprintf(res, "&%s|%d|%d|%d|%s", currentHD->soHD, currentHD->date.day, currentHD->date.month, currentHD->date.year, (currentHD->loai == n ? "nhap" : "xuat"));
+                CT_HoaDon *currentCT = currentHD->ds_ct_hoadon;
+                outFile << res << endl;
+                while (currentCT != nullptr)
+                {
+                    sprintf(res, "!%s|%d|%f|%f", currentCT->maVT, currentCT->soLuong, currentCT->donGia, currentCT->vAT);
+                    outFile << res << endl;
+                    currentCT = currentCT->next;
+                }
+                currentHD = currentHD->next;
+            }
+        }
+    }
+}
+
+void saveAllDataToFile(DanhSachNhanVien ds, const char *fileName, int soLuongNV)
+{
+
+    ofstream outFile(fileName);
+    if (!outFile.is_open())
+    {
+        cout << "Khong the mo file!" << endl;
+        return;
+    }
+
+    saveAllDataSupporter(ds, outFile, soLuongNV);
+    outFile.close();
+    cout << "Thanh cong" << endl;
+}
+
+void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLuongNV, DanhSachHoaDon ds_hd, DanhSach_CT_HoaDon ds_ct_hd)
+{
+    char buffer[256];
+
+    while (inFile.getline(buffer, 256))
+    {
+        // DOC NHAN VIEN
+        if (buffer[0] == '#')
+        {
+            char inputMaNV[21];
+            char inputHo[21];
+            char inputTen[11];
+            char inputPhai1[4];
+            Phai inputPhai2;
+            sscanf(buffer, "#%[^|]|%[^|]|%[^|]|%3s", inputMaNV, inputHo, inputTen, inputPhai1);
+            if (strcmp(inputPhai1, "nam") == 0)
+            {
+                inputPhai2 = nam;
+            }
+            else
+            {
+                inputPhai2 = nu;
+            }
+
+            while (inFile.getline(buffer, 256))
+            {
+                if (buffer[0] == '&')
+                {
+                    char soHD[21];
+                    char loaiT[5];
+                    LoaiHoaDon loai;
+
+                    int day, month, year;
+                    sscanf(buffer, "&%[^|]|%d|%d|%d|%s", soHD, &day, &month, &year, loaiT);
+                    if (strcmp(loaiT, "nhap") == 0)
+                    {
+                        loai = n;
+                    }
+                    else
+                    {
+                        loai = x;
+                    }
+
+                    while (inFile.getline(buffer, 256))
+                    {
+                        if (buffer[0] == '!')
+                        {
+                            char maVT[11];
+                            int soLuong;
+                            double donGia;
+                            double vAT;
+                            sscanf(buffer, "!%[^|]|%s|%d|%f|%f", maVT, &soLuong, &donGia, &vAT);
+                        }
+                        else if (buffer[0] == '#' || buffer[0] == '&')
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if (buffer[0] == '#')
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void insertAllDataByFile(DanhSachNhanVien &ds_nv, const char *fileName, int &soLuongNV, DanhSachHoaDon ds_hd, DanhSach_CT_HoaDon ds_ct_hd)
+{
+    ifstream inFile(fileName);
+    if (!inFile.is_open())
+    {
+        cout << "Khong the mo file" << endl;
+        return;
+    }
+
+    insertAllDataSupporter(ds_nv, inFile, soLuongNV, ds_hd, ds_ct_hd);
+
+    inFile.close();
+    cout << "Da xong" << endl;
+}

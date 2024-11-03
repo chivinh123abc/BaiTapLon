@@ -1,6 +1,7 @@
 #include "drawFormatCode.cpp"
 #include "vattu.cpp"
 #include "stack.cpp"
+#include "contactWithfile.cpp"
 #include <ctime>
 #include "nhanvien.cpp"
 #include "hoadon.cpp"
@@ -9,10 +10,10 @@
 #include <cstring>
 #include <iomanip>
 
-const int firstItems = 4;
+const int firstItems = 5;
 const int seccondVatTuItems = 5;
 const int seccondNhanVienItems = 2;
-const int seccondHoaDonItems = 3;
+const int seccondHoaDonItems = 4;
 const int thirdHoaDonItems = 4;
 const int xUI1 = 0;
 const int yUI1 = 10;
@@ -39,7 +40,8 @@ char firstUI[firstItems][50]{
     "         Vat Tu         ",
     "        Nhan Vien       ",
     "         Hoa Don        ",
-    " Thong Ke Doanh Thu Nam "
+    " Thong Ke Doanh Thu Nam ",
+    "     Sao Luu Du Lieu    "
     //
 };
 
@@ -61,7 +63,8 @@ char seccondNhanVienUI[seccondNhanVienItems][50]{
 char seccondHoaDonUI[seccondHoaDonItems][50]{
     "           Lap Hoa Don Nhap           ",
     "           Lap Hoa Don Xuat           ",
-    "         In Danh Sach Hoa Don         "
+    "         In Danh Sach Hoa Don         ",
+    "    In Danh Sach Hoa Don Theo Ngay    "
     //
 };
 
@@ -143,6 +146,18 @@ void expandArray(CT_HoaDon **&arr, int oldSize, int newSize)
 
     arr = newArr;
 }
+void expandArray(HoaDon **&arr, int oldSize, int newSize)
+{
+    HoaDon **newArr = new HoaDon *[newSize];
+
+    for (int i = 0; i < oldSize; ++i)
+    {
+        newArr[i] = arr[i];
+    }
+    delete[] arr;
+
+    arr = newArr;
+}
 
 void trim(char *str)
 {
@@ -183,6 +198,35 @@ void trim(char *str)
         }
     }
     str[writePos] = '\0';
+}
+
+bool NamTrongKhoangTG(Date date, Date date1, Date date2)
+{
+    if (date.year < date1.year || date.year > date2.year)
+    {
+        return false;
+    }
+
+    // Kiểm tra năm, tháng
+    if (date.year == date1.year && date.month < date1.month)
+    {
+        return false;
+    }
+    if (date.year == date2.year && date.month > date2.month)
+    {
+        return false;
+    }
+
+    if (date.year == date1.year && date.month == date1.month && date.day < date1.day)
+    {
+        return false;
+    }
+    if (date.year == date2.year && date.month == date2.month && date.day > date2.day)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool isSpecialChar(char ch)
@@ -836,11 +880,12 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
     VatTuStack *PageStack = new VatTuStack[1];
     VatTu **firstPagePos = new VatTu *[1];
     char pageMaVTData[15][11];
+    bool backToPrev = false;
     //
     VatTu *current_vt = ds_vt;
     VatTuStack vtStack;
     // dem de gioi han so luong
-    int count = 1;
+    int count = 0;
     int max = 15;
     //
     int ptrY = 0;
@@ -854,33 +899,31 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
             current_vt = current_vt->left;
         }
 
-        if (Page == arr2Size)
-        {
-            PageStack[arr2Size - 1] = vtStack;
-            expandArray(PageStack, arr2Size, Page + 1);
-        }
-
         current_vt = vtStack.pop();
         //
         if (Page == arr2Size && current_vt != nullptr)
         {
+            PageStack[arr2Size - 1] = vtStack;
+            PageStack[arr2Size - 1].push(current_vt);
+            expandArray(PageStack, arr2Size, Page + 1);
+
             firstPagePos[arr2Size - 1] = current_vt;
             expandArray(firstPagePos, arr2Size, Page + 1);
             arr2Size += 1;
         }
 
-        gotoxy(3, 21 - (max - count));
+        gotoxy(3, 22 - (max - count));
         cout << current_vt->maVT;
-        gotoxy(18, 21 - (max - count));
+        gotoxy(18, 22 - (max - count));
         cout << current_vt->tenVT;
-        gotoxy(71, 21 - (max - count));
+        gotoxy(71, 22 - (max - count));
         cout << current_vt->dVT;
-        gotoxy(99, 21 - (max - count));
+        gotoxy(99, 22 - (max - count));
         cout << current_vt->soLuongTon;
         strcpy(pageMaVTData[14 - (max - count)], current_vt->maVT);
         count++;
 
-        if (count > max || count > SoLuongVatTu)
+        if (count >= max || count > SoLuongVatTu)
         {
             gotoxy(0, 7 + ptrY);
             SetColor(0x4);
@@ -894,8 +937,8 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
                     c = getch();
                     if (c == RIGHT_ARROW && max < SoLuongVatTu)
                     {
-                        count = max + 1;
-                        max = count + 14;
+                        count = max;
+                        max = max + 15;
                         Page++;
                         clearShowVatTuBoard();
                         break;
@@ -903,10 +946,11 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
                     else if (c == LEFT_ARROW && Page > 1)
                     {
                         Page--;
-                        current_vt = firstPagePos[Page - 1];
+                        current_vt = nullptr;
                         vtStack = PageStack[Page - 1];
                         max -= 15;
-                        count = max - 14;
+                        count = max - 15;
+                        backToPrev = true;
                         clearShowVatTuBoard();
                         break;
                     }
@@ -944,6 +988,11 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
                     dem = strlen(noidung);
                     return;
                 }
+            }
+            if (backToPrev)
+            {
+                backToPrev = false;
+                continue;
             }
         }
 
@@ -1527,13 +1576,14 @@ void HienThiVatTu(DanhSachVatTu root, int SoLuongVatTu)
     // dem trang va luu ptr vs stack tai vi tri day
     int Page = 1;
     int arr2Size = 1;
+    bool backToPrv = false;
     VatTuStack *PageStack = new VatTuStack[1];
     VatTu **firstPagePos = new VatTu *[1];
     //
     VatTu *current_vt = root;
     VatTuStack vtStack;
     // dem de gioi han so luong
-    int count = 1;
+    int count = 0;
     int max = 15;
     //
     clearShowVatTuBoard();
@@ -1545,33 +1595,32 @@ void HienThiVatTu(DanhSachVatTu root, int SoLuongVatTu)
             current_vt = current_vt->left;
         }
 
-        if (Page == arr2Size)
-        {
-            PageStack[arr2Size - 1] = vtStack;
-            expandArray(PageStack, arr2Size, Page + 1);
-        }
-
         current_vt = vtStack.pop();
-        //
+
         if (Page == arr2Size && current_vt != nullptr)
         {
+            PageStack[arr2Size - 1] = vtStack;
+            PageStack[arr2Size - 1].push(current_vt);
+            expandArray(PageStack, arr2Size, Page + 1);
+
             firstPagePos[arr2Size - 1] = current_vt;
             expandArray(firstPagePos, arr2Size, Page + 1);
             arr2Size += 1;
         }
 
-        gotoxy(3, 21 - (max - count));
+        gotoxy(3, 22 - (max - count));
         cout << current_vt->maVT;
-        gotoxy(18, 21 - (max - count));
+        gotoxy(18, 22 - (max - count));
         cout << current_vt->tenVT;
-        gotoxy(71, 21 - (max - count));
+        gotoxy(71, 22 - (max - count));
         cout << current_vt->dVT;
-        gotoxy(99, 21 - (max - count));
+        gotoxy(99, 22 - (max - count));
         cout << current_vt->soLuongTon;
         count++;
 
-        if (count > max || count > SoLuongVatTu)
+        if (count >= max || count > SoLuongVatTu)
         {
+            backToPrv = false;
             while (true)
             {
                 c = getch();
@@ -1580,19 +1629,20 @@ void HienThiVatTu(DanhSachVatTu root, int SoLuongVatTu)
                     c = getch();
                     if (c == RIGHT_ARROW && max < SoLuongVatTu)
                     {
-                        count = max + 1;
-                        max = count + 14;
+                        count = max;
+                        max = max + 15;
                         Page++;
                         clearShowVatTuBoard();
                         break;
                     }
                     else if (c == LEFT_ARROW && Page > 1)
                     {
+                        backToPrv = true;
                         Page--;
-                        current_vt = firstPagePos[Page - 1];
+                        current_vt = nullptr;
                         vtStack = PageStack[Page - 1];
                         max -= 15;
-                        count = max - 14;
+                        count = max - 15;
                         clearShowVatTuBoard();
                         break;
                     }
@@ -1605,6 +1655,10 @@ void HienThiVatTu(DanhSachVatTu root, int SoLuongVatTu)
                     firstPagePos = nullptr;
                     return;
                 }
+            }
+            if (backToPrv)
+            {
+                continue;
             }
         }
 
@@ -2691,8 +2745,6 @@ void DrawHoaDonContactGuide()
 void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
 {
     DanhSach_CT_HoaDon new_ct_hd = new CT_HoaDon;
-    new_ct_hd->vAT = -1;
-    new_ct_hd->donGia = -1;
     unsigned char ch;
     int count = 0;
     //
@@ -2798,19 +2850,143 @@ void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
         }
     }
 
-    if (KiemTraMaVT_CTHD(hoadon->ds_ct_hoadon, new_ct_hd->maVT))
+    //
+    drawRectangle(0, 16, 15, 2);
+    drawRectangle(15, 16, 55, 2);
+    gotoxy(0, 16);
+    cout << char(195);
+    gotoxy(15, 16);
+    //
+    cout << char(197);
+    gotoxy(15, 18);
+    cout << char(193);
+    gotoxy(70, 16);
+    cout << char(180);
+    //
+    char inputdonGia[16];
+    count = 0;
+    //
+    gotoxy(4, 17);
+    cout << "Don Gia";
+    gotoxy(18, 17);
+    //
+    while (true)
     {
-        CT_HoaDon *foundCt_hoadon = timKiemCTHoaDon(hoadon->ds_ct_hoadon, new_ct_hd->maVT);
-        foundCt_hoadon->soLuong += new_ct_hd->soLuong;
-        gotoxy(18, 26);
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            inputdonGia[count] = '\0';
+
+            if (isValidDoule(inputdonGia))
+            {
+                gotoxy(0, 19);
+                cout << "                                                      ";
+                new_ct_hd->donGia = stod(inputdonGia);
+                break;
+            }
+            else
+            {
+                gotoxy(0, 19);
+                cout << "Don Gia Khong Hop Le (Chi dung 1 dau '.' de phan cach)";
+                gotoxy(18 + count, 17);
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            cout << "\b \b";
+            inputdonGia[--count] = '\0';
+            continue;
+        }
+        else if ((isdigit(ch) || ch == '.') && count < 15)
+        {
+            cout << ch;
+            inputdonGia[count++] = ch;
+            continue;
+        }
     }
-    else
+    //
+
+    drawRectangle(0, 18, 15, 2);
+    drawRectangle(15, 18, 55, 2);
+    gotoxy(0, 18);
+    cout << char(195);
+    gotoxy(15, 18);
+    //
+    cout << char(197);
+    gotoxy(15, 20);
+    cout << char(193);
+    gotoxy(70, 18);
+    cout << char(180);
+    //
+    char inputVAT[16];
+    count = 0;
+    //
+    gotoxy(4, 19);
+    cout << "VAT (%)";
+    gotoxy(18, 19);
+    //
+    while (true)
     {
-        Them_CTHD(hoadon->ds_ct_hoadon, new_ct_hd);
-        gotoxy(18, 26);
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            inputVAT[count] = '\0';
+            if (isValidDoule(inputVAT))
+            {
+                gotoxy(0, 21);
+                cout << "                                                      ";
+                new_ct_hd->vAT = stod(inputVAT);
+                break;
+            }
+            else
+            {
+                gotoxy(0, 21);
+                cout << "VAT Khong Hop Le (Chi dung 1 dau '.' de phan cach)";
+                gotoxy(18 + count, 19);
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            cout << "\b \b";
+            inputVAT[--count] = '\0';
+            continue;
+        }
+        else if ((isdigit(ch) || ch == '.') && count < 15)
+        {
+            cout << ch;
+            inputVAT[count++] = ch;
+            continue;
+        }
     }
 
-    clearBottomScreen();
+    CT_HoaDon *current = hoadon->ds_ct_hoadon;
+    if (current == nullptr)
+    {
+        Them_CTHD_CanMultipleVariable(hoadon->ds_ct_hoadon, new_ct_hd);
+        return;
+    }
+
+    while (current != nullptr)
+    {
+        if ((strcmp(current->maVT, new_ct_hd->maVT) == 0) && new_ct_hd->donGia == current->donGia && new_ct_hd->vAT == current->vAT)
+        {
+            current->soLuong += new_ct_hd->soLuong;
+            return;
+        }
+        current = current->next;
+    }
+
+    Them_CTHD_CanMultipleVariable(hoadon->ds_ct_hoadon, new_ct_hd);
     return;
 }
 
@@ -3102,7 +3278,7 @@ void themChiTietHoaDonXuat(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
             else
             {
                 gotoxy(0, 21);
-                cout << "Don Gia Khong Hop Le (Chi dung 1 dau '.' de phan cach)";
+                cout << "VAT Khong Hop Le (Chi dung 1 dau '.' de phan cach)";
                 gotoxy(18 + count, 19);
                 continue;
             }
@@ -3299,7 +3475,7 @@ bool QuickChooseXoaCTHD(DanhSachHoaDon ds_hd, char inputMaVT[11], int &soKyTu)
         gotoxy(18, 25 - (max - count));
         cout << current->soLuong;
 
-        if ((max - count) == 10)
+        if ((max - count) == 10 && size == page)
         {
             firstPageEl[size - 1] = current;
             expandArray(firstPageEl, size, size + 1);
@@ -3463,7 +3639,7 @@ bool QuickChooseXoaCTHD_2(DanhSachHoaDon ds_hd, int &soKyTu, CT_HoaDon *&ct_canx
         gotoxy(47, 25 - (max - count));
         cout << fixed << setprecision(2) << current->vAT;
 
-        if ((max - count) == 10)
+        if ((max - count) == 10 && page == size)
         {
             firstPageEl[size - 1] = current;
             expandArray(firstPageEl, size, size + 1);
@@ -3597,7 +3773,7 @@ void XemThongTinCTVT(DanhSachHoaDon ds_hd)
         gotoxy(18, 25 - (max - count));
         cout << current->soLuong;
 
-        if ((max - count) == 10)
+        if ((max - count) == 10 && size == page)
         {
             firstPageEl[size - 1] = current;
             expandArray(firstPageEl, size, size + 1);
@@ -3673,206 +3849,6 @@ void DrawXoaCTHD()
 }
 
 void XoaChiTietHoaDon(DanhSachHoaDon &new_ds_hd, DanhSachVatTu &ds_vt)
-{
-    int count;
-    unsigned char ch;
-    char inputMaVatTu[11];
-    char inputSoLuongMuonXoa[10];
-    int soLuongMuonXoa;
-    //
-letDelete:
-    DrawXoaCTHD();
-    count = 0;
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-            continue;
-        }
-        else if (ch == '*' && new_ds_hd->ds_ct_hoadon != nullptr)
-        {
-            clearBottomScreen();
-            QuickChooseXoaCTHD(new_ds_hd, inputMaVatTu, count);
-            DrawXoaCTHD();
-            gotoxy(18, 13);
-            cout << "               ";
-            gotoxy(18, 13);
-            cout << inputMaVatTu;
-
-            // HamQUickChose
-
-            continue;
-        }
-        else if (ch == ESC)
-        {
-            clearBottomScreen();
-            return;
-        }
-        else if (ch == ENTER && count > 0)
-        {
-            inputMaVatTu[count] = '\0';
-            if (timKiemCTHoaDon(new_ds_hd->ds_ct_hoadon, inputMaVatTu) == nullptr)
-            {
-                gotoxy(1, 15);
-                cout << "Hoa don nay khong co chi tiet hoa don voi maVT nay vui long nhap lai";
-                gotoxy(18 + count, 13);
-                continue;
-            }
-            else
-            {
-                gotoxy(1, 15);
-                cout << "                                                                     ";
-                break;
-            };
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            inputMaVatTu[--count] = '\0';
-            cout << "\b \b";
-        }
-        else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
-        {
-            cout << ch;
-            ch = tolower(ch);
-            inputMaVatTu[count++] = ch;
-        }
-    }
-    //
-    count = 0;
-    drawRectangle(0, 14, 70, 2);
-    drawRectangle(0, 16, 15, 2);
-    drawRectangle(15, 16, 55, 2);
-    gotoxy(0, 14);
-    cout << char(195);
-    gotoxy(0, 16);
-    cout << char(195);
-    gotoxy(70, 14);
-    cout << char(180);
-    gotoxy(70, 16);
-    cout << char(180);
-    gotoxy(15, 16);
-    cout << char(194);
-    gotoxy(15, 14);
-    cout << char(193);
-    gotoxy(15, 18);
-    cout << char(193);
-    gotoxy(7, 15);
-    cout << "Nhap So Luong Ban Muon Bo Di (Bo trong neu muon xoa tat ca)";
-    gotoxy(3, 17);
-    cout << "So Luong";
-    gotoxy(18, 17);
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-        }
-        if (ch == TAB)
-        {
-            clearBottomScreen();
-            goto letDelete;
-        }
-        else if (ch == '*')
-        {
-            clearBottomScreen();
-            XemThongTinCTVT(new_ds_hd);
-            // Ve lai, co the viet thanh ham rieng
-            DrawXoaCTHD();
-            cout << inputMaVatTu;
-            drawRectangle(0, 14, 70, 2);
-            drawRectangle(0, 16, 15, 2);
-            drawRectangle(15, 16, 55, 2);
-            gotoxy(0, 14);
-            cout << char(195);
-            gotoxy(0, 16);
-            cout << char(195);
-            gotoxy(70, 14);
-            cout << char(180);
-            gotoxy(70, 16);
-            cout << char(180);
-            gotoxy(15, 16);
-            cout << char(194);
-            gotoxy(15, 14);
-            cout << char(193);
-            gotoxy(15, 18);
-            cout << char(193);
-            gotoxy(7, 15);
-            cout << "Nhap So Luong Ban Muon Bo Di (Bo trong neu muon xoa tat ca)";
-            gotoxy(3, 17);
-            cout << "So Luong";
-            gotoxy(18, 17);
-            inputSoLuongMuonXoa[count] = '\0';
-            cout << inputSoLuongMuonXoa;
-            //
-            continue;
-        }
-        else if (ch == ESC)
-        {
-            clearBottomScreen();
-            return;
-        }
-        else if (ch == ENTER && count >= 0)
-        {
-            inputSoLuongMuonXoa[count] = '\0';
-            break;
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            inputSoLuongMuonXoa[--count] = '\0';
-            cout << "\b \b";
-        }
-        else if (isdigit(ch) && count < 9)
-        {
-            cout << ch;
-            inputSoLuongMuonXoa[count++] = ch;
-        }
-    }
-
-    //
-    CT_HoaDon *thisCT_HD = timKiemCTHoaDon(new_ds_hd->ds_ct_hoadon, inputMaVatTu);
-
-    if (strlen(inputSoLuongMuonXoa) == 0 || thisCT_HD->soLuong <= stoi(inputSoLuongMuonXoa))
-    {
-        CT_HoaDon *prev = nullptr;
-        CT_HoaDon *current = new_ds_hd->ds_ct_hoadon;
-
-        while (current != nullptr)
-        {
-            if (strcmp(inputMaVatTu, current->maVT) == 0)
-            {
-                break;
-            }
-            prev = current;
-            current = current->next;
-        }
-        if (prev == nullptr)
-        {
-            new_ds_hd->ds_ct_hoadon = current->next;
-        }
-        else
-        {
-            prev->next = current->next;
-            delete current;
-            current = nullptr;
-        }
-    }
-    else
-    {
-        thisCT_HD->soLuong -= stoi(inputSoLuongMuonXoa);
-    }
-
-    gotoxy(1, 19);
-    cout << "Thanh cong";
-    Sleep(2000);
-    clearBottomScreen();
-
-    return;
-};
-
-void XoaChiTietHoaDonXuat(DanhSachHoaDon &new_ds_hd, DanhSachVatTu &ds_vt)
 {
     CT_HoaDon *ct_canxoa = new CT_HoaDon;
     int count;
@@ -4659,6 +4635,7 @@ startLapHoaDon:
             {
                 clearBottomScreen();
                 themChiTietHoaDonNhap(new_hd, ds_vt);
+                clearBottomScreen();
                 backAllow = false;
             }
             else if (choose3 == 1)
@@ -4668,6 +4645,7 @@ startLapHoaDon:
                 // InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
                 // ch = getch();
                 XoaChiTietHoaDon(new_hd, ds_vt);
+                clearBottomScreen();
                 continue;
             }
             else if (choose3 == 2)
@@ -5192,9 +5170,7 @@ startLapHoaDon:
             {
                 clearBottomScreen();
                 gotoxy(0, 20);
-                // XoaDSHoaDon(new_hd->ds_ct_hoadon);
-                XoaChiTietHoaDonXuat(new_hd, ds_vt);
-                // InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
+                XoaChiTietHoaDon(new_hd, ds_vt);
                 clearBottomScreen();
                 continue;
             }
@@ -5267,11 +5243,57 @@ startLapHoaDon:
     }
 }
 
-void InHoaDonTheoSoHoaDon(DanhSachHoaDon ds_hd)
+int TimNhanVienTheoSoHD(DanhSachNhanVien ds_nv, int soLuongNV, const char soHD[])
 {
+    for (int i = 0; i < soLuongNV; i++)
+    {
+        NhanVien *nv = ds_nv[i];
+        DanhSachHoaDon current_hoadon = ds_nv[i]->ds_hoadon;
+        while (current_hoadon != nullptr)
+        {
+            if (strcmp(current_hoadon->soHD, soHD) == 0)
+            {
+                return i;
+            }
+            current_hoadon = current_hoadon->next;
+        }
+    }
+    return -1;
+}
+
+void clearHoaDonTable()
+{
+    for (int i = 0; i < 15; i++)
+    {
+        gotoxy(1, 7 + i);
+        cout << "          ";
+        gotoxy(12, 7 + i);
+        cout << "                               ";
+        gotoxy(44, 7 + i);
+        cout << "    ";
+        gotoxy(49, 7 + i);
+        cout << "                    ";
+        gotoxy(71, 7 + i);
+        cout << "         ";
+        gotoxy(81, 7 + i);
+        cout << "                ";
+        gotoxy(98, 7 + i);
+        cout << "                     ";
+    }
+}
+
+void InHoaDonTheoSoHoaDon(DanhSachHoaDon ds_hd, DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, int soLuongNV)
+{
+    int max = 15;
     unsigned char ch;
     char inputSoHD[21];
-    int count = 0;
+    int count;
+
+startIn:
+    //
+    clrscr();
+    count = 0;
+    max = 15;
     //
     gotoxy(0, 27);
     SetColor(0xA);
@@ -5302,16 +5324,1759 @@ void InHoaDonTheoSoHoaDon(DanhSachHoaDon ds_hd)
     SetColor(0xF);
     //
     drawRectangle(0, 0, 119, 2);
-    gotoxy(48, 1);
+    gotoxy(45, 1);
     SetColor(0x4);
     cout << "In Thong Tin Hoa Don Theo So Hoa Don";
     SetColor(0xF);
-    drawRectangle(0, 2, 4, 2);
-    drawRectangle(4, 2, 4, 2);
-    //
+    drawRectangle(0, 2, 30, 2);
+    drawRectangle(30, 2, 89, 2);
+    gotoxy(0, 2);
+    cout << char(195);
+    gotoxy(30, 2);
+    cout << char(194);
+    gotoxy(30, 4);
+    cout << char(193);
+    gotoxy(119, 2);
+    cout << char(180);
+
+    gotoxy(2, 3);
+    cout << "Nhap So Hoa Don Ban Muon In";
+    gotoxy(32, 3);
+
     while (true)
     {
         ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            inputSoHD[count] = '\0';
+            if (!isContainSoHoaDon(ds_hd, inputSoHD))
+            {
+                gotoxy(0, 5);
+                cout << "Khong Ton Tai So Hoa Don Nay Nen Khong The Truy Xuat";
+                gotoxy(32 + count, 3);
+                continue;
+            }
+            gotoxy(0, 5);
+            cout << "                                                     ";
+            break;
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            cout << "\b \b";
+            inputSoHD[--count] = '\0';
+        }
+        else if ((isalnum(ch) || isSpecialChar(ch)) && count < 20)
+        {
+            cout << ch;
+            ch = tolower(ch);
+            inputSoHD[count++] = ch;
+        }
+    }
+    //
+
+    //
+    drawRectangle(0, 4, 11, 2);
+    drawRectangle(11, 4, 32, 2);
+    drawRectangle(43, 4, 5, 2);
+    drawRectangle(48, 4, 21, 2);
+    drawRectangle(69, 4, 11, 2);
+    drawRectangle(80, 4, 17, 2);
+    drawRectangle(97, 4, 22, 2);
+    SetColor(0xB);
+    gotoxy(4, 5);
+    cout << "Ngay";
+    gotoxy(23, 5);
+    cout << "Ho Va Ten";
+    gotoxy(44, 5);
+    cout << "Loai";
+    gotoxy(54, 5);
+    cout << "Ten Vat Tu";
+    gotoxy(71, 5);
+    cout << "So Luong";
+    gotoxy(85, 5);
+    cout << "Don Gia";
+    gotoxy(105, 5);
+    cout << "Tri Gia";
+    SetColor(0xF);
+    // Phan chua noi dung
+    drawRectangle(0, 6, 11, 16);
+    drawRectangle(11, 6, 32, 16);
+    drawRectangle(43, 6, 5, 16);
+    drawRectangle(48, 6, 21, 16);
+    drawRectangle(69, 6, 11, 16);
+    drawRectangle(80, 6, 17, 16);
+    drawRectangle(97, 6, 22, 16);
+    drawRectangle(0, 22, 15, 2);
+    drawRectangle(15, 22, 104, 2);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(11, 4);
+    cout << char(194);
+    gotoxy(30, 4);
+    cout << char(193);
+    gotoxy(43, 4);
+    cout << char(194);
+    gotoxy(48, 4);
+    cout << char(194);
+    gotoxy(69, 4);
+    cout << char(194);
+    gotoxy(80, 4);
+    cout << char(194);
+    gotoxy(97, 4);
+    cout << char(194);
+    gotoxy(119, 4);
+    cout << char(180);
+    gotoxy(0, 6);
+    cout << char(195);
+    gotoxy(11, 6);
+    cout << char(197);
+    gotoxy(43, 6);
+    cout << char(197);
+    gotoxy(48, 6);
+    cout << char(197);
+    gotoxy(69, 6);
+    cout << char(197);
+    gotoxy(80, 6);
+    cout << char(197);
+    gotoxy(97, 6);
+    cout << char(197);
+    gotoxy(119, 6);
+    cout << char(180);
+    gotoxy(0, 22);
+    cout << char(195);
+    gotoxy(11, 22);
+    cout << char(193);
+    gotoxy(43, 22);
+    cout << char(193);
+    gotoxy(48, 22);
+    cout << char(193);
+    gotoxy(69, 22);
+    cout << char(193);
+    gotoxy(80, 22);
+    cout << char(193);
+    gotoxy(97, 22);
+    cout << char(193);
+    gotoxy(119, 22);
+    cout << char(180);
+    gotoxy(15, 22);
+    cout << char(194);
+    gotoxy(15, 24);
+    cout << char(193);
+    // Noi Dung
+    HoaDon *HoaDon = searchSoHoaDon(ds_hd, inputSoHD);
+    CT_HoaDon *current = HoaDon->ds_ct_hoadon;
+    CT_HoaDon **firstPageEl = new CT_HoaDon *[1];
+    VatTu *current_vt = new VatTu;
+    int vitriNV = TimNhanVienTheoSoHD(ds_nv, soLuongNV, inputSoHD);
+    int size = 1;
+    int Page = 1;
+    double sumOfHD = 0;
+    count = 0;
+    // tim tong
+    while (current != nullptr)
+    {
+        sumOfHD += current->donGia * current->soLuong * (1 + (current->vAT / 100.0));
+        current = current->next;
+    }
+
+    gotoxy(4, 23);
+    cout << "Tong HD";
+    gotoxy(18, 23);
+    cout << fixed << setprecision(2) << sumOfHD;
+    // Dat lai
+    current = HoaDon->ds_ct_hoadon;
+    //
+    if (current == nullptr)
+    {
+        gotoxy(1, 7);
+        cout << "NONE";
+        gotoxy(12, 7);
+        cout << "Hoa Don Nay Khong Co Du Lieu";
+        gotoxy(44, 7);
+        cout << "NONE";
+        gotoxy(49, 7);
+        cout << "NONE";
+        gotoxy(71, 7);
+        cout << "NONE";
+        gotoxy(82, 7);
+        cout << "NONE";
+        gotoxy(99, 7);
+        cout << "NONE";
+        getch();
+        return;
+    }
+    while (count < max && current != nullptr)
+    {
+        current_vt = searchMaVT_DanhSachVatTu(ds_vt, current->maVT);
+
+        if ((max - count) == 15 && Page == size)
+        {
+            firstPageEl[size - 1] = current;
+            expandArray(firstPageEl, size, size + 1);
+            size++;
+        }
+
+        gotoxy(1, 22 - (max - count));
+        if (HoaDon->date.day < 10)
+        {
+            cout << "0" << HoaDon->date.day << '/';
+        }
+        if (HoaDon->date.month < 10)
+        {
+            cout << "0" << HoaDon->date.month << '/';
+        }
+        cout << HoaDon->date.year;
+        //
+        gotoxy(12, 22 - (max - count));
+        cout << ds_nv[vitriNV]->ho << " " << ds_nv[vitriNV]->ten;
+        gotoxy(44, 22 - (max - count));
+        if (HoaDon->loai == n)
+        {
+            cout << "Nhap";
+        }
+        else
+        {
+            cout << "Xuat";
+        }
+        gotoxy(49, 22 - (max - count));
+        cout << current_vt->tenVT;
+        gotoxy(71, 22 - (max - count));
+        cout << current->soLuong;
+        gotoxy(82, 22 - (max - count));
+        cout << fixed << setprecision(2) << current->donGia;
+        gotoxy(99, 22 - (max - count));
+        cout << fixed << setprecision(2) << current->donGia * current->soLuong * (1 + (current->vAT / 100.0));
+        //
+        current = current->next;
+        count++;
+
+        if (count >= max || current == nullptr)
+        {
+            while (true)
+            {
+                ch = getch();
+                if (ch == 224)
+                {
+                    ch = getch();
+                    if (ch == RIGHT_ARROW && current != nullptr)
+                    {
+                        count = count + 15;
+                        max = count + 15;
+                        Page++;
+                        clearHoaDonTable();
+                        break;
+                    }
+                    else if (ch == LEFT_ARROW && Page > 1)
+                    {
+                        max = max - 15;
+                        count = max - 15;
+                        Page--;
+                        current = firstPageEl[Page - 1];
+                        clearHoaDonTable();
+                        break;
+                    }
+                }
+                else if (ch == TAB)
+                {
+                    goto startIn;
+                }
+            }
+        }
+    }
+
+    // TEST
+    // gotoxy(1, 7);
+    // cout << "20/10/2024";
+    // gotoxy(12, 7);
+    // cout << "Luong Chi Vinh Junior Ryan Ngok";
+    // gotoxy(44, 7);
+    // cout << "Xuat";
+    // gotoxy(49, 7);
+    // cout << "Banh xe vo dich kkkk";
+    // gotoxy(71, 7);
+    // cout << "999999999";
+    // gotoxy(82, 7);
+    // cout << "123456789123456";
+    // gotoxy(99, 7);
+    // cout << "1234567891234567";
+
+    getch();
+    return;
+}
+
+bool isContainMaVTInDoanhThu(DoanhThuVT *dtvt, int soLuongDangCo, const char maVT[11])
+{
+    for (int i = 0; i < soLuongDangCo; i++)
+    {
+        if (strcmp(dtvt[i].maVT, maVT) == 0)
+        {
+            return true;
+        };
+    }
+    return false;
+}
+
+int searchMaVTInDoanhThu(DoanhThuVT *dtvt, int soLuongDangCo, const char maVT[11])
+{
+    for (int i = 0; i < soLuongDangCo; i++)
+    {
+        if (strcmp(dtvt[i].maVT, maVT) == 0)
+        {
+            return i;
+        };
+    }
+    return -1;
+}
+
+void In10VatTuDoanhThuCaoNhat(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, DanhSachHoaDon ds_hd, int soLuongVatTu, int soLuongNV)
+{
+    // Kiem tra kha thi
+    if (ds_vt == nullptr || ds_nv == nullptr || ds_hd == nullptr)
+    {
+        return;
+    }
+    //
+    unsigned char ch;
+    int count;
+    Date ngayDau;
+    Date ngayCuoi;
+    char charInputDate[6];
+    time_t now = time(nullptr);
+    tm *localTime = localtime(&now);
+    bool backAllow = true;
+    //
+
+    //
+//
+start:
+    clrscr();
+    //
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Accept  ";
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Change SoHD  ";
+    SetColor(0xA);
+    cout << "DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape From Board    ";
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "<--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+    //
+    count = 0;
+    drawRectangle(0, 0, 119, 2);
+    gotoxy(45, 1);
+    SetColor(0x4);
+    cout << "BANG LIET KE 10 VAT TU CO DOANH THU CAO NHAT";
+    SetColor(0xF);
+    drawRectangle(0, 2, 30, 2);
+    drawRectangle(30, 2, 89, 2);
+    gotoxy(0, 2);
+    cout << char(195);
+    gotoxy(30, 2);
+    cout << char(194);
+    gotoxy(30, 4);
+    cout << char(193);
+    gotoxy(119, 2);
+    cout << char(180);
+    gotoxy(2, 3);
+    cout << "Nhap Ngay Thu Nhat";
+    gotoxy(32, 3);
+    cout << "Nam:           |Thang:         |Ngay:         ";
+    gotoxy(37, 3);
+    while (true)
+    {
+    namLap:
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+            // TAM DUNG SU DUNG NO DE DANH NEU DU TG
+            //  if (ch == UP_ARROW)
+            //  {
+            //      dateChooseTable(inputDate);
+            //  }
+            continue;
+        }
+        else if (ch == ESC)
+        {
+            clearBottomScreen();
+            return;
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            charInputDate[count] = '\0';
+            ngayDau.year = stoi(charInputDate);
+            if (ngayDau.year <= localTime->tm_year + 1900) // nam bat dau tu 1900 nen +1900 vao
+            {
+                gotoxy(55, 3);
+                count = 0;
+                while (true)
+                {
+                thangLap:
+                    ch = getch();
+                    if (ch == 224)
+                    {
+                        ch = getch();
+                        continue;
+                    }
+                    else if (ch == TAB)
+                    {
+                        gotoxy(55, 3);
+                        cout << "  ";
+                        gotoxy(37, 3);
+                        count = 0;
+                        cout << "    ";
+                        gotoxy(37, 3);
+                        goto namLap;
+                    }
+                    else if (ch == ESC)
+                    {
+                        clearBottomScreen();
+                        return;
+                    }
+                    else if (ch == ENTER && count > 0)
+                    {
+                        charInputDate[count] = '\0';
+                        ngayDau.month = stoi(charInputDate);
+                        if ((ngayDau.year == localTime->tm_year + 1900) && ngayDau.month > localTime->tm_mon + 1)
+                        {
+                            gotoxy(55, 3);
+                            cout << "  ";
+                            gotoxy(55, 3);
+                            count = 0;
+                            continue;
+                        }
+                        else if (ngayDau.month > 12)
+                        {
+                            gotoxy(55, 3);
+                            cout << "  ";
+                            gotoxy(55, 3);
+                            count = 0;
+                            continue;
+                        }
+                        else
+                        {
+                            gotoxy(70, 3);
+                            count = 0;
+                            //
+                            while (true)
+                            {
+                            ngayLap:
+                                ch = getch();
+                                if (ch == 224)
+                                {
+                                    ch = getch();
+                                    continue;
+                                }
+                                else if (ch == TAB)
+                                {
+
+                                    gotoxy(70, 3);
+                                    cout << "  ";
+                                    gotoxy(55, 3);
+                                    count = 0;
+                                    cout << "  ";
+                                    gotoxy(55, 3);
+                                    goto thangLap;
+                                }
+                                else if (ch == ESC)
+                                {
+                                    clearBottomScreen();
+                                    return;
+                                }
+                                else if (ch == ENTER && count > 0)
+                                {
+                                    charInputDate[count] = '\0';
+                                    ngayDau.day = stoi(charInputDate);
+                                    if (ngayDau.month == 2)
+                                    {
+                                        if (isNamNhuan(ngayDau.year) && ngayDau.day <= 29)
+                                        {
+                                            break;
+                                        }
+                                        else if (!isNamNhuan(ngayDau.year) && ngayDau.day <= 28)
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            gotoxy(70, 3);
+                                            cout << "  ";
+                                            gotoxy(70, 3);
+                                            count = 0;
+                                            continue;
+                                        }
+                                    }
+                                    else if (ngayDau.day <= 30 && (ngayDau.month == 4 || ngayDau.month == 6 || ngayDau.month == 9 || ngayDau.month == 11))
+                                    {
+                                        break;
+                                    }
+                                    else if (ngayDau.day <= 31)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        gotoxy(70, 3);
+                                        cout << "  ";
+                                        gotoxy(70, 3);
+                                        count = 0;
+                                        continue;
+                                    }
+                                }
+                                else if (ch == '\b' && count > 0)
+                                {
+                                    charInputDate[--count] = '\0';
+                                    cout << "\b \b";
+                                }
+                                else if (isdigit(ch) && count < 2)
+                                {
+                                    charInputDate[count++] = ch;
+                                    cout << ch;
+                                }
+                            };
+                        };
+                        break;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        charInputDate[--count] = '\0';
+                        cout << "\b \b";
+                    }
+                    else if (isdigit(ch) && count < 2)
+                    {
+                        charInputDate[count++] = ch;
+                        cout << ch;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                gotoxy(37, 3);
+                cout << "    ";
+                gotoxy(37, 3);
+                count = 0;
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            charInputDate[--count] = '\0';
+            cout << "\b \b";
+        }
+        else if (isdigit(ch) && count < 4)
+        {
+            charInputDate[count++] = ch;
+            cout << ch;
+        }
+    }
+
+    // Input 2
+    drawRectangle(0, 4, 30, 2);
+    drawRectangle(30, 4, 89, 2);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(30, 4);
+    cout << char(197);
+    gotoxy(30, 6);
+    cout << char(193);
+    gotoxy(119, 4);
+    cout << char(180);
+    count = 0;
+    gotoxy(2, 5);
+    cout << "Nhap Ngay Thu Hai";
+    gotoxy(32, 5);
+    cout << "Nam:           |Thang:         |Ngay:         ";
+    gotoxy(37, 5);
+    while (true)
+    {
+    namLap2:
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+            // TAM DUNG SU DUNG NO DE DANH NEU DU TG
+            //  if (ch == UP_ARROW)
+            //  {
+            //      dateChooseTable(inputDate);
+            //  }
+            continue;
+        }
+        else if (ch == TAB)
+        {
+            count = 0;
+            gotoxy(37, 5);
+            cout << "  ";
+            gotoxy(70, 3);
+            cout << "    ";
+            gotoxy(70, 3);
+            goto ngayLap;
+        }
+        else if (ch == ESC)
+        {
+            clearBottomScreen();
+            return;
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            charInputDate[count] = '\0';
+            ngayCuoi.year = stoi(charInputDate);
+            if (ngayCuoi.year <= localTime->tm_year + 1900 && ngayCuoi.year >= ngayDau.year) // nam bat dau tu 1900 nen +1900 vao
+            {
+                gotoxy(55, 5);
+                count = 0;
+                while (true)
+                {
+                thangLap2:
+                    ch = getch();
+                    if (ch == 224)
+                    {
+                        ch = getch();
+                        continue;
+                    }
+                    else if (ch == TAB)
+                    {
+                        gotoxy(55, 5);
+                        cout << "  ";
+                        gotoxy(37, 5);
+                        count = 0;
+                        cout << "    ";
+                        gotoxy(37, 5);
+                        goto namLap2;
+                    }
+                    else if (ch == ESC)
+                    {
+                        clearBottomScreen();
+                        return;
+                    }
+                    else if (ch == ENTER && count > 0)
+                    {
+                        charInputDate[count] = '\0';
+                        ngayCuoi.month = stoi(charInputDate);
+                        if (((ngayCuoi.year == localTime->tm_year + 1900) &&
+                             (ngayCuoi.month > localTime->tm_mon + 1)) ||
+                            (ngayCuoi.month < ngayDau.month && ngayCuoi.year == ngayDau.year))
+                        {
+                            gotoxy(55, 5);
+                            cout << "  ";
+                            gotoxy(55, 5);
+                            count = 0;
+                            continue;
+                        }
+                        else if (ngayCuoi.month > 12)
+                        {
+                            gotoxy(55, 5);
+                            cout << "  ";
+                            gotoxy(55, 5);
+                            count = 0;
+                            continue;
+                        }
+                        else
+                        {
+                            gotoxy(70, 5);
+                            count = 0;
+                            //
+                            while (true)
+                            {
+                            ngayLap2:
+                                ch = getch();
+                                if (ch == 224)
+                                {
+                                    ch = getch();
+                                    continue;
+                                }
+                                else if (ch == TAB)
+                                {
+
+                                    gotoxy(70, 5);
+                                    cout << "  ";
+                                    gotoxy(55, 5);
+                                    count = 0;
+                                    cout << "  ";
+                                    gotoxy(55, 5);
+                                    goto thangLap2;
+                                }
+                                else if (ch == ESC)
+                                {
+                                    clearBottomScreen();
+                                    return;
+                                }
+                                else if (ch == ENTER && count > 0)
+                                {
+                                    charInputDate[count] = '\0';
+                                    ngayCuoi.day = stoi(charInputDate);
+                                    if (ngayCuoi.month == 2)
+                                    {
+                                        if ((isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 29) &&
+                                            (ngayCuoi.year > ngayDau.year ||
+                                             (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                             (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                        {
+                                            break;
+                                        }
+                                        else if ((!isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 28) &&
+                                                 (ngayCuoi.year > ngayDau.year ||
+                                                  (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                                  (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            gotoxy(70, 5);
+                                            cout << "  ";
+                                            gotoxy(70, 5);
+                                            count = 0;
+                                            continue;
+                                        }
+                                    }
+                                    else if ((ngayCuoi.day <= 30 && (ngayCuoi.month == 4 || ngayCuoi.month == 6 || ngayCuoi.month == 9 || ngayCuoi.month == 11)) &&
+                                             (ngayCuoi.year > ngayDau.year ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                    {
+                                        break;
+                                    }
+                                    else if (ngayCuoi.day <= 31 &&
+                                             (ngayCuoi.year > ngayDau.year ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        gotoxy(70, 5);
+                                        cout << "  ";
+                                        gotoxy(70, 5);
+                                        count = 0;
+                                        continue;
+                                    }
+                                }
+                                else if (ch == '\b' && count > 0)
+                                {
+                                    charInputDate[--count] = '\0';
+                                    cout << "\b \b";
+                                }
+                                else if (isdigit(ch) && count < 2)
+                                {
+                                    charInputDate[count++] = ch;
+                                    cout << ch;
+                                }
+                            };
+                        };
+                        break;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        charInputDate[--count] = '\0';
+                        cout << "\b \b";
+                    }
+                    else if (isdigit(ch) && count < 2)
+                    {
+                        charInputDate[count++] = ch;
+                        cout << ch;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                gotoxy(37, 5);
+                cout << "    ";
+                gotoxy(37, 5);
+                count = 0;
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            charInputDate[--count] = '\0';
+            cout << "\b \b";
+        }
+        else if (isdigit(ch) && count < 4)
+        {
+            charInputDate[count++] = ch;
+            cout << ch;
+        }
+    }
+    //
+    drawRectangle(0, 7, 30, 2);
+    drawRectangle(30, 7, 89, 2);
+    drawRectangle(0, 9, 30, 11);
+    drawRectangle(30, 9, 89, 11);
+
+    gotoxy(0, 9);
+    cout << char(195);
+    gotoxy(30, 7);
+    cout << char(194);
+    gotoxy(119, 9);
+    cout << char(180);
+    gotoxy(30, 9);
+    cout << char(197);
+    gotoxy(30, 20);
+    cout << char(193);
+
+    gotoxy(1, 8);
+    cout << "Ten Vat Tu";
+    gotoxy(31, 8);
+    cout << "Doanh Thu";
+    // Xu Ly LOGIC
+    DoanhThuVT doanhThu[soLuongVatTu];
+    int soLuongVTCoDoanhThu = 0;
+    // Duyet qua tat ca hoa don va lay gia tri
+    HoaDon *currentHoaDon = ds_hd;
+
+    while (currentHoaDon != nullptr)
+    {
+        if (currentHoaDon->loai == x && NamTrongKhoangTG(currentHoaDon->date, ngayDau, ngayCuoi))
+        {
+            CT_HoaDon *currentCTHoaDon = currentHoaDon->ds_ct_hoadon;
+
+            while (currentCTHoaDon != nullptr)
+            {
+                if (isContainMaVTInDoanhThu(doanhThu, soLuongVTCoDoanhThu, currentCTHoaDon->maVT))
+                {
+                    int viTriMaVT = searchMaVTInDoanhThu(doanhThu, soLuongVTCoDoanhThu, currentCTHoaDon->maVT);
+                    doanhThu[viTriMaVT].doanhthu += currentCTHoaDon->soLuong * currentCTHoaDon->donGia * (1 + currentCTHoaDon->vAT / 100);
+                }
+                else
+                {
+                    doanhThu[soLuongVTCoDoanhThu].doanhthu += currentCTHoaDon->soLuong * currentCTHoaDon->donGia * (1 + currentCTHoaDon->vAT / 100);
+                    strcpy(doanhThu[soLuongVTCoDoanhThu].maVT, currentCTHoaDon->maVT);
+                    soLuongVTCoDoanhThu += 1;
+                };
+                currentCTHoaDon = currentCTHoaDon->next;
+            }
+        }
+        currentHoaDon = currentHoaDon->next;
+    }
+
+    if (soLuongVTCoDoanhThu == 0)
+    {
+        gotoxy(1, 10);
+        cout << "None";
+        gotoxy(31, 10);
+        cout << "None";
+    }
+    else
+    {
+        quickSortDoanhThu(doanhThu, 0, soLuongVTCoDoanhThu - 1);
+
+        for (int i = soLuongVTCoDoanhThu - 1; i >= 0; i--)
+        {
+            gotoxy(2, 10 + (soLuongVTCoDoanhThu - 1 - i));
+            cout << doanhThu[i].maVT << endl;
+            gotoxy(32, 10 + (soLuongVTCoDoanhThu - 1 - i));
+            cout << fixed << setprecision(2) << doanhThu[i].doanhthu << endl;
+            if (i < soLuongVTCoDoanhThu - 9)
+            {
+                break;
+            }
+        }
+    }
+
+    while (true)
+    {
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+        }
+        else if (ch == TAB)
+        {
+            goto start;
+        }
+        else if (ch == ESC)
+        {
+            return;
+        }
+    }
+};
+
+void clearThongKeTable()
+{
+    for (int i = 0; i < 13; i++)
+    {
+        gotoxy(2, 13 + i);
+        cout << "                    ";
+        gotoxy(25, 13 + i);
+        cout << "           ";
+        gotoxy(39, 13 + i);
+        cout << "     ";
+        gotoxy(47, 13 + i);
+        cout << "                                ";
+        gotoxy(83, 13 + i);
+        cout << "                               ";
+    }
+}
+
+void ThongKeHoaDonTrong1KhoangTG(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, DanhSachHoaDon ds_hd, int soLuongVatTu, int soLuongNV)
+{
+    if (ds_vt == nullptr || ds_nv == nullptr || ds_hd == nullptr)
+    {
+        return;
+    }
+    //
+    unsigned char ch;
+    int count;
+    Date ngayDau;
+    Date ngayCuoi;
+    char charInputDate[6];
+    time_t now = time(nullptr);
+    tm *localTime = localtime(&now);
+    bool backAllow = true;
+//
+//
+start:
+    clrscr();
+    //
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Accept  ";
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Change DATE  ";
+    SetColor(0xA);
+    cout << "DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape From Board    ";
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "<--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+    //
+    count = 0;
+    drawRectangle(0, 0, 119, 2);
+    gotoxy(35, 1);
+    SetColor(0x4);
+    cout << "VUI LONG NHAP KHOANG THOI GIAN DE LIET KE HOA DON";
+    SetColor(0xF);
+    drawRectangle(0, 2, 30, 2);
+    drawRectangle(30, 2, 89, 2);
+    gotoxy(0, 2);
+    cout << char(195);
+    gotoxy(30, 2);
+    cout << char(194);
+    gotoxy(30, 4);
+    cout << char(193);
+    gotoxy(119, 2);
+    cout << char(180);
+    gotoxy(2, 3);
+    cout << "Nhap Ngay Thu Nhat";
+    gotoxy(32, 3);
+    cout << "Nam:           |Thang:         |Ngay:         ";
+    gotoxy(37, 3);
+    while (true)
+    {
+    namLap:
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+            // TAM DUNG SU DUNG NO DE DANH NEU DU TG
+            //  if (ch == UP_ARROW)
+            //  {
+            //      dateChooseTable(inputDate);
+            //  }
+            continue;
+        }
+        else if (ch == ESC)
+        {
+            clearBottomScreen();
+            return;
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            charInputDate[count] = '\0';
+            ngayDau.year = stoi(charInputDate);
+            if (ngayDau.year <= localTime->tm_year + 1900) // nam bat dau tu 1900 nen +1900 vao
+            {
+                gotoxy(55, 3);
+                count = 0;
+                while (true)
+                {
+                thangLap:
+                    ch = getch();
+                    if (ch == 224)
+                    {
+                        ch = getch();
+                        continue;
+                    }
+                    else if (ch == TAB)
+                    {
+                        gotoxy(55, 3);
+                        cout << "  ";
+                        gotoxy(37, 3);
+                        count = 0;
+                        cout << "    ";
+                        gotoxy(37, 3);
+                        goto namLap;
+                    }
+                    else if (ch == ESC)
+                    {
+                        clearBottomScreen();
+                        return;
+                    }
+                    else if (ch == ENTER && count > 0)
+                    {
+                        charInputDate[count] = '\0';
+                        ngayDau.month = stoi(charInputDate);
+                        if ((ngayDau.year == localTime->tm_year + 1900) && ngayDau.month > localTime->tm_mon + 1)
+                        {
+                            gotoxy(55, 3);
+                            cout << "  ";
+                            gotoxy(55, 3);
+                            count = 0;
+                            continue;
+                        }
+                        else if (ngayDau.month > 12)
+                        {
+                            gotoxy(55, 3);
+                            cout << "  ";
+                            gotoxy(55, 3);
+                            count = 0;
+                            continue;
+                        }
+                        else
+                        {
+                            gotoxy(70, 3);
+                            count = 0;
+                            //
+                            while (true)
+                            {
+                            ngayLap:
+                                ch = getch();
+                                if (ch == 224)
+                                {
+                                    ch = getch();
+                                    continue;
+                                }
+                                else if (ch == TAB)
+                                {
+
+                                    gotoxy(70, 3);
+                                    cout << "  ";
+                                    gotoxy(55, 3);
+                                    count = 0;
+                                    cout << "  ";
+                                    gotoxy(55, 3);
+                                    goto thangLap;
+                                }
+                                else if (ch == ESC)
+                                {
+                                    clearBottomScreen();
+                                    return;
+                                }
+                                else if (ch == ENTER && count > 0)
+                                {
+                                    charInputDate[count] = '\0';
+                                    ngayDau.day = stoi(charInputDate);
+                                    if (ngayDau.month == 2)
+                                    {
+                                        if (isNamNhuan(ngayDau.year) && ngayDau.day <= 29)
+                                        {
+                                            break;
+                                        }
+                                        else if (!isNamNhuan(ngayDau.year) && ngayDau.day <= 28)
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            gotoxy(70, 3);
+                                            cout << "  ";
+                                            gotoxy(70, 3);
+                                            count = 0;
+                                            continue;
+                                        }
+                                    }
+                                    else if (ngayDau.day <= 30 && (ngayDau.month == 4 || ngayDau.month == 6 || ngayDau.month == 9 || ngayDau.month == 11))
+                                    {
+                                        break;
+                                    }
+                                    else if (ngayDau.day <= 31)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        gotoxy(70, 3);
+                                        cout << "  ";
+                                        gotoxy(70, 3);
+                                        count = 0;
+                                        continue;
+                                    }
+                                }
+                                else if (ch == '\b' && count > 0)
+                                {
+                                    charInputDate[--count] = '\0';
+                                    cout << "\b \b";
+                                }
+                                else if (isdigit(ch) && count < 2)
+                                {
+                                    charInputDate[count++] = ch;
+                                    cout << ch;
+                                }
+                            };
+                        };
+                        break;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        charInputDate[--count] = '\0';
+                        cout << "\b \b";
+                    }
+                    else if (isdigit(ch) && count < 2)
+                    {
+                        charInputDate[count++] = ch;
+                        cout << ch;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                gotoxy(37, 3);
+                cout << "    ";
+                gotoxy(37, 3);
+                count = 0;
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            charInputDate[--count] = '\0';
+            cout << "\b \b";
+        }
+        else if (isdigit(ch) && count < 4)
+        {
+            charInputDate[count++] = ch;
+            cout << ch;
+        }
+    }
+
+    // Input 2
+    drawRectangle(0, 4, 30, 2);
+    drawRectangle(30, 4, 89, 2);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(30, 4);
+    cout << char(197);
+    gotoxy(30, 6);
+    cout << char(193);
+    gotoxy(119, 4);
+    cout << char(180);
+    count = 0;
+    gotoxy(2, 5);
+    cout << "Nhap Ngay Thu Hai";
+    gotoxy(32, 5);
+    cout << "Nam:           |Thang:         |Ngay:         ";
+    gotoxy(37, 5);
+    while (true)
+    {
+    namLap2:
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+            // TAM DUNG SU DUNG NO DE DANH NEU DU TG
+            //  if (ch == UP_ARROW)
+            //  {
+            //      dateChooseTable(inputDate);
+            //  }
+            continue;
+        }
+        else if (ch == TAB)
+        {
+            count = 0;
+            gotoxy(37, 5);
+            cout << "  ";
+            gotoxy(70, 3);
+            cout << "    ";
+            gotoxy(70, 3);
+            goto ngayLap;
+        }
+        else if (ch == ESC)
+        {
+            clearBottomScreen();
+            return;
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            charInputDate[count] = '\0';
+            ngayCuoi.year = stoi(charInputDate);
+            if (ngayCuoi.year <= localTime->tm_year + 1900 && ngayCuoi.year >= ngayDau.year) // nam bat dau tu 1900 nen +1900 vao
+            {
+                gotoxy(55, 5);
+                count = 0;
+                while (true)
+                {
+                thangLap2:
+                    ch = getch();
+                    if (ch == 224)
+                    {
+                        ch = getch();
+                        continue;
+                    }
+                    else if (ch == TAB)
+                    {
+                        gotoxy(55, 5);
+                        cout << "  ";
+                        gotoxy(37, 5);
+                        count = 0;
+                        cout << "    ";
+                        gotoxy(37, 5);
+                        goto namLap2;
+                    }
+                    else if (ch == ESC)
+                    {
+                        clearBottomScreen();
+                        return;
+                    }
+                    else if (ch == ENTER && count > 0)
+                    {
+                        charInputDate[count] = '\0';
+                        ngayCuoi.month = stoi(charInputDate);
+                        if (((ngayCuoi.year == localTime->tm_year + 1900) &&
+                             (ngayCuoi.month > localTime->tm_mon + 1)) ||
+                            (ngayCuoi.month < ngayDau.month && ngayCuoi.year == ngayDau.year))
+                        {
+                            gotoxy(55, 5);
+                            cout << "  ";
+                            gotoxy(55, 5);
+                            count = 0;
+                            continue;
+                        }
+                        else if (ngayCuoi.month > 12)
+                        {
+                            gotoxy(55, 5);
+                            cout << "  ";
+                            gotoxy(55, 5);
+                            count = 0;
+                            continue;
+                        }
+                        else
+                        {
+                            gotoxy(70, 5);
+                            count = 0;
+                            //
+                            while (true)
+                            {
+                            ngayLap2:
+                                ch = getch();
+                                if (ch == 224)
+                                {
+                                    ch = getch();
+                                    continue;
+                                }
+                                else if (ch == TAB)
+                                {
+
+                                    gotoxy(70, 5);
+                                    cout << "  ";
+                                    gotoxy(55, 5);
+                                    count = 0;
+                                    cout << "  ";
+                                    gotoxy(55, 5);
+                                    goto thangLap2;
+                                }
+                                else if (ch == ESC)
+                                {
+                                    clearBottomScreen();
+                                    return;
+                                }
+                                else if (ch == ENTER && count > 0)
+                                {
+                                    charInputDate[count] = '\0';
+                                    ngayCuoi.day = stoi(charInputDate);
+                                    if (ngayCuoi.month == 2)
+                                    {
+                                        if ((isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 29) &&
+                                            (ngayCuoi.year > ngayDau.year ||
+                                             (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                             (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                        {
+                                            break;
+                                        }
+                                        else if ((!isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 28) &&
+                                                 (ngayCuoi.year > ngayDau.year ||
+                                                  (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                                  (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            gotoxy(70, 5);
+                                            cout << "  ";
+                                            gotoxy(70, 5);
+                                            count = 0;
+                                            continue;
+                                        }
+                                    }
+                                    else if ((ngayCuoi.day <= 30 && (ngayCuoi.month == 4 || ngayCuoi.month == 6 || ngayCuoi.month == 9 || ngayCuoi.month == 11)) &&
+                                             (ngayCuoi.year > ngayDau.year ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                    {
+                                        break;
+                                    }
+                                    else if (ngayCuoi.day <= 31 &&
+                                             (ngayCuoi.year > ngayDau.year ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
+                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        gotoxy(70, 5);
+                                        cout << "  ";
+                                        gotoxy(70, 5);
+                                        count = 0;
+                                        continue;
+                                    }
+                                }
+                                else if (ch == '\b' && count > 0)
+                                {
+                                    charInputDate[--count] = '\0';
+                                    cout << "\b \b";
+                                }
+                                else if (isdigit(ch) && count < 2)
+                                {
+                                    charInputDate[count++] = ch;
+                                    cout << ch;
+                                }
+                            };
+                        };
+                        break;
+                    }
+                    else if (ch == '\b' && count > 0)
+                    {
+                        charInputDate[--count] = '\0';
+                        cout << "\b \b";
+                    }
+                    else if (isdigit(ch) && count < 2)
+                    {
+                        charInputDate[count++] = ch;
+                        cout << ch;
+                    }
+                }
+                break;
+            }
+            else
+            {
+                gotoxy(37, 5);
+                cout << "    ";
+                gotoxy(37, 5);
+                count = 0;
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            charInputDate[--count] = '\0';
+            cout << "\b \b";
+        }
+        else if (isdigit(ch) && count < 4)
+        {
+            charInputDate[count++] = ch;
+            cout << ch;
+        }
+    }
+    // XU Li
+    drawRectangle(0, 6, 119, 2);
+    drawRectangle(0, 8, 59, 2);
+    drawRectangle(59, 8, 60, 2);
+    drawRectangle(0, 10, 24, 2);
+    drawRectangle(24, 10, 14, 2);
+    drawRectangle(38, 10, 8, 2);
+    drawRectangle(46, 10, 36, 2);
+    drawRectangle(82, 10, 37, 2);
+    drawRectangle(0, 12, 24, 14);
+    drawRectangle(24, 12, 14, 14);
+    drawRectangle(38, 12, 8, 14);
+    drawRectangle(46, 12, 36, 14);
+    drawRectangle(82, 12, 37, 14);
+    gotoxy(0, 6);
+    cout << char(195);
+    gotoxy(0, 8);
+    cout << char(195);
+    gotoxy(0, 10);
+    cout << char(195);
+    gotoxy(0, 12);
+    cout << char(195);
+    gotoxy(119, 6);
+    cout << char(180);
+    gotoxy(119, 8);
+    cout << char(180);
+    gotoxy(119, 10);
+    cout << char(180);
+    gotoxy(119, 12);
+    cout << char(180);
+    gotoxy(30, 6);
+    cout << char(193);
+    gotoxy(59, 8);
+    cout << char(194);
+    gotoxy(59, 10);
+    cout << char(193);
+    gotoxy(24, 10);
+    cout << char(194);
+    gotoxy(38, 10);
+    cout << char(194);
+    gotoxy(46, 10);
+    cout << char(194);
+    gotoxy(82, 10);
+    cout << char(194);
+    gotoxy(24, 12);
+    cout << char(197);
+    gotoxy(38, 12);
+    cout << char(197);
+    gotoxy(46, 12);
+    cout << char(197);
+    gotoxy(82, 12);
+    cout << char(197);
+    gotoxy(24, 26);
+    cout << char(193);
+    gotoxy(38, 26);
+    cout << char(193);
+    gotoxy(46, 26);
+    cout << char(193);
+    gotoxy(82, 26);
+    cout << char(193);
+
+    // Số HĐ 20		Ngày lập xx/xx/xxxx 10     Loại HĐ 4		Họ tên NV lập 31		Trị giá hóa đơn 30
+    //
+    gotoxy(34, 7);
+    SetColor(0x4);
+    cout << "BANG LIET KE HOA DON TRONG KHOANG THOI GIAN (dd/mm/yyyy)";
+    SetColor(0xF);
+
+    gotoxy(7, 11);
+    cout << "So Hoa Don";
+    gotoxy(27, 11);
+    cout << "Ngay Lap";
+    gotoxy(39, 11);
+    cout << "Loai HD";
+    gotoxy(52, 11);
+    cout << "Ho Va Ten Nhan Vien Lap";
+    gotoxy(93, 11);
+    cout << "Tri Gia Hoa Don";
+
+    gotoxy(20, 9);
+    cout << "TU NGAY: ";
+    if (ngayDau.day < 10)
+    {
+        cout << '0';
+    }
+    cout << ngayDau.day << '/';
+    if (ngayDau.month < 10)
+    {
+        cout << '0';
+    }
+    cout << ngayDau.month << '/';
+    cout << ngayDau.year;
+
+    gotoxy(80, 9);
+    cout << "DEN NGAY: ";
+    if (ngayCuoi.day < 10)
+    {
+        cout << '0';
+    }
+    cout << ngayCuoi.day << '/';
+    if (ngayCuoi.month < 10)
+    {
+        cout << '0';
+    }
+    cout << ngayCuoi.month << '/';
+    cout << ngayCuoi.year;
+
+    //
+    count = 0;
+    int max = 13;
+    HoaDon *currentHoaDon = ds_hd;
+    int sizeARR = 1;
+    int Page = 1;
+    int this_nhanvien;
+    HoaDon **firstPagePosHoaDon = new HoaDon *[1];
+    while (currentHoaDon != nullptr && count < max)
+    {
+        this_nhanvien = TimNhanVienTheoSoHD(ds_nv, soLuongNV, currentHoaDon->soHD);
+        CT_HoaDon *current_CT = currentHoaDon->ds_ct_hoadon;
+        double tongTriGia = 0;
+
+        if (Page == sizeARR && currentHoaDon != nullptr)
+        {
+            firstPagePosHoaDon[sizeARR - 1] = currentHoaDon;
+            expandArray(firstPagePosHoaDon, sizeARR, sizeARR + 1);
+            sizeARR++;
+        }
+
+        if (NamTrongKhoangTG(currentHoaDon->date, ngayDau, ngayCuoi))
+        {
+            while (current_CT != nullptr)
+            {
+                tongTriGia += current_CT->soLuong * current_CT->donGia * (1 + (current_CT->vAT / 100.0));
+                current_CT = current_CT->next;
+            }
+        }
+
+        gotoxy(2, 26 - (max - count));
+        cout << currentHoaDon->soHD;
+        gotoxy(26, 26 - (max - count));
+        if (currentHoaDon->date.day < 10)
+        {
+            cout << '0';
+        }
+        cout << ngayDau.day << '/';
+        if (currentHoaDon->date.month < 10)
+        {
+            cout << '0';
+        }
+        cout << currentHoaDon->date.month << "/";
+        cout << setw(4) << setfill('0') << currentHoaDon->date.year;
+        gotoxy(40, 26 - (max - count));
+        if (currentHoaDon->loai == n)
+        {
+            cout << "Nhap";
+        }
+        else
+        {
+            cout << "Xuat";
+        }
+        gotoxy(48, 26 - (max - count));
+        cout << ds_nv[this_nhanvien]->ho << " " << ds_nv[this_nhanvien]->ten;
+        gotoxy(84, 26 - (max - count));
+        cout << fixed << setprecision(2) << tongTriGia;
+
+        count++;
+        currentHoaDon = currentHoaDon->next;
+
+        if (count >= max || currentHoaDon == nullptr)
+        {
+            while (true)
+            {
+                ch = getch();
+                if (ch == 224)
+                {
+                    ch = getch();
+                    if (ch == RIGHT_ARROW && currentHoaDon != nullptr)
+                    {
+                        count += 13;
+                        max = count + 13;
+                        Page += 1;
+                        clearThongKeTable();
+                        break;
+                    }
+                    else if (ch == LEFT_ARROW && Page > 1)
+                    {
+                        max = max - 13;
+                        count = max - 13;
+                        Page -= 1;
+                        currentHoaDon = firstPagePosHoaDon[Page - 1];
+                        clearThongKeTable();
+                        break;
+                    }
+                }
+                else if (ch == TAB)
+                {
+                    goto start;
+                }
+                else if (ch == ESC)
+                {
+                    return;
+                }
+            }
+            continue;
+        }
+    }
+}
+
+void ThongKeDoanhThuTrong1Nam(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, DanhSachHoaDon ds_hd, int soLuongVatTu, int SoLuongNV)
+{
+    unsigned char ch;
+    int count;
+    int years;
+    char charInputDate[6];
+start:
+    clrscr();
+    count = 0;
+
+    //
+    //
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Accept  ";
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Change DATE  ";
+    SetColor(0xA);
+    cout << "DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape From Board    ";
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "<--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+    //
+    drawRectangle(0, 0, 119, 2);
+    gotoxy(40, 1);
+    SetColor(0x4);
+    cout << "BANG THONG KE DOANH THU NAM: ";
+    SetColor(0xF);
+    gotoxy(69, 1);
+    while (true)
+    {
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            charInputDate[count] = '\0';
+            years = stoi(charInputDate);
+            if (years > 0 && years <= 2024)
+            {
+                gotoxy(1, 3);
+                cout << "                   ";
+                break;
+            }
+            else
+            {
+                gotoxy(1, 3);
+                cout << "So Nam Khong Hop Le";
+                gotoxy(69 + count, 1);
+                continue;
+            }
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            cout << "\b \b";
+            charInputDate[--count] = '\0';
+        }
+        else if (isdigit(ch) && count < 4)
+        {
+            charInputDate[count++] = ch;
+            cout << ch;
+        }
+    }
+    //
+    drawRectangle(0, 2, 59, 2);
+    drawRectangle(59, 2, 60, 2);
+    drawRectangle(0, 4, 59, 13);
+    drawRectangle(59, 4, 60, 13);
+    gotoxy(0, 2);
+    cout << char(195);
+    gotoxy(119, 2);
+    cout << char(180);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(119, 4);
+    cout << char(180);
+    gotoxy(59, 2);
+    cout << char(194);
+    gotoxy(59, 4);
+    cout << char(197);
+    gotoxy(59, 17);
+    cout << char(193);
+    gotoxy(27, 3);
+    cout << "THANG";
+    gotoxy(84, 3);
+    cout << "DOANH THU";
+    // Khai Bao Tien Xu Ly
+    double doanhThuThang[12] = {0};
+    // Xu Ly
+    HoaDon *currentHoaDon = ds_hd;
+    while (currentHoaDon != nullptr)
+    {
+        if (currentHoaDon->date.year == years)
+        {
+            CT_HoaDon *currentCT = currentHoaDon->ds_ct_hoadon;
+            while (currentCT != nullptr)
+            {
+                if (currentHoaDon->loai == n)
+                {
+                    doanhThuThang[currentHoaDon->date.month - 1] -= currentCT->soLuong * currentCT->donGia * (1 + (currentCT->vAT / 100.0));
+                }
+                else
+                {
+                    doanhThuThang[currentHoaDon->date.month - 1] += currentCT->soLuong * currentCT->donGia * (1 + (currentCT->vAT / 100.0));
+                }
+                currentCT = currentCT->next;
+            }
+        }
+        currentHoaDon = currentHoaDon->next;
+    }
+
+    for (int i = 0; i < 12; i++)
+    {
+        gotoxy(2, 5 + i);
+        cout << "Thang " << i + 1;
+        gotoxy(61, 5 + i);
+        cout << fixed << setprecision(2) << doanhThuThang[i];
+    }
+
+    while (true)
+    {
+        ch = getch();
+        if (ch == TAB)
+        {
+            goto start;
+        }
+        else if (ch == ESC)
+        {
+            return;
+        }
     }
 }
 
@@ -5374,10 +7139,9 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             }
             case 4:
             {
-                gotoxy(0, 0);
                 clrscr();
-                cout << "In ra 10 vat tu co doanh thu cao nhat";
-                Sleep(5000);
+                gotoxy(0, 0);
+                In10VatTuDoanhThuCaoNhat(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
                 clrscr();
                 break;
             }
@@ -5431,7 +7195,6 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             }
             }
             //
-
             DrawFirstUI(choose1);
             break;
         }
@@ -5468,8 +7231,13 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 }
                 else if (choose2 == 2)
                 {
-                    InHoaDonTheoSoHoaDon(ds_hd);
+                    InHoaDonTheoSoHoaDon(ds_hd, ds_vt, ds_nv, soLuongNhanVienCount);
                     clrscr();
+                    continue;
+                }
+                else if (choose2 == 3)
+                {
+                    ThongKeHoaDonTrong1KhoangTG(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
                     continue;
                 }
                 else if (choose2 == -1)
@@ -5484,25 +7252,21 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         }
         case 3:
         {
-            gotoxy(30, 10);
             clrscr();
-            int pos = searchNhanVienFromDSNV(ds_nv, "1", soLuongNhanVienGlobalCount);
-            HoaDon *nowhd = ds_nv[pos]->ds_hoadon;
-
-            if (nowhd == nullptr)
-            {
-                cout << "RONG";
-                DrawFirstUI(choose1);
-                break;
-            }
-
-            while (nowhd != nullptr)
-            {
-                cout << nowhd->soHD << endl;
-                nowhd = nowhd->next;
-            }
+            ThongKeDoanhThuTrong1Nam(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
+            clrscr();
+            DrawFirstUI(choose1);
+            break;
+        }
+        case 4:
+        {
+            clrscr();
+            gotoxy(0, 0);
+            cout << "Sao Luu Du Lieu";
+            saveVatTuToFile(ds_vt, "vattu.txt");
+            saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
             getch();
-
+            clrscr();
             DrawFirstUI(choose1);
             break;
         }
@@ -5520,64 +7284,203 @@ int main()
     // ThemNhanVien(ds_nv, soLuongNhanVienGlobalCount);
     // clrscr();
     // ThemNhanVien(ds_nv, soLuongNhanVienGlobalCount);
+    Date d1;
+    d1.day = 2;
+    d1.month = 1;
+    d1.year = 980;
+    Date d2;
+    d2.day = 3;
+    d2.month = 2;
+    d2.year = 980;
+    Date d3;
+    d3.day = 3;
+    d3.month = 3;
+    d3.year = 980;
+    Date d4;
+    d4.day = 3;
+    d4.month = 4;
+    d4.year = 980;
+    Date d5;
+    d5.day = 3;
+    d5.month = 5;
+    d5.year = 980;
+    Date d6;
+    d6.day = 3;
+    d6.month = 6;
+    d6.year = 980;
+    Date d7;
+    d7.day = 3;
+    d7.month = 7;
+    d7.year = 980;
+    Date d8;
+    d8.day = 3;
+    d8.month = 8;
+    d8.year = 980;
 
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-001", "Luong Chi", "Vinh", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("1", "Luong Chi", "Vinh", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-002", "Nguyen Minh", "Tuan", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-003", "Tran Quoc", "Duc", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-004", "Pham Thi", "Linh", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-005", "Le Van", "Khanh", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-006", "Do Thi", "Nhung", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-007", "Luong Chi", "Tuan", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-008", "Nguyen Minh", "Anh", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-009", "Tran Quoc", "Vinh", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-010", "Pham Thi", "Hoa", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-011", "Le Van", "Khanh", nam, nullptr), soLuongNhanVienGlobalCount);
+    CT_HoaDon *i1 = newDanhSachCTHoaDon("vt-0000022", 10, 40.234, 20.12);
+    Them_CTHD(i1, "vt-0000001", 10, 40.234, 123.12);
+    Them_CTHD(i1, "vt-0000002", 20, 232, 345.12);
+    Them_CTHD(i1, "vt-0000003", 10, 40.123, 254.12);
+    Them_CTHD(i1, "vt-0000004", 10, 124.234, 623.12);
+    Them_CTHD(i1, "vt-0000005", 10, 6212345.234, 7345.12);
+    Them_CTHD(i1, "vt-0000006", 12, 11324.234, 2534.12);
+    Them_CTHD(i1, "vt-0000007", 10, 5113234.234, 654.12);
+    Them_CTHD(i1, "vt-0000008", 13, 14132.234, 845.12);
+    Them_CTHD(i1, "vt-0000009", 10, 3.234, 364.12);
+    Them_CTHD(i1, "vt-0000010", 10, 134.234, 364.12);
+    Them_CTHD(i1, "vt-0000011", 10, 143.234, 2634.12);
+    Them_CTHD(i1, "vt-0000012", 32, 1432.234, 263.12);
+    Them_CTHD(i1, "vt-0000013", 22, 1243.234, 3745.12);
+    Them_CTHD(i1, "vt-0000014", 51, 1423.234, 2653.12);
+    Them_CTHD(i1, "vt-0000015", 10, 143.234, 4865.12);
+    Them_CTHD(i1, "vt-0000016", 12, 51.234, 485.12);
+    Them_CTHD(i1, "vt-0000017", 25, 1523.234, 8465.12);
+    Them_CTHD(i1, "vt-0000018", 10, 1253.234, 6345.12);
+    Them_CTHD(i1, "vt-0000019", 10, 1235.234, 3645.12);
+    Them_CTHD(i1, "vt-0000020", 10, 1235.234, 6345.12);
+    Them_CTHD(i1, "vt-0000021", 10, 25476.234, 3645.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("1", d2, x, i1));
+    HoaDon *new_hd_copy = newHoaDon("1", d2, x, i1);
+
+    CT_HoaDon *in2 = newDanhSachCTHoaDon("vt-0000022", 10, 40.234, 20.12);
+    Them_CTHD(in2, "vt-0000001", 10, 40.234, 123.12);
+    Them_CTHD(in2, "vt-0000002", 20, 232, 345.12);
+    Them_CTHD(in2, "vt-0000003", 10, 40.123, 254.12);
+    Them_CTHD(in2, "vt-0000004", 10, 124.234, 623.12);
+    Them_CTHD(in2, "vt-0000005", 10, 62345.234, 7345.12);
+    Them_CTHD(in2, "vt-0000006", 12, 124.234, 2534.12);
+    Them_CTHD(in2, "vt-0000007", 10, 5134.234, 654.12);
+    Them_CTHD(in2, "vt-0000008", 13, 14.234, 845.12);
+    Them_CTHD(in2, "vt-0000009", 10, 3.234, 364.12);
+    Them_CTHD(in2, "vt-0000010", 10, 134.234, 364.12);
+    Them_CTHD(in2, "vt-0000011", 10, 143.234, 2634.12);
+    Them_CTHD(in2, "vt-0000012", 32, 1432.234, 263.12);
+    Them_CTHD(in2, "vt-0000013", 22, 1243.234, 3745.12);
+    Them_CTHD(in2, "vt-0000014", 51, 1423.234, 2653.12);
+    Them_CTHD(in2, "vt-0000015", 10, 143.234, 4865.12);
+    Them_CTHD(in2, "vt-0000016", 12, 51.234, 485.12);
+    Them_CTHD(in2, "vt-0000017", 25, 1523.234, 8465.12);
+    Them_CTHD(in2, "vt-0000018", 10, 1253.234, 6345.12);
+    Them_CTHD(in2, "vt-0000019", 10, 1235.234, 3645.12);
+    Them_CTHD(in2, "vt-0000020", 10, 1235.234, 6345.12);
+    Them_CTHD(in2, "vt-0000021", 10, 25476.234, 3645.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-101", d1, n, in2));
+    HoaDon *new_hd_copy1 = newHoaDon("nv-nv-101", d1, n, in2);
+
+    CT_HoaDon *i3 = newDanhSachCTHoaDon("vt-0000001", 10, 40.234, 20.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-103", d2, x, i3));
+    HoaDon *new_hd_copy3 = newHoaDon("nv-nv-103", d2, x, i3);
+    CT_HoaDon *i4 = newDanhSachCTHoaDon("vt-0000003", 10, 40.234, 20.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-104", d3, x, i4));
+    HoaDon *new_hd_copy4 = newHoaDon("nv-nv-104", d3, x, i4);
+    CT_HoaDon *i5 = newDanhSachCTHoaDon("vt-0000002", 10, 40.234, 20.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-105", d8, n, i5));
+    HoaDon *new_hd_copy5 = newHoaDon("nv-nv-105", d8, n, i5);
+    CT_HoaDon *i6 = newDanhSachCTHoaDon("vt-0000005", 10, 40.234, 20.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-106", d5, x, i6));
+    HoaDon *new_hd_copy6 = newHoaDon("nv-nv-106", d5, x, i6);
+    CT_HoaDon *i7 = newDanhSachCTHoaDon("vt-0000003", 10, 40.234, 20.12);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-107", d4, n, i7));
+    HoaDon *new_hd_copy7 = newHoaDon("nv-nv-107", d4, n, i7);
+    CT_HoaDon *i8 = newDanhSachCTHoaDon("vt-0000008", 7, 12.500, 4.75);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-108", d7, x, i8));
+    HoaDon *new_hd_copy8 = newHoaDon("nv-nv-108", d7, x, i8);
+    CT_HoaDon *i9 = newDanhSachCTHoaDon("vt-0000009", 9, 18.000, 9.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-109", d6, x, i9));
+    HoaDon *new_hd_copy9 = newHoaDon("nv-nv-109", d6, x, i9);
+    CT_HoaDon *i10 = newDanhSachCTHoaDon("vt-0000010", 14, 22.000, 12.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-110", d1, n, i10));
+    HoaDon *new_hd_copy10 = newHoaDon("nv-nv-110", d1, n, i10);
+    CT_HoaDon *i11 = newDanhSachCTHoaDon("vt-0000011", 6, 8.500, 3.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-111", d2, x, i11));
+    HoaDon *new_hd_copy11 = newHoaDon("nv-nv-111", d2, x, i11);
+    CT_HoaDon *i12 = newDanhSachCTHoaDon("vt-0000012", 11, 27.000, 14.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-112", d1, x, i12));
+    HoaDon *new_hd_copy12 = newHoaDon("nv-nv-112", d1, x, i12);
+    CT_HoaDon *i13 = newDanhSachCTHoaDon("vt-0000013", 4, 20.000, 10.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-113", d1, n, i13));
+    HoaDon *new_hd_copy13 = newHoaDon("nv-nv-113", d1, n, i13);
+    CT_HoaDon *i14 = newDanhSachCTHoaDon("vt-0000014", 2, 50.000, 20.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-114", d2, x, i14));
+    HoaDon *new_hd_copy14 = newHoaDon("nv-nv-114", d2, x, i14);
+    CT_HoaDon *i15 = newDanhSachCTHoaDon("vt-0000015", 3, 75.000, 35.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-115", d1, n, i15));
+    HoaDon *new_hd_copy15 = newHoaDon("nv-nv-115", d1, n, i15);
+    CT_HoaDon *i16 = newDanhSachCTHoaDon("vt-0000016", 16, 90.000, 45.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-116", d2, x, i16));
+    HoaDon *new_hd_copy16 = newHoaDon("nv-nv-116", d2, x, i16);
+    CT_HoaDon *i17 = newDanhSachCTHoaDon("vt-0000017", 13, 12.000, 7.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-117", d2, n, i17));
+    HoaDon *new_hd_copy17 = newHoaDon("nv-nv-117", d2, n, i17);
+    CT_HoaDon *i18 = newDanhSachCTHoaDon("vt-0000018", 1, 19.000, 5.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-118", d1, x, i18));
+    HoaDon *new_hd_copy18 = newHoaDon("nv-nv-118", d1, x, i18);
+    CT_HoaDon *i19 = newDanhSachCTHoaDon("vt-0000019", 17, 32.000, 15.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-119", d2, x, i19));
+    HoaDon *new_hd_copy19 = newHoaDon("nv-nv-119", d2, x, i19);
+    CT_HoaDon *i20 = newDanhSachCTHoaDon("vt-0000020", 19, 28.000, 10.00);
+    InsertHoaDonVaoDSHD(ds_hd, newHoaDon("nv-nv-120", d1, n, i20));
+    HoaDon *new_hd_copy20 = newHoaDon("nv-nv-120", d1, n, i20);
+
+    //
+
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-001", "Luong Chi", "Vinh", nam, new_hd_copy18), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("1", "Luong Chi", "Vinh", nam, new_hd_copy), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("2", "Nguyen Minh", "Tuan", nu, new_hd_copy1), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-003", "Tran Quoc", "Duc", nam, new_hd_copy3), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-004", "Pham Thi", "Linh", nu, new_hd_copy4), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-005", "Le Van", "Khanh", nam, new_hd_copy5), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-006", "Do Thi", "Nhung", nu, new_hd_copy6), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-007", "Luong Chi", "Tuan", nam, new_hd_copy8), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-008", "Nguyen Minh", "Anh", nu, new_hd_copy7), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-009", "Tran Quoc", "Vinh", nam, new_hd_copy19), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-010", "Pham Thi", "Hoa", nu, new_hd_copy16), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-011", "Le Van", "Khanh", nam, new_hd_copy17), soLuongNhanVienGlobalCount);
     insertNhanVienToDSNV(ds_nv, newNhanVien("nv-012", "Do Thi", "Linh", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-013", "Luong Chi", "Duc", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-014", "Nguyen Minh", "Tuan", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-015", "Tran Quoc", "Vinh", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-016", "Pham Thi", "Anh", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-017", "Le Van", "Duc", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-018", "Do Thi", "Hoa", nu, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-019", "Luong Chi", "Khanh", nam, nullptr), soLuongNhanVienGlobalCount);
-    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-020", "Nguyen Minh", "Linh", nu, nullptr), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-013", "Luong Chi", "Duc", nam, new_hd_copy14), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-014", "Nguyen Minh", "Tuan", nam, new_hd_copy9), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-015", "Tran Quoc", "Vinh", nam, new_hd_copy10), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-016", "Pham Thi", "Anh", nu, new_hd_copy11), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-017", "Le Van", "Duc", nam, new_hd_copy13), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-018", "Do Thi", "Hoa", nu, new_hd_copy20), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-019", "Luong Chi", "Khanh", nam, new_hd_copy12), soLuongNhanVienGlobalCount);
+    insertNhanVienToDSNV(ds_nv, newNhanVien("nv-020", "Nguyen Minh", "Linh", nu, new_hd_copy15), soLuongNhanVienGlobalCount);
     //
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000001", "xe dap", "chiec", 100));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000002", "may tinh", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000003", "dien thoai", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000004", "sach", "cuon", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000005", "tu quang", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000006", "ban ghe", "cai", 1));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000002", "may tinh", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000003", "dien thoai", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000004", "sach", "cuon", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000005", "tu quang", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000006", "ban ghe", "cai", 100));
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000007", "tivi", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000008", "tu lanh", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000009", "may giat", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000010", "de giuong", "chiec", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000011", "bon rua", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000012", "ghe sofa", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000013", "tu xe", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000014", "ke sach", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000015", "dong ho", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000016", "bong den", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000017", "tu lam", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000018", "bi ve", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000019", "may hut bui", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000020", "quat dien", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000021", "dieu hoa", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000022", "bep ga", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000023", "may xay sinh to", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000024", "bep dien", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000025", "ket sat", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000026", "binh nuoc", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000027", "ghe xep", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000028", "ban an", "chiec", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000029", "ban tra", "chiec", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000030", "may pha ca phe", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000031", "khung tranh", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000032", "ke chua do", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000033", "chai nuoc", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000034", "cai thi", "cai", 1));
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000035", "cai nia", "cai", 1));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000008", "tu lanh", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000009", "may giat", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000010", "de giuong", "chiec", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000011", "bon rua", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000012", "ghe sofa", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000013", "tu xe", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000014", "ke sach", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000015", "dong ho", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000016", "bong den", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000017", "tu lam", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000018", "bi ve", "cai", 1001));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000019", "may hut bui", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000020", "quat dien", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000021", "dieu hoa", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000022", "bep ga", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000023", "may xay sinh to", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000024", "bep dien", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000025", "ket sat", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000026", "binh nuoc", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000027", "ghe xep", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000028", "ban an", "chiec", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000029", "ban tra", "chiec", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000030", "may pha ca phe", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000031", "khung tranh", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000032", "ke chua do", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000033", "chai nuoc", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000034", "cai thi", "cai", 100));
+    insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000035", "cai nia", "cai", 100));
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000036", "bat an", "cai", 1));
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000037", "coc uong", "cai", 1));
     insertDanhSachVatTu(ds_vt, newDanhSachVatTu("vt-0000038", "ro trai cay", "cai", 1));
