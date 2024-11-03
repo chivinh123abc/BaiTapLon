@@ -4,7 +4,7 @@
 
 // Khoi tao danh sach Chi Tiet Hoa Don moi;
 
-DanhSach_CT_HoaDon newDanhSachCTHoaDon(const char maVT[11], int soLuong, double donGia, double vAT)
+DanhSach_CT_HoaDon newDanhSachCTHoaDon(const char maVT[], int soLuong, double donGia, double vAT)
 {
     DanhSach_CT_HoaDon ds_cthoadon = new CT_HoaDon;
     strcpy(ds_cthoadon->maVT, maVT);
@@ -84,7 +84,7 @@ bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, CT_HoaDon *&CT_HoaDonMoi)
     return true;
 }
 
-void Them_CTHD_CanMultipleVariable(DanhSach_CT_HoaDon &ds_cthoadon, CT_HoaDon *&CT_HoaDonMoi)
+void Them_CTHD_CanMultipleVariable(DanhSach_CT_HoaDon &ds_cthoadon, CT_HoaDon *CT_HoaDonMoi)
 {
     CT_HoaDonMoi->next = ds_cthoadon;
     ds_cthoadon = CT_HoaDonMoi;

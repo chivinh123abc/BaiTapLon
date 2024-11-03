@@ -177,13 +177,12 @@ void saveAllDataToFile(DanhSachNhanVien ds, const char *fileName, int soLuongNV)
     cout << "Thanh cong" << endl;
 }
 
-void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLuongNV, DanhSachHoaDon ds_hd, DanhSach_CT_HoaDon ds_ct_hd)
+void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLuongNV, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct_hd)
 {
-    char buffer[256];
-
-    while (inFile.getline(buffer, 256))
+    char buffer[255];
+    while (inFile.getline(buffer, 255))
     {
-        // DOC NHAN VIEN
+    start:
         if (buffer[0] == '#')
         {
             char inputMaNV[21];
@@ -191,7 +190,8 @@ void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLu
             char inputTen[11];
             char inputPhai1[4];
             Phai inputPhai2;
-            sscanf(buffer, "#%[^|]|%[^|]|%[^|]|%3s", inputMaNV, inputHo, inputTen, inputPhai1);
+
+            sscanf(buffer, "#%20[^|]|%20[^|]|%10[^|]|%5s", inputMaNV, inputHo, inputTen, inputPhai1);
             if (strcmp(inputPhai1, "nam") == 0)
             {
                 inputPhai2 = nam;
@@ -201,51 +201,67 @@ void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLu
                 inputPhai2 = nu;
             }
 
-            while (inFile.getline(buffer, 256))
+            HoaDon *new_hoadon = nullptr;
+            while (inFile.getline(buffer, 255))
             {
                 if (buffer[0] == '&')
                 {
-                    char soHD[21];
-                    char loaiT[5];
-                    LoaiHoaDon loai;
+                    char inputSoHD[21];
+                    Date inputDate;
+                    LoaiHoaDon inputLoai;
+                    char inputLoai1[6];
 
-                    int day, month, year;
-                    sscanf(buffer, "&%[^|]|%d|%d|%d|%s", soHD, &day, &month, &year, loaiT);
-                    if (strcmp(loaiT, "nhap") == 0)
+                    sscanf(buffer, "&%20[^|]|%d|%d|%d|%5s", inputSoHD, &inputDate.day, &inputDate.month, &inputDate.year, inputLoai1);
+                    if (strcmp(inputLoai1, "nhap") == 0)
                     {
-                        loai = n;
+                        inputLoai = n;
                     }
                     else
                     {
-                        loai = x;
+                        inputLoai = x;
                     }
-
-                    while (inFile.getline(buffer, 256))
+                    //
+                    CT_HoaDon *new_ct = nullptr;
+                    while (inFile.getline(buffer, 255))
                     {
                         if (buffer[0] == '!')
                         {
                             char maVT[11];
-                            int soLuong;
-                            double donGia;
-                            double vAT;
-                            sscanf(buffer, "!%[^|]|%s|%d|%f|%f", maVT, &soLuong, &donGia, &vAT);
+                            int inputSoLuong;
+                            double inputDonGia;
+                            double inputVAT;
+
+                            sscanf(buffer, "!%10[^|]|%d|%lf|%lf", maVT, &inputSoLuong, &inputDonGia, &inputVAT);
+                            Them_CTHD_CanMultipleVariable(new_ct, newDanhSachCTHoaDon(maVT, inputSoLuong, inputDonGia, inputVAT));
                         }
-                        else if (buffer[0] == '#' || buffer[0] == '&')
+
+                        if (buffer[0] == '#')
+                        {
+                            break;
+                        }
+
+                        if (buffer[0] == '&')
                         {
                             break;
                         }
                     }
+                    InsertHoaDonVaoDSHD(new_hoadon, newHoaDon(inputSoHD, inputDate, inputLoai, new_ct));
+                    CT_HoaDon *new_ct_copy = new CT_HoaDon(*new_ct);
+                    InsertHoaDonVaoDSHD(ds_hd, newHoaDon(inputSoHD, inputDate, inputLoai, new_ct_copy));
                 }
-                else if (buffer[0] == '#')
+
+                if (buffer[0] == '#')
                 {
                     break;
                 }
             }
+            insertNhanVienToDSNV(ds_nv, newNhanVien(inputMaNV, inputHo, inputTen, inputPhai2, new_hoadon), soLuongNV);
+            goto start;
         }
     }
 }
 
-void insertAllDataByFile(DanhSachNhanVien &ds_nv, const char *fileName, int &soLuongNV, DanhSachHoaDon ds_hd, DanhSach_CT_HoaDon ds_ct_hd)
+void insertAllDataByFile(DanhSachNhanVien &ds_nv, const char *fileName, int &soLuongNV, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct_hd)
 {
     ifstream inFile(fileName);
     if (!inFile.is_open())
