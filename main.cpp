@@ -7279,16 +7279,16 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         {
             clrscr();
             gotoxy(0, 0);
-            // cout << "Sao Luu Du Lieu";
-            // saveVatTuToFile(ds_vt, "vattu.txt");
-            // saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
-            int a = searchNhanVienFromDSNV(ds_nv, "1", soLuongNhanVienCount);
-            DanhSachHoaDon hoadon = ds_nv[a]->ds_hoadon;
-            while (hoadon != nullptr)
-            {
-                cout << hoadon->soHD << endl;
-                hoadon = hoadon->next;
-            }
+            cout << "Sao Luu Du Lieu";
+            saveVatTuToFile(ds_vt, "vattu.txt");
+            saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
+            // int a = searchNhanVienFromDSNV(ds_nv, "1", soLuongNhanVienCount);
+            // DanhSachHoaDon hoadon = ds_nv[a]->ds_hoadon;
+            // while (hoadon != nullptr)
+            // {
+            //     cout << hoadon->soHD << endl;
+            //     hoadon = hoadon->next;
+            // }
             getch();
             clrscr();
             DrawFirstUI(choose1);
