@@ -204,6 +204,7 @@ void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLu
             HoaDon *new_hoadon = nullptr;
             while (inFile.getline(buffer, 255))
             {
+            start2:
                 if (buffer[0] == '&')
                 {
                     char inputSoHD[21];
@@ -248,6 +249,7 @@ void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLu
                     InsertHoaDonVaoDSHD(new_hoadon, newHoaDon(inputSoHD, inputDate, inputLoai, new_ct));
                     CT_HoaDon *new_ct_copy = new CT_HoaDon(*new_ct);
                     InsertHoaDonVaoDSHD(ds_hd, newHoaDon(inputSoHD, inputDate, inputLoai, new_ct_copy));
+                    goto start2;
                 }
 
                 if (buffer[0] == '#')

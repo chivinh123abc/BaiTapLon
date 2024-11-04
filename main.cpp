@@ -6853,55 +6853,55 @@ start:
     HoaDon **firstPagePosHoaDon = new HoaDon *[1];
     while (currentHoaDon != nullptr && count < max)
     {
-        this_nhanvien = TimNhanVienTheoSoHD(ds_nv, soLuongNV, currentHoaDon->soHD);
-        CT_HoaDon *current_CT = currentHoaDon->ds_ct_hoadon;
-        double tongTriGia = 0;
-
-        if (Page == sizeARR && currentHoaDon != nullptr)
-        {
-            firstPagePosHoaDon[sizeARR - 1] = currentHoaDon;
-            expandArray(firstPagePosHoaDon, sizeARR, sizeARR + 1);
-            sizeARR++;
-        }
-
         if (NamTrongKhoangTG(currentHoaDon->date, ngayDau, ngayCuoi))
         {
+            this_nhanvien = TimNhanVienTheoSoHD(ds_nv, soLuongNV, currentHoaDon->soHD);
+            CT_HoaDon *current_CT = currentHoaDon->ds_ct_hoadon;
+            double tongTriGia = 0;
+
+            if (Page == sizeARR && currentHoaDon != nullptr)
+            {
+                firstPagePosHoaDon[sizeARR - 1] = currentHoaDon;
+                expandArray(firstPagePosHoaDon, sizeARR, sizeARR + 1);
+                sizeARR++;
+            }
+
             while (current_CT != nullptr)
             {
                 tongTriGia += current_CT->soLuong * current_CT->donGia * (1 + (current_CT->vAT / 100.0));
                 current_CT = current_CT->next;
             }
-        }
 
-        gotoxy(2, 26 - (max - count));
-        cout << currentHoaDon->soHD;
-        gotoxy(26, 26 - (max - count));
-        if (currentHoaDon->date.day < 10)
-        {
-            cout << '0';
-        }
-        cout << ngayDau.day << '/';
-        if (currentHoaDon->date.month < 10)
-        {
-            cout << '0';
-        }
-        cout << currentHoaDon->date.month << "/";
-        cout << setw(4) << setfill('0') << currentHoaDon->date.year;
-        gotoxy(40, 26 - (max - count));
-        if (currentHoaDon->loai == n)
-        {
-            cout << "Nhap";
-        }
-        else
-        {
-            cout << "Xuat";
-        }
-        gotoxy(48, 26 - (max - count));
-        cout << ds_nv[this_nhanvien]->ho << " " << ds_nv[this_nhanvien]->ten;
-        gotoxy(84, 26 - (max - count));
-        cout << fixed << setprecision(2) << tongTriGia;
+            gotoxy(2, 26 - (max - count));
+            cout << currentHoaDon->soHD;
+            gotoxy(26, 26 - (max - count));
+            if (currentHoaDon->date.day < 10)
+            {
+                cout << '0';
+            }
+            cout << ngayDau.day << '/';
+            if (currentHoaDon->date.month < 10)
+            {
+                cout << '0';
+            }
+            cout << currentHoaDon->date.month << "/";
+            cout << setw(4) << setfill('0') << currentHoaDon->date.year;
+            gotoxy(40, 26 - (max - count));
+            if (currentHoaDon->loai == n)
+            {
+                cout << "Nhap";
+            }
+            else
+            {
+                cout << "Xuat";
+            }
+            gotoxy(48, 26 - (max - count));
+            cout << ds_nv[this_nhanvien]->ho << " " << ds_nv[this_nhanvien]->ten;
+            gotoxy(84, 26 - (max - count));
+            cout << fixed << setprecision(2) << tongTriGia;
 
-        count++;
+            count++;
+        }
         currentHoaDon = currentHoaDon->next;
 
         if (count >= max || currentHoaDon == nullptr)
@@ -7254,6 +7254,7 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 else if (choose2 == 3)
                 {
                     ThongKeHoaDonTrong1KhoangTG(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
+                    clrscr();
                     continue;
                 }
                 else if (choose2 == -1)
@@ -7278,9 +7279,16 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         {
             clrscr();
             gotoxy(0, 0);
-            cout << "Sao Luu Du Lieu";
-            saveVatTuToFile(ds_vt, "vattu.txt");
-            saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
+            // cout << "Sao Luu Du Lieu";
+            // saveVatTuToFile(ds_vt, "vattu.txt");
+            // saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
+            int a = searchNhanVienFromDSNV(ds_nv, "1", soLuongNhanVienCount);
+            DanhSachHoaDon hoadon = ds_nv[a]->ds_hoadon;
+            while (hoadon != nullptr)
+            {
+                cout << hoadon->soHD << endl;
+                hoadon = hoadon->next;
+            }
             getch();
             clrscr();
             DrawFirstUI(choose1);
