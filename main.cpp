@@ -15,10 +15,11 @@ const int seccondVatTuItems = 5;
 const int seccondNhanVienItems = 2;
 const int seccondHoaDonItems = 4;
 const int thirdHoaDonItems = 4;
-const int xUI1 = 0;
-const int yUI1 = 10;
-const int xUI2 = 30;
-const int yUI2 = 10;
+const int xUI1 = 2;
+const int yUI1 = 5;
+const int xUI2 = 35;
+const int yUI2 = 3;
+const int yUINV2 = 6;
 const int ENTER = 13;
 const int ESC = 27;
 const int TAB = 9;
@@ -91,8 +92,13 @@ void SetNormalColor()
 
 void SetHighLight()
 {
-    SetColor(0x1);
-    SetBGColor(0x3);
+    SetColor(0x0);
+    SetBGColor(0x2);
+}
+void SetHighLight2()
+{
+    SetColor(0x0);
+    SetBGColor(0x7);
 }
 
 void expandArray(int *&arr, int oldSize, int newSize)
@@ -242,15 +248,52 @@ bool isSpecialChar(char ch)
     return false;
 }
 
+void DrawUIInstruction()
+{
+    SetColor(0xB);
+    drawRectangle2(0, 25, 28, 2);
+    drawRectangle2(30, 25, 29, 2);
+    drawRectangle2(61, 25, 20, 2);
+    drawRectangle2(83, 25, 24, 2);
+    SetNormalColor();
+    gotoxy(2, 26);
+    SetColor(0xC);
+    cout << "ENTER: ";
+    SetNormalColor();
+    cout << "CHOOSE THIS OPTION";
+    //
+    gotoxy(32, 26);
+    SetColor(0xC);
+    cout << "ESC: ";
+    SetNormalColor();
+    cout << "BACK TO PREVIOUS PART";
+    //
+    gotoxy(63, 26);
+    SetColor(0xC);
+    cout << "UP_ARROW: ";
+    SetNormalColor();
+    cout << "MOVE UP";
+    //
+    gotoxy(85, 26);
+    SetColor(0xC);
+    cout << "DOWN_ARROW: ";
+    SetNormalColor();
+    cout << "MOVE DOWN";
+}
+
 void DrawFirstUI(int choose1)
 {
+    DrawUIInstruction();
     for (int iy = 0; iy < firstItems; iy++)
     {
-        gotoxy(xUI1, yUI1 + iy);
+        // drawRectangle(xUI1 - 1, yUI1 - 1, 10, 3);
+        drawRectangle2(xUI1 - 1, yUI1 + iy * 3, 25, 2);
+        gotoxy(xUI1, yUI1 + iy * 3 + 1);
         cout << firstUI[iy];
     }
     SetHighLight();
-    gotoxy(xUI1, yUI1 + choose1);
+    drawRectangle2(xUI1 - 1, yUI1 + choose1 * 3, 25, 2);
+    gotoxy(xUI1, yUI1 + choose1 * 3 + 1);
     cout << firstUI[choose1];
     SetNormalColor();
 }
@@ -259,37 +302,43 @@ void DrawSeccondUIVatTu(int choose2)
 {
     for (int iy = 0; iy < seccondVatTuItems; iy++)
     {
-        gotoxy(xUI2, yUI2 + iy);
+        drawRectangle2(xUI2 - 1, yUI2 + iy * 3, 38, 2);
+        gotoxy(xUI2, yUI2 + iy * 3 + 1);
         cout << seccondVatTuUI[iy];
     }
     SetHighLight();
-    gotoxy(xUI2, yUI2 + choose2);
+    drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+    gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
     cout << seccondVatTuUI[choose2];
     SetNormalColor();
 }
 
 void DrawSeccondUINhanVien(int choose2)
 {
-    for (int iy = 0; iy <= seccondNhanVienItems; iy++)
+    for (int iy = 0; iy < seccondNhanVienItems; iy++)
     {
-        gotoxy(xUI2, yUI2 + iy);
+        drawRectangle2(xUI2 - 1, yUINV2 + iy * 3, 37, 2);
+        gotoxy(xUI2, yUINV2 + iy * 3 + 1);
         cout << seccondNhanVienUI[iy];
     }
     SetHighLight();
-    gotoxy(xUI2, yUI2 + choose2);
+    drawRectangle2(xUI2 - 1, yUINV2 + choose2 * 3, 37, 2);
+    gotoxy(xUI2, yUINV2 + choose2 * 3 + 1);
     cout << seccondNhanVienUI[choose2];
     SetNormalColor();
 };
 
 void DrawSeccondUIHoaDon(int choose2)
 {
-    for (int iy = 0; iy <= seccondHoaDonItems; iy++)
+    for (int iy = 0; iy < seccondHoaDonItems; iy++)
     {
-        gotoxy(xUI2, yUI2 + iy);
+        drawRectangle2(xUI2 - 1, yUI2 + iy * 3, 39, 2);
+        gotoxy(xUI2, yUI2 + iy * 3 + 1);
         cout << seccondHoaDonUI[iy];
     }
     SetHighLight();
-    gotoxy(xUI2, yUI2 + choose2);
+    drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 39, 2);
+    gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
     cout << seccondHoaDonUI[choose2];
     SetNormalColor();
 };
@@ -303,6 +352,10 @@ int GetFirstUIInput(char &c1, int &choose1)
         {
         case UP_ARROW:
         {
+
+            drawRectangle2(xUI1 - 1, yUI1 + choose1 * 3, 25, 2);
+            gotoxy(xUI1, yUI1 + choose1 * 3 + 1);
+            cout << firstUI[choose1];
             if (choose1 == 0)
             {
                 choose1 = firstItems - 1;
@@ -311,11 +364,20 @@ int GetFirstUIInput(char &c1, int &choose1)
             {
                 choose1--;
             }
-            DrawFirstUI(choose1);
+            SetHighLight();
+            drawRectangle2(xUI1 - 1, yUI1 + choose1 * 3, 25, 2);
+            gotoxy(xUI1, yUI1 + choose1 * 3 + 1);
+            cout << firstUI[choose1];
+            SetNormalColor();
+
             break;
         }
         case DOWN_ARROW:
         {
+            drawRectangle2(xUI1 - 1, yUI1 + choose1 * 3, 25, 2);
+            gotoxy(xUI1, yUI1 + choose1 * 3 + 1);
+            cout << firstUI[choose1];
+
             if (choose1 == firstItems - 1)
             {
                 choose1 = 0;
@@ -324,7 +386,11 @@ int GetFirstUIInput(char &c1, int &choose1)
             {
                 choose1++;
             }
-            DrawFirstUI(choose1);
+            SetHighLight();
+            drawRectangle2(xUI1 - 1, yUI1 + choose1 * 3, 25, 2);
+            gotoxy(xUI1, yUI1 + choose1 * 3 + 1);
+            cout << firstUI[choose1];
+            SetNormalColor();
             break;
         }
         case ENTER:
@@ -344,6 +410,9 @@ int GetSeccondUIVatTuInput(char &c2, int &choose2)
         {
         case DOWN_ARROW:
         {
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondVatTuUI[choose2];
             if (choose2 == seccondVatTuItems - 1)
             {
                 choose2 = 0;
@@ -352,11 +421,18 @@ int GetSeccondUIVatTuInput(char &c2, int &choose2)
             {
                 choose2++;
             }
-            DrawSeccondUIVatTu(choose2);
+            SetHighLight();
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondVatTuUI[choose2];
+            SetNormalColor();
             break;
         }
         case UP_ARROW:
         {
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondVatTuUI[choose2];
             if (choose2 == 0)
             {
                 choose2 = seccondVatTuItems - 1;
@@ -365,7 +441,11 @@ int GetSeccondUIVatTuInput(char &c2, int &choose2)
             {
                 choose2--;
             }
-            DrawSeccondUIVatTu(choose2);
+            SetHighLight();
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondVatTuUI[choose2];
+            SetNormalColor();
             break;
         }
         case ESC:
@@ -920,10 +1000,10 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
         cout << current_vt->dVT;
         gotoxy(99, 22 - (max - count));
         cout << current_vt->soLuongTon;
-        strcpy(pageMaVTData[14 - (max - count)], current_vt->maVT);
+        strcpy(pageMaVTData[15 - (max - count)], current_vt->maVT);
         count++;
 
-        if (count >= max || count > SoLuongVatTu)
+        if (count >= max || count > SoLuongVatTu - 1)
         {
             gotoxy(0, 7 + ptrY);
             SetColor(0x4);
@@ -954,7 +1034,7 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
                         clearShowVatTuBoard();
                         break;
                     }
-                    else if (c == DOWN_ARROW && ptrY < 13 - (max - count))
+                    else if (c == DOWN_ARROW && ptrY < 14 - (max - count))
                     {
                         gotoxy(0, 7 + ptrY);
                         cout << char(179) << " ";
@@ -981,7 +1061,7 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVa
                 {
                     return;
                 }
-                else if (c == ENTER && ptrY < 14 - (max - count))
+                else if (c == ENTER && ptrY < 15 - (max - count))
                 {
                     gotoxy(0, 0);
                     strcpy(noidung, pageMaVTData[ptrY]);
@@ -1618,7 +1698,7 @@ void HienThiVatTu(DanhSachVatTu root, int SoLuongVatTu)
         cout << current_vt->soLuongTon;
         count++;
 
-        if (count >= max || count > SoLuongVatTu)
+        if (count >= max || count > SoLuongVatTu - 1)
         {
             backToPrv = false;
             while (true)
@@ -1677,6 +1757,9 @@ int GetSeccondUINhanVienInput(char &c2, int &choose2)
         {
         case DOWN_ARROW:
         {
+            drawRectangle2(xUI2 - 1, yUINV2 + choose2 * 3, 37, 2);
+            gotoxy(xUI2, yUINV2 + choose2 * 3 + 1);
+            cout << seccondNhanVienUI[choose2];
             if (choose2 == seccondNhanVienItems - 1)
             {
                 choose2 = 0;
@@ -1685,11 +1768,18 @@ int GetSeccondUINhanVienInput(char &c2, int &choose2)
             {
                 choose2++;
             }
-            DrawSeccondUINhanVien(choose2);
+            SetHighLight();
+            drawRectangle2(xUI2 - 1, yUINV2 + choose2 * 3, 37, 2);
+            gotoxy(xUI2, yUINV2 + choose2 * 3 + 1);
+            cout << seccondNhanVienUI[choose2];
+            SetNormalColor();
             break;
         }
         case UP_ARROW:
         {
+            drawRectangle2(xUI2 - 1, yUINV2 + choose2 * 3, 37, 2);
+            gotoxy(xUI2, yUINV2 + choose2 * 3 + 1);
+            cout << seccondNhanVienUI[choose2];
             if (choose2 == 0)
             {
                 choose2 = seccondNhanVienItems - 1;
@@ -1698,7 +1788,11 @@ int GetSeccondUINhanVienInput(char &c2, int &choose2)
             {
                 choose2--;
             }
-            DrawSeccondUINhanVien(choose2);
+            SetHighLight();
+            drawRectangle2(xUI2 - 1, yUINV2 + choose2 * 3, 37, 2);
+            gotoxy(xUI2, yUINV2 + choose2 * 3 + 1);
+            cout << seccondNhanVienUI[choose2];
+            SetNormalColor();
             break;
         }
         case ESC:
@@ -2413,6 +2507,9 @@ int GetSeccondUIHoaDonInput(char &c2, int &choose2)
         {
         case DOWN_ARROW:
         {
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 39, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondHoaDonUI[choose2];
             if (choose2 == seccondHoaDonItems - 1)
             {
                 choose2 = 0;
@@ -2421,11 +2518,18 @@ int GetSeccondUIHoaDonInput(char &c2, int &choose2)
             {
                 choose2++;
             }
-            DrawSeccondUIHoaDon(choose2);
+            SetHighLight();
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 39, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondHoaDonUI[choose2];
+            SetNormalColor();
             break;
         }
         case UP_ARROW:
         {
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 39, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondHoaDonUI[choose2];
             if (choose2 == 0)
             {
                 choose2 = seccondHoaDonItems - 1;
@@ -2434,7 +2538,13 @@ int GetSeccondUIHoaDonInput(char &c2, int &choose2)
             {
                 choose2--;
             }
-            DrawSeccondUIHoaDon(choose2);
+            // duyendotroiphantaita
+
+            SetHighLight();
+            drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 39, 2);
+            gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+            cout << seccondHoaDonUI[choose2];
+            SetNormalColor();
             break;
         }
         case ESC:

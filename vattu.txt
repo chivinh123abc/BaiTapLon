@@ -1,3 +1,4 @@
+132|12|123|123
 vt-0000028|ban an|chiec|100
 vt-0000006|ban ghe|cai|100
 vt-0000029|ban tra|chiec|100
@@ -54,7 +55,7 @@ vt-0000031|khung tranh|cai|100
 vt-0000009|may giat|cai|100
 vt-0000019|may hut bui|cai|100
 vt-0000030|may pha ca phe|cai|100
-vt-0000002|may tinh|cai|100
+vt-0000002|may tinh|cai|99
 vt-0000023|may xay sinh to|cai|100
 vt-0000042|mon an nhanh|cai|1
 vt-0000041|mon trang mieng|cai|1
@@ -62,7 +63,7 @@ vt-0000047|muoi|goi|1
 vt-0000043|my an lien|cai|1
 vt-0000020|quat dien|cai|100
 vt-0000038|ro trai cay|cai|1
-vt-0000004|sach|cuon|100
+vt-0000004|sach|cuon|99
 vt-0000051|thia nhua|cai|1
 vt-0000059|thung rac|cai|1
 vt-0000049|tieu|goi|1

@@ -32,6 +32,32 @@ void drawRectangle(int x, int y, int width, int height)
     cout << char(217);
 }
 
+void drawRectangle2(int x, int y, int width, int height)
+{
+    for (int ix = x; ix <= x + width; ix++)
+    {
+        gotoxy(ix, y);
+        cout << char(205);
+        gotoxy(ix, y + height);
+        cout << char(205);
+    }
+    for (int iy = y; iy <= y + height; iy++)
+    {
+        gotoxy(x, iy);
+        cout << char(186);
+        gotoxy(x + width, iy);
+        cout << char(186);
+    }
+    gotoxy(x, y);
+    cout << char(201);
+    gotoxy(x, y + height);
+    cout << char(200);
+    gotoxy(x + width, y);
+    cout << char(187);
+    gotoxy(x + width, y + height);
+    cout << char(188);
+}
+
 void drawRectangleReverse(int x, int y, int x2, int height)
 {
 
