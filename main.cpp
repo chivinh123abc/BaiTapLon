@@ -6918,24 +6918,34 @@ start:
     }
     //
     drawRectangle(0, 7, 30, 2);
-    drawRectangle(30, 7, 89, 2);
+    drawRectangle(30, 7, 40, 2);
+    drawRectangle(70, 7, 49, 2);
     drawRectangle(0, 9, 30, 11);
-    drawRectangle(30, 9, 89, 11);
+    drawRectangle(30, 9, 40, 11);
+    drawRectangle(70, 9, 49, 11);
 
     gotoxy(0, 9);
     cout << char(195);
     gotoxy(30, 7);
     cout << char(194);
+    gotoxy(70, 7);
+    cout << char(194);
     gotoxy(119, 9);
     cout << char(180);
     gotoxy(30, 9);
     cout << char(197);
+    gotoxy(70, 9);
+    cout << char(197);
     gotoxy(30, 20);
+    cout << char(193);
+    gotoxy(70, 20);
     cout << char(193);
 
     gotoxy(1, 8);
-    cout << "Ten Vat Tu";
+    cout << "Ma Vat Tu";
     gotoxy(31, 8);
+    cout << "Ten VT";
+    gotoxy(71, 8);
     cout << "Doanh Thu";
     // Xu Ly LOGIC
     DoanhThuVT doanhThu[soLuongVatTu];
@@ -6974,6 +6984,8 @@ start:
         cout << "None";
         gotoxy(31, 10);
         cout << "None";
+        gotoxy(71, 10);
+        cout << "None";
     }
     else
     {
@@ -6982,9 +6994,12 @@ start:
         for (int i = soLuongVTCoDoanhThu - 1; i >= 0; i--)
         {
             gotoxy(2, 10 + (soLuongVTCoDoanhThu - 1 - i));
-            cout << doanhThu[i].maVT << endl;
+            cout << doanhThu[i].maVT;
+            VatTu *foundVT = searchMaVT_DanhSachVatTu(ds_vt, doanhThu[i].maVT);
             gotoxy(32, 10 + (soLuongVTCoDoanhThu - 1 - i));
-            cout << fixed << setprecision(2) << doanhThu[i].doanhthu << endl;
+            cout << foundVT->tenVT;
+            gotoxy(72, 10 + (soLuongVTCoDoanhThu - 1 - i));
+            cout << fixed << setprecision(2) << doanhThu[i].doanhthu;
             if (i < soLuongVTCoDoanhThu - 9)
             {
                 break;
