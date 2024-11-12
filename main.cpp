@@ -23,6 +23,10 @@ const int yUINV2 = 6;
 const int ENTER = 13;
 const int ESC = 27;
 const int TAB = 9;
+const int F1 = 59;
+const int F2 = 60;
+const int F3 = 61;
+const int F4 = 62;
 const int UP_ARROW = 72;
 const int DOWN_ARROW = 80;
 const int LEFT_ARROW = 75;
@@ -656,888 +660,23 @@ void clearShowVatTuBoard()
     }
 };
 
-// THEM VAT TU
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-void ThemVatTu(DanhSachVatTu &ds_vt)
+void clearShowVatTuBoard2()
 {
-
-    while (true)
+    for (int i = 1; i <= 15; i++)
     {
-        drawRectangle(0, 0, 70, 2);
-        drawRectangle(0, 2, 15, 2);
-        drawRectangle(15, 2, 55, 2);
-        DrawAnnouncementBoard();
-        //
-        gotoxy(0, 2);
-        cout << char(195);
-        gotoxy(15, 2);
-        cout << char(194);
-        gotoxy(15, 4);
-        cout << char(193);
-        gotoxy(70, 2);
-        cout << char(180);
-        //
-        gotoxy(24, 1);
-        SetColor(0xC);
-        cout << "Them thong tin vat tu" << endl;
-        SetColor(0xF);
-        // int choice = -1;
-        char inputMaVT[11];
-        int count = 0;
-        unsigned char ch;
-        //
-        gotoxy(3, 3);
-        cout << "Ma Vat Tu";
-        gotoxy(18, 3);
-        // dinhDangMaVatTu(inputMaVT, "vt", idVatTuGlobalCount);
-        // cout << "maVT cua ban la " << inputMaVT << endl;
-        while (true)
-        {
-
-            ch = getch();
-            if (ch == 224)
-            {
-                ch = getch();
-                continue;
-            }
-            else if (count > 0 && ch == 13)
-            {
-                inputMaVT[count] = '\0';
-                trim(inputMaVT);
-                if (isContainMaVT_DanhSachVatTu(ds_vt, inputMaVT))
-                {
-                    gotoxy(62, 28);
-                    SetBGColor(0x4);
-                    cout << "Cay da ton tai vat tu [" << inputMaVT << "]" << endl;
-                    gotoxy(18 + count, 3);
-                    SetNormalColor();
-                    continue;
-                }
-                else
-                {
-                    gotoxy(61, 28);
-                    SetBGColor(0x4);
-                    cout << "                                                          ";
-                    SetNormalColor();
-                    break;
-                }
-            }
-            else if (ch == '\b' && count > 0)
-            {
-                cout << "\b \b";
-                inputMaVT[--count] = '\0';
-            }
-            else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
-            {
-                cout << ch;
-                ch = tolower(ch);
-                inputMaVT[count++] = ch;
-            }
-            else if (ch == ESC)
-            {
-                gotoxy(0, 7);
-                cout << "Quit";
-                return;
-            }
-        }
-
-        char inputTenVT[21];
-        count = 0;
-        //
-        drawRectangle(0, 4, 15, 2);
-        drawRectangle(15, 4, 55, 2);
-        gotoxy(0, 4);
-        cout << char(195);
-        gotoxy(70, 4);
-        cout << char(180);
-        gotoxy(15, 4);
-        cout << char(197);
-        gotoxy(15, 6);
-        cout << char(193);
-        //
-        gotoxy(3, 5);
-        cout << "Ten Vat Tu";
-        gotoxy(18, 5);
-        //
-        while (true)
-        {
-
-            ch = getch();
-
-            if (ch == 224)
-            {
-                ch = getch();
-                continue;
-            }
-            else if (count > 0 && ch == 13)
-            {
-                inputTenVT[count] = '\0';
-                trim(inputTenVT);
-                if (isContainTenVT_DanhSachVatTu(ds_vt, inputTenVT))
-                {
-                    gotoxy(62, 28);
-                    SetBGColor(0x4);
-                    cout << "Cay da ton tai vat tu [" << inputTenVT << "]" << endl;
-                    SetNormalColor();
-                    gotoxy(18 + count, 5);
-                    continue;
-                }
-                else
-                {
-                    gotoxy(61, 28);
-                    SetBGColor(0x4);
-                    cout << "                                                          ";
-                    SetNormalColor();
-                    break;
-                }
-            }
-            else if (ch == '\b' && count > 0)
-            {
-                cout << "\b \b";
-                inputTenVT[--count] = '\0';
-            }
-            else if ((isalnum(ch) || ch == ' ') && count < 20)
-            {
-                cout << ch;
-                ch = tolower(ch);
-                inputTenVT[count++] = ch;
-            }
-            else if (ch == ESC)
-            {
-                return;
-            }
-        }
-        cout << endl;
-        //
-
-        drawRectangle(0, 6, 15, 2);
-        drawRectangle(15, 6, 55, 2);
-        gotoxy(0, 6);
-        cout << char(195);
-        gotoxy(15, 6);
-        cout << char(197);
-        gotoxy(15, 8);
-        cout << char(193);
-        gotoxy(70, 6);
-        cout << char(180);
-        //
-        gotoxy(2, 7);
-        char inputDVT[11];
-        count = 0;
-        cout << "Don Vi Tinh";
-        gotoxy(18, 7);
-
-        while (true)
-        {
-            ch = getch();
-            if (ch == 224)
-            {
-                ch = getch();
-                continue;
-            }
-            else if (ch == 13 && count > 0)
-            {
-                inputDVT[count] = '\0';
-                trim(inputDVT);
-                break;
-            }
-            else if (ch == '\b' && count > 0)
-            {
-                cout << "\b \b";
-                inputDVT[--count] = '\0';
-            }
-            else if ((isalnum(ch) || ch == ' ') && count < 10)
-            {
-                cout << ch;
-                ch = tolower(ch);
-                inputDVT[count++] = ch;
-            }
-            else if (ch == ESC)
-            {
-                return;
-            }
-        }
-        cout << endl;
-
-        char inputC_SoLuongTon[10];
-        count = 0;
-        //
-        drawRectangle(0, 8, 15, 2);
-        drawRectangle(15, 8, 55, 2);
-        gotoxy(0, 8);
-        cout << char(195);
-        gotoxy(15, 8);
-        cout << char(197);
-        gotoxy(15, 10);
-        cout << char(193);
-        gotoxy(70, 8);
-        cout << char(180);
-        //
-        gotoxy(2, 9);
-        cout << "So luong ton";
-        gotoxy(18, 9);
-
-        while (true)
-        {
-            ch = getch();
-            if (ch == 224)
-            {
-                ch = getch();
-                continue;
-            }
-            else if (ch == 13 && count > 0)
-            {
-                inputC_SoLuongTon[count] = '\0';
-                break;
-            }
-            else if (ch == '\b' && count > 0)
-            {
-                cout << "\b \b";
-                inputC_SoLuongTon[--count] = '\0';
-            }
-            else if (isdigit(ch) && count < 9)
-            {
-                cout << ch;
-                inputC_SoLuongTon[count++] = ch;
-            }
-            else if (ch == ESC)
-            {
-                return;
-            }
-        }
-        cout << endl;
-
-        int inputSoLuongTon = stoi(inputC_SoLuongTon);
-
-        DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
-        insertDanhSachVatTu(ds_vt, dsvt_moi);
-        //
-        gotoxy(62, 28);
-        SetBGColor(0x4);
-        cout << "SUCCESSFUL";
-        SetNormalColor();
-        // Kiem tra muon nhap tiep hay thoat
-        gotoxy(1, 12);
-        cout << "DO YOU WANT TO CONTINUE ADD MORE VATTU (y: Continue, n: Exit)";
-        while (true)
-        {
-            ch = getch();
-            if (ch == 'y' || ch == 'Y')
-            {
-                clrscr();
-                break;
-            }
-            else if (ch == 'n' || ch == 'N')
-            {
-                return;
-            }
-        }
+        // 15,25,15,21
+        // 0,15,40,55
+        gotoxy(1, 6 + i);
+        cout << "              ";
+        gotoxy(16, 6 + i);
+        cout << "                        ";
+        gotoxy(41, 6 + i);
+        cout << "              ";
+        gotoxy(56, 6 + i);
+        cout << "                    ";
     }
-}
+};
 
-// HIEU CHINH VAT TU
-//+++++++++++++++++++++++++++++++++++++++++++
-
-// Dung de ho tro ve lai vung nhap input
-void HieuChinhVatTuDrawSupport()
-{
-    drawRectangle(0, 0, 70, 2);
-    drawRectangle(0, 2, 70, 2);
-    gotoxy(0, 2);
-    cout << char(195);
-    gotoxy(70, 2);
-    cout << char(180);
-    gotoxy(22, 1);
-    SetColor(0xC);
-    cout << "Hieu Chinh Thong Tin Vat Tu" << endl;
-    SetColor(0xF);
-    gotoxy(15, 3);
-    cout << "Nhap ma vat tu cua vat tu can hieu chinh";
-    drawRectangle(0, 4, 15, 2);
-    drawRectangle(15, 4, 55, 2);
-    gotoxy(0, 4);
-    cout << char(195);
-    gotoxy(70, 4);
-    cout << char(180);
-    gotoxy(15, 4);
-    cout << char(194);
-    gotoxy(15, 6);
-    cout << char(193);
-    gotoxy(4, 5);
-    cout << "Ma Vat Tu";
-    gotoxy(18, 5);
-}
-
-// NOTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVatTu)
-{
-    unsigned char c;
-    // dem trang va luu ptr vs stack tai vi tri day
-    int Page = 1;
-    int arr2Size = 1;
-    VatTuStack *PageStack = new VatTuStack[1];
-    VatTu **firstPagePos = new VatTu *[1];
-    char pageMaVTData[15][11];
-    bool backToPrev = false;
-    //
-    VatTu *current_vt = ds_vt;
-    VatTuStack vtStack;
-    // dem de gioi han so luong
-    int count = 0;
-    int max = 15;
-    //
-    int ptrY = 0;
-    //
-    clearShowVatTuBoard();
-    while (current_vt != nullptr || !vtStack.isEmpty())
-    {
-        while (current_vt != nullptr)
-        {
-            vtStack.push(current_vt);
-            current_vt = current_vt->left;
-        }
-
-        current_vt = vtStack.pop();
-        //
-        if (Page == arr2Size && current_vt != nullptr)
-        {
-            PageStack[arr2Size - 1] = vtStack;
-            PageStack[arr2Size - 1].push(current_vt);
-            expandArray(PageStack, arr2Size, Page + 1);
-
-            firstPagePos[arr2Size - 1] = current_vt;
-            expandArray(firstPagePos, arr2Size, Page + 1);
-            arr2Size += 1;
-        }
-
-        gotoxy(3, 22 - (max - count));
-        cout << current_vt->maVT;
-        gotoxy(18, 22 - (max - count));
-        cout << current_vt->tenVT;
-        gotoxy(71, 22 - (max - count));
-        cout << current_vt->dVT;
-        gotoxy(99, 22 - (max - count));
-        cout << current_vt->soLuongTon;
-        strcpy(pageMaVTData[15 - (max - count)], current_vt->maVT);
-        count++;
-
-        if (count >= max || count > SoLuongVatTu - 1)
-        {
-            if (14 - (max - count) < ptrY)
-            {
-                gotoxy(0, 7 + ptrY);
-                cout << char(179) << " ";
-                ptrY = 14 - (max - count);
-            }
-
-            gotoxy(0, 7 + ptrY);
-            SetColor(0x4);
-            cout << "->";
-            SetColor(0xF);
-            while (true)
-            {
-                c = getch();
-                if (c == 224)
-                {
-                    c = getch();
-                    if (c == RIGHT_ARROW && max < SoLuongVatTu)
-                    {
-
-                        count = max;
-                        max = max + 15;
-                        Page++;
-                        clearShowVatTuBoard();
-                        break;
-                    }
-                    else if (c == LEFT_ARROW && Page > 1)
-                    {
-                        Page--;
-                        current_vt = nullptr;
-                        vtStack = PageStack[Page - 1];
-                        max -= 15;
-                        count = max - 15;
-                        backToPrev = true;
-                        clearShowVatTuBoard();
-                        break;
-                    }
-                    else if (c == DOWN_ARROW && ptrY < 14 - (max - count))
-                    {
-                        gotoxy(0, 7 + ptrY);
-                        cout << char(179) << " ";
-                        ptrY += 1;
-                        gotoxy(0, 7 + ptrY);
-                        SetColor(0x4);
-                        cout << "->";
-                        SetColor(0xF);
-                        continue;
-                    }
-                    else if (c == UP_ARROW && ptrY > 0)
-                    {
-                        gotoxy(0, 7 + ptrY);
-                        cout << char(179) << " ";
-                        ptrY -= 1;
-                        gotoxy(0, 7 + ptrY);
-                        SetColor(0x4);
-                        cout << "->";
-                        SetColor(0xF);
-                        continue;
-                    }
-                }
-                else if (c == ESC)
-                {
-                    return;
-                }
-                else if (c == ENTER && ptrY < 15 - (max - count))
-                {
-                    gotoxy(0, 0);
-                    strcpy(noidung, pageMaVTData[ptrY]);
-                    dem = strlen(noidung);
-                    return;
-                }
-            }
-            if (backToPrev)
-            {
-                backToPrev = false;
-                continue;
-            }
-        }
-
-        current_vt = current_vt->right;
-    }
-}
-
-void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVatTu)
-{
-    if (ds_vt == nullptr)
-    {
-        cout << "Danh Sach Dang Trong";
-        gotoxy(18, 5);
-    }
-    else
-    {
-        //
-        gotoxy(0, 27);
-        SetColor(0xA);
-        cout << "ENTER:";
-        SetColor(0xF);
-        cout << " Choose This MaVT  ";
-        SetColor(0xA);
-        cout << "UP_ARROW:";
-        SetColor(0xF);
-        cout << " Move Up  ";
-        SetColor(0xA);
-        cout << "DOWN_ARROW:";
-        SetColor(0xF);
-        cout << " Move Down";
-        gotoxy(0, 28);
-        SetColor(0xA);
-        cout << "ESC:";
-        SetColor(0xF);
-        cout << " Escape From Board    ";
-        SetColor(0xA);
-        cout << "-->:";
-        SetColor(0xF);
-        cout << " Next List     ";
-        SetColor(0xA);
-        cout << "<--:";
-        SetColor(0xF);
-        cout << " Previous List   ";
-        SetColor(0xF);
-        //
-        drawRectangle(0, 0, 118, 4);
-        gotoxy(40, 2);
-        SetColor(0xC);
-        cout << "Bang Thong Tin Chi Tiet Vat Tu Dang Co" << endl;
-        SetColor(0xF);
-        drawRectangle(0, 4, 16, 2);
-        gotoxy(4, 5);
-        cout << "Ma Vat Tu";
-        drawRectangle(16, 4, 53, 2);
-        gotoxy(36, 5);
-        cout << "Ten Vat Tu";
-        drawRectangle(69, 4, 28, 2);
-        gotoxy(78, 5);
-        cout << "Don Vi Tinh";
-        drawRectangle(97, 4, 21, 2);
-        gotoxy(102, 5);
-        cout << "So Luong Ton";
-        // Phan noi dung
-        drawRectangle(0, 6, 16, 16);
-        drawRectangle(16, 6, 53, 16);
-        drawRectangle(69, 6, 28, 16);
-        drawRectangle(97, 6, 21, 16);
-        //
-        gotoxy(0, 4);
-        cout << char(195);
-        gotoxy(16, 4);
-        cout << char(194);
-        gotoxy(69, 4);
-        cout << char(194);
-        gotoxy(97, 4);
-        cout << char(194);
-        gotoxy(118, 4);
-        cout << char(180);
-        gotoxy(0, 6);
-        cout << char(195);
-        gotoxy(16, 6);
-        cout << char(197);
-        gotoxy(69, 6);
-        cout << char(197);
-        gotoxy(97, 6);
-        cout << char(197);
-        gotoxy(118, 6);
-        cout << char(180);
-        gotoxy(16, 22);
-        cout << char(193);
-        gotoxy(69, 22);
-        cout << char(193);
-        gotoxy(97, 22);
-        cout << char(193);
-        /////////////////////////
-        NoiDungVatTu(ds_vt, noidung, dem, SoLuongVatTu);
-    }
-}
-
-void HieuChinhVatTu(DanhSachVatTu &ds_vt)
-{
-    int count = 0;
-    char inputMaVT[11];
-    unsigned char ch;
-
-    DrawAnnouncementBoard();
-    HieuChinhVatTuDrawSupport();
-
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-        }
-        else if (ch == '*')
-        {
-            clrscr();
-            HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount);
-            clrscr();
-            HieuChinhVatTuDrawSupport();
-            DrawAdjustVatTuContactGuide();
-            gotoxy(18, 5);
-            if (count != 0)
-            {
-                cout << inputMaVT;
-            }
-            continue;
-        }
-        else if (count > 0 && ch == 13)
-        {
-            inputMaVT[count] = '\0';
-            trim(inputMaVT);
-            //
-            if (!isContainMaVT_DanhSachVatTu(ds_vt, inputMaVT))
-            {
-                gotoxy(2, 7);
-                SetErrorColor();
-                cout << "Ma vat tu [" << inputMaVT << "] khong duoc tim thay" << endl;
-                SetNormalColor();
-                gotoxy(18 + count, 5);
-                continue;
-            }
-            else
-            {
-                gotoxy(2, 7);
-                cout << "                                                  ";
-                break;
-            }
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            cout << "\b \b";
-            inputMaVT[--count] = '\0';
-        }
-        else if (ch == ESC)
-        {
-            gotoxy(0, 7);
-            cout << "Quit";
-            return;
-        }
-        else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
-        {
-            cout << ch;
-            ch = tolower(ch);
-            inputMaVT[count++] = ch;
-        }
-    }
-
-    VatTu *foundVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
-    char inputTenVT[21];
-    count = 0;
-    //
-    drawRectangle(0, 6, 15, 2);
-    drawRectangle(15, 6, 55, 2);
-    gotoxy(0, 6);
-    cout << char(195);
-    gotoxy(15, 6);
-    cout << char(197);
-    gotoxy(15, 8);
-    cout << char(193);
-    gotoxy(70, 6);
-    cout << char(180);
-    //
-    gotoxy(3, 7);
-    cout << "Ten Vat Tu";
-    gotoxy(18, 7);
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-            if (ch == RIGHT_ARROW)
-            {
-                continue;
-            }
-            else if (ch == LEFT_ARROW)
-            {
-                continue;
-            }
-        }
-        else if (ch == 13 && count >= 0)
-        {
-            inputTenVT[count] = '\0';
-            trim(inputTenVT);
-            if (isContainTenVT_DanhSachVatTu(ds_vt, inputTenVT))
-            {
-                gotoxy(2, 9);
-                SetErrorColor();
-                cout << "Ten vat tu [" << inputTenVT << "] da ton tai" << endl;
-                SetNormalColor();
-                gotoxy(18 + count, 7);
-                continue;
-            }
-            else
-            {
-                if (count == 0)
-                {
-                    gotoxy(18, 7);
-                    cout << foundVT->tenVT;
-                    count = strlen(foundVT->tenVT);
-                }
-                gotoxy(2, 9);
-                cout << "                                                  ";
-                break;
-            }
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            cout << "\b \b";
-            inputTenVT[--count] = '\0';
-        }
-        else if ((isalnum(ch) || ch == ' ') && count < 20)
-        {
-            cout << ch;
-            ch = tolower(ch);
-            inputTenVT[count++] = ch;
-        }
-        else if (ch == ESC)
-        {
-            gotoxy(0, 9);
-            cout << "Quit";
-            return;
-        }
-    }
-    //
-
-    char inputDVT[11];
-    count = 0;
-    //
-    drawRectangle(0, 8, 15, 2);
-    drawRectangle(15, 8, 55, 2);
-    gotoxy(0, 8);
-    cout << char(195);
-    gotoxy(15, 8);
-    cout << char(197);
-    gotoxy(15, 10);
-    cout << char(193);
-    gotoxy(70, 8);
-    cout << char(180);
-    //
-    gotoxy(2, 9);
-    cout << "Don Vi Tinh";
-    gotoxy(18, 9);
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-            if (ch == RIGHT_ARROW)
-            {
-                continue;
-            }
-            else if (ch == LEFT_ARROW)
-            {
-                continue;
-            }
-        }
-        else if (ch == 13 && count >= 0)
-        {
-            inputDVT[count] = '\0';
-            trim(inputDVT);
-            if (count == 0)
-            {
-                gotoxy(18, 9);
-                cout << foundVT->dVT;
-                count = strlen(foundVT->dVT);
-            }
-            break;
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            cout << "\b \b";
-            inputDVT[--count] = '\0';
-        }
-        else if ((isalnum(ch) || ch == ' ') && count < 10)
-        {
-            cout << ch;
-            ch = tolower(ch);
-            inputDVT[count++] = ch;
-        }
-        else if (ch == ESC)
-        {
-            gotoxy(0, 11);
-            cout << "Quit";
-            return;
-        }
-    }
-    cout << endl;
-
-    if (strlen(inputTenVT) == 0)
-    {
-        strcpy(inputTenVT, foundVT->tenVT);
-    }
-
-    if (strlen(inputDVT) == 0)
-    {
-        strcpy(inputDVT, foundVT->dVT);
-    }
-
-    int inputSoLuongTon = foundVT->soLuongTon;
-
-    //
-    removeFromDanhSachVatTu(foundVT->tenVT, ds_vt);
-    SoLuongVatTuGlobalCount--;
-    insertDanhSachVatTu(ds_vt, newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon));
-    //
-    gotoxy(0, 13);
-    cout << "Successful";
-}
-
-void XoaVatTuDrawSupport()
-{
-    drawRectangle(0, 0, 70, 2);
-    drawRectangle(0, 2, 70, 2);
-    gotoxy(0, 2);
-    cout << char(195);
-    gotoxy(70, 2);
-    cout << char(180);
-    gotoxy(20, 1);
-    SetColor(0xC);
-    cout << "Xoa Thong Tin Vat Tu" << endl;
-    SetColor(0xF);
-    gotoxy(17, 3);
-    cout << "Nhap ma vat tu cua vat tu can xoa";
-    drawRectangle(0, 4, 15, 2);
-    drawRectangle(15, 4, 55, 2);
-    gotoxy(0, 4);
-    cout << char(195);
-    gotoxy(70, 4);
-    cout << char(180);
-    gotoxy(15, 4);
-    cout << char(194);
-    gotoxy(15, 6);
-    cout << char(193);
-    gotoxy(3, 5);
-    cout << "Ma Vat Tu";
-    gotoxy(18, 5);
-}
-
-void XoaVatTu(DanhSachVatTu &ds_vt, int &soLuongVatTu)
-{
-    XoaVatTuDrawSupport();
-    char inputMaVT[11];
-    int count = 0;
-    unsigned char ch;
-
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-        }
-        else if (ch == '*')
-        {
-            int soThuTu = 0;
-            clrscr();
-            HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount);
-            clrscr();
-            XoaVatTuDrawSupport();
-            DrawRemoveVatTuContactGuide();
-            gotoxy(18, 5);
-            if (count != 0)
-            {
-                cout << inputMaVT;
-            }
-            continue;
-        }
-        else if (count > 0 && ch == 13)
-        {
-            inputMaVT[count] = '\0';
-            trim(inputMaVT);
-            //
-            if (isContainMaVT_DanhSachVatTu(ds_vt, inputMaVT))
-            {
-                VatTu *deletedVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
-                removeFromDanhSachVatTu(deletedVT->tenVT, ds_vt);
-                soLuongVatTu--;
-                gotoxy(2, 7);
-                cout << "                                                         ";
-                gotoxy(2, 7);
-                cout << "Removed " << inputMaVT << " from DanhSach";
-                break;
-            }
-            else
-            {
-                gotoxy(2, 7);
-                SetErrorColor();
-                cout << "Cay khong ton tai vat tu [" << inputMaVT << "]" << endl;
-                SetNormalColor();
-                gotoxy(18 + count, 5);
-                continue;
-            }
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            cout << "\b \b";
-            inputMaVT[--count] = '\0';
-        }
-        else if (ch == ESC)
-        {
-            gotoxy(0, 7);
-            cout << "Quit";
-            return;
-        }
-        else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
-        {
-            cout << ch;
-            ch = tolower(ch);
-            inputMaVT[count++] = ch;
-        }
-    }
-}
-
-// HIEN THI VAT TU
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 void DrawHienThiVatTuTable(DanhSachVatTu ds_vt)
 {
     if (ds_vt == nullptr)
@@ -1627,6 +766,1500 @@ void DrawHienThiVatTuTable(DanhSachVatTu ds_vt)
         /////////////////////////
     }
 }
+
+void DrawHienThiThemVatTuTable(DanhSachVatTu ds_vt)
+{
+    if (ds_vt == nullptr)
+    {
+        cout << "Danh Sach Dang Trong";
+        gotoxy(62, 28);
+    }
+    else
+    {
+        gotoxy(0, 27);
+        SetColor(0xA);
+        cout << "ENTER:";
+        SetColor(0xF);
+        cout << " Choose This TenVT  ";
+        SetColor(0xA);
+        cout << "UP_ARROW:";
+        SetColor(0xF);
+        cout << " Move Up  ";
+        SetColor(0xA);
+        cout << "DOWN_ARROW:";
+        SetColor(0xF);
+        cout << " Move Down";
+        gotoxy(0, 28);
+        SetColor(0xA);
+        cout << "ESC:";
+        SetColor(0xF);
+        cout << " Escape From Board    ";
+        SetColor(0xA);
+        cout << "-->:";
+        SetColor(0xF);
+        cout << " Next List     ";
+        SetColor(0xA);
+        cout << "<--:";
+        SetColor(0xF);
+        cout << " Previous List   ";
+        SetColor(0xF);
+        //
+        drawRectangle(0, 0, 76, 4);
+        gotoxy(25, 2);
+        SetColor(0xC);
+        cout << "Bang Thong Tin Chi Tiet Vat Tu Dang Co" << endl;
+        SetColor(0xF);
+        drawRectangle(0, 4, 15, 2);
+        gotoxy(3, 5);
+        cout << "Ma Vat Tu";
+        drawRectangle(15, 4, 25, 2);
+        gotoxy(23, 5);
+        cout << "Ten Vat Tu";
+        drawRectangle(40, 4, 15, 2);
+        gotoxy(42, 5);
+        cout << "Don Vi Tinh";
+        drawRectangle(55, 4, 21, 2);
+        gotoxy(61, 5);
+        cout << "So Luong Ton";
+        // Phan noi dung
+        drawRectangle(0, 6, 15, 16);
+        drawRectangle(15, 6, 25, 16);
+        drawRectangle(40, 6, 15, 16);
+        drawRectangle(55, 6, 21, 16);
+        // 15,15,25,21
+        // 0,15,30,55
+        gotoxy(0, 4);
+        cout << char(195);
+        gotoxy(15, 4);
+        cout << char(194);
+        gotoxy(40, 4);
+        cout << char(194);
+        gotoxy(55, 4);
+        cout << char(194);
+        gotoxy(76, 4);
+        cout << char(180);
+        gotoxy(0, 6);
+        cout << char(195);
+        gotoxy(15, 6);
+        cout << char(197);
+        gotoxy(40, 6);
+        cout << char(197);
+        gotoxy(55, 6);
+        cout << char(197);
+        gotoxy(76, 6);
+        cout << char(180);
+        gotoxy(15, 22);
+        cout << char(193);
+        gotoxy(40, 22);
+        cout << char(193);
+        gotoxy(55, 22);
+        cout << char(193);
+        /////////////////////////
+    }
+}
+
+// THEM VAT TU
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+void HienThiThemVatTu(DanhSachVatTu root, int SoLuongVatTu)
+{
+    DrawHienThiThemVatTuTable(root);
+    unsigned char c;
+    // dem trang va luu ptr vs stack tai vi tri day
+    int Page = 1;
+    int arr2Size = 1;
+    bool backToPrv = false;
+    VatTuStack *PageStack = new VatTuStack[1];
+    VatTu **firstPagePos = new VatTu *[1];
+    //
+    VatTu *current_vt = root;
+    VatTuStack vtStack;
+    // dem de gioi han so luong
+    int count = 0;
+    int max = 15;
+    //
+    clearShowVatTuBoard2();
+    while (current_vt != nullptr || !vtStack.isEmpty())
+    {
+        while (current_vt != nullptr)
+        {
+            vtStack.push(current_vt);
+            current_vt = current_vt->left;
+        }
+
+        current_vt = vtStack.pop();
+
+        if (Page == arr2Size && current_vt != nullptr)
+        {
+            PageStack[arr2Size - 1] = vtStack;
+            PageStack[arr2Size - 1].push(current_vt);
+            expandArray(PageStack, arr2Size, Page + 1);
+
+            firstPagePos[arr2Size - 1] = current_vt;
+            expandArray(firstPagePos, arr2Size, Page + 1);
+            arr2Size += 1;
+        }
+        // 15,25,15,21
+        // 0,15,40,55
+        gotoxy(3, 22 - (max - count));
+        cout << current_vt->maVT;
+        gotoxy(18, 22 - (max - count));
+        cout << current_vt->tenVT;
+        gotoxy(43, 22 - (max - count));
+        cout << current_vt->dVT;
+        gotoxy(58, 22 - (max - count));
+        cout << current_vt->soLuongTon;
+        count++;
+
+        if (count >= max || count > SoLuongVatTu - 1)
+        {
+            backToPrv = false;
+            while (true)
+            {
+                c = getch();
+                if (c == 224)
+                {
+                    c = getch();
+                    if (c == RIGHT_ARROW && max < SoLuongVatTu)
+                    {
+                        count = max;
+                        max = max + 15;
+                        Page++;
+                        clearShowVatTuBoard2();
+                        break;
+                    }
+                    else if (c == LEFT_ARROW && Page > 1)
+                    {
+                        backToPrv = true;
+                        Page--;
+                        current_vt = nullptr;
+                        vtStack = PageStack[Page - 1];
+                        max -= 15;
+                        count = max - 15;
+                        clearShowVatTuBoard2();
+                        break;
+                    }
+                }
+                else if (c == ESC)
+                {
+                    delete[] PageStack;
+                    delete[] firstPagePos;
+                    PageStack = nullptr;
+                    firstPagePos = nullptr;
+                    return;
+                }
+            }
+            if (backToPrv)
+            {
+                continue;
+            }
+        }
+        current_vt = current_vt->right;
+    }
+}
+
+// VatTuStack *PageStack = new VatTuStack[1];
+//  VatTu **firstPagePos
+void InNoiDungTrangThemVT(DanhSachVatTu &current_vt, VatTuStack *&PageStack, VatTu **&firstPagePos, VatTuStack &vtStack, int &Page, int &arr2Size, int bodem, int max)
+{
+    clearShowVatTuBoard2();
+    while (current_vt != nullptr || !vtStack.isEmpty())
+    {
+        while (current_vt != nullptr)
+        {
+            vtStack.push(current_vt);
+            current_vt = current_vt->left;
+        }
+
+        current_vt = vtStack.pop();
+
+        if (Page == arr2Size && current_vt != nullptr)
+        {
+            PageStack[arr2Size - 1] = vtStack;
+            PageStack[arr2Size - 1].push(current_vt);
+            expandArray(PageStack, arr2Size, Page + 1);
+
+            firstPagePos[arr2Size - 1] = current_vt;
+            expandArray(firstPagePos, arr2Size, Page + 1);
+            arr2Size += 1;
+        }
+        // 15,25,15,21
+        // 0,15,40,55
+        gotoxy(3, 22 - (max - bodem));
+        cout << current_vt->maVT;
+        gotoxy(18, 22 - (max - bodem));
+        cout << current_vt->tenVT;
+        gotoxy(43, 22 - (max - bodem));
+        cout << current_vt->dVT;
+        gotoxy(58, 22 - (max - bodem));
+        cout << current_vt->soLuongTon;
+        bodem++;
+
+        if (bodem >= max || bodem > SoLuongVatTuGlobalCount - 1)
+        {
+            break;
+            // backToPrv = false;
+            // while (true)
+            // {
+            //     c = getch();
+            //     if (c == 224)
+            //     {
+            //         c = getch();
+            //         if (c == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+            //         {
+            //             bodem = max;
+            //             max = max + 15;
+            //             Page++;
+            //             clearShowVatTuBoard2();
+            //             break;
+            //         }
+            //         else if (c == LEFT_ARROW && Page > 1)
+            //         {
+            //             backToPrv = true;
+            //             Page--;
+            //             current_vt = nullptr;
+            //             vtStack = PageStack[Page - 1];
+            //             max -= 15;
+            //             bodem = max - 15;
+            //             clearShowVatTuBoard2();
+            //             break;
+            //         }
+            //     }
+            //     else if (c == ESC)
+            //     {
+            //         delete[] PageStack;
+            //         delete[] firstPagePos;
+            //         PageStack = nullptr;
+            //         firstPagePos = nullptr;
+            //         return;
+            //     }
+            // }
+            // if (backToPrv)
+            // {
+            //     continue;
+            // }
+        }
+        current_vt = current_vt->right;
+    }
+}
+
+void ThemVatTu(DanhSachVatTu &ds_vt)
+{
+    // dem trang va luu ptr vs stack tai vi tri day
+    int Page = 1;
+    int arr2Size = 1;
+    bool backToPrv = false;
+    VatTuStack *PageStack = new VatTuStack[1];
+    VatTu **firstPagePos = new VatTu *[1];
+    VatTu *current_vt = ds_vt;
+    VatTuStack vtStack;
+    int bodem = 0;
+    int max = 15;
+    //
+    while (true)
+    {
+        drawRectangle(79, 0, 40, 2);
+        drawRectangle(79, 2, 15, 2);
+        drawRectangle(94, 2, 25, 2);
+        DrawHienThiThemVatTuTable(ds_vt);
+        InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+        DrawAnnouncementBoard();
+        gotoxy(79, 2);
+        cout << char(195);
+        gotoxy(94, 2);
+        cout << char(194);
+        gotoxy(94, 4);
+        cout << char(193);
+        gotoxy(119, 2);
+        cout << char(180);
+        gotoxy(89, 1);
+        SetColor(0xC);
+        cout << "Them thong tin vat tu" << endl;
+        SetColor(0xF);
+        char inputMaVT[11];
+        int count;
+        unsigned char ch;
+        gotoxy(82, 3);
+        cout << "Ma Vat Tu";
+        //
+        drawRectangle(79, 4, 15, 2);
+        drawRectangle(94, 4, 25, 2);
+        gotoxy(79, 4);
+        cout << char(195);
+        gotoxy(119, 4);
+        cout << char(180);
+        gotoxy(94, 4);
+        cout << char(197);
+        gotoxy(94, 6);
+        cout << char(193);
+        gotoxy(82, 5);
+        cout << "Ten Vat Tu";
+        //
+        drawRectangle(79, 6, 15, 2);
+        drawRectangle(94, 6, 25, 2);
+        gotoxy(79, 6);
+        cout << char(195);
+        gotoxy(94, 6);
+        cout << char(197);
+        gotoxy(94, 8);
+        cout << char(193);
+        gotoxy(119, 6);
+        cout << char(180);
+        gotoxy(81, 7);
+        cout << "Don Vi Tinh";
+        //
+        drawRectangle(79, 8, 15, 2);
+        drawRectangle(94, 8, 25, 2);
+        gotoxy(79, 8);
+        cout << char(195);
+        gotoxy(94, 8);
+        cout << char(197);
+        gotoxy(94, 10);
+        cout << char(193);
+        gotoxy(119, 8);
+        cout << char(180);
+        gotoxy(81, 9);
+        cout << "So luong ton";
+        //
+        gotoxy(96, 3);
+        // dinhDangMaVatTu(inputMaVT, "vt", idVatTuGlobalCount);
+        // cout << "maVT cua ban la " << inputMaVT << endl;
+        count = 0;
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+                {
+                    bodem = max;
+                    max = max + 15;
+                    Page++;
+                    current_vt = current_vt->right;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                else if (ch == LEFT_ARROW && Page > 1)
+                {
+                    backToPrv = true;
+                    Page--;
+                    current_vt = nullptr;
+                    vtStack = PageStack[Page - 1];
+                    max -= 15;
+                    bodem = max - 15;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                gotoxy(96 + count, 3);
+                continue;
+            }
+            else if (count > 0 && ch == 13)
+            {
+                inputMaVT[count] = '\0';
+                trim(inputMaVT);
+                if (isContainMaVT_DanhSachVatTu(ds_vt, inputMaVT))
+                {
+                    gotoxy(62, 28);
+                    SetBGColor(0x4);
+                    cout << "Cay da ton tai vat tu [" << inputMaVT << "]" << endl;
+                    gotoxy(96 + count, 3);
+                    SetNormalColor();
+                    continue;
+                }
+                else
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                          ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputMaVT[--count] = '\0';
+            }
+            else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputMaVT[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(62, 28);
+                cout << "Quit";
+                return;
+            }
+        }
+
+        char inputTenVT[21];
+        count = 0;
+        gotoxy(96, 5);
+
+        while (true)
+        {
+
+            ch = getch();
+
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+                {
+                    bodem = max;
+                    max = max + 15;
+                    Page++;
+                    current_vt = current_vt->right;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                else if (ch == LEFT_ARROW && Page > 1)
+                {
+                    backToPrv = true;
+                    Page--;
+                    current_vt = nullptr;
+                    vtStack = PageStack[Page - 1];
+                    max -= 15;
+                    bodem = max - 15;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                gotoxy(96 + count, 5);
+                continue;
+            }
+            else if (count > 0 && ch == 13)
+            {
+                inputTenVT[count] = '\0';
+                trim(inputTenVT);
+                if (isContainTenVT_DanhSachVatTu(ds_vt, inputTenVT))
+                {
+                    gotoxy(62, 28);
+                    SetBGColor(0x4);
+                    cout << "Cay da ton tai vat tu [" << inputTenVT << "]" << endl;
+                    SetNormalColor();
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+                else
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                          ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputTenVT[--count] = '\0';
+            }
+            else if ((isalnum(ch) || ch == ' ') && count < 20)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputTenVT[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                return;
+            }
+        }
+        char inputDVT[11];
+        count = 0;
+        gotoxy(96, 7);
+
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+                {
+                    bodem = max;
+                    max = max + 15;
+                    Page++;
+                    current_vt = current_vt->right;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                else if (ch == LEFT_ARROW && Page > 1)
+                {
+                    backToPrv = true;
+                    Page--;
+                    current_vt = nullptr;
+                    vtStack = PageStack[Page - 1];
+                    max -= 15;
+                    bodem = max - 15;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                gotoxy(96 + count, 7);
+                continue;
+            }
+            else if (ch == 13 && count > 0)
+            {
+                inputDVT[count] = '\0';
+                trim(inputDVT);
+                break;
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputDVT[--count] = '\0';
+            }
+            else if ((isalnum(ch) || ch == ' ') && count < 10)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputDVT[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                return;
+            }
+        }
+
+        char inputC_SoLuongTon[10];
+        count = 0;
+        gotoxy(96, 9);
+
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+                {
+                    bodem = max;
+                    max = max + 15;
+                    Page++;
+                    current_vt = current_vt->right;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                else if (ch == LEFT_ARROW && Page > 1)
+                {
+                    backToPrv = true;
+                    Page--;
+                    current_vt = nullptr;
+                    vtStack = PageStack[Page - 1];
+                    max -= 15;
+                    bodem = max - 15;
+                    InNoiDungTrangThemVT(current_vt, PageStack, firstPagePos, vtStack, Page, arr2Size, bodem, max);
+                }
+                gotoxy(96 + count, 9);
+                continue;
+            }
+            else if (ch == 13 && count > 0)
+            {
+                inputC_SoLuongTon[count] = '\0';
+                break;
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputC_SoLuongTon[--count] = '\0';
+            }
+            else if (isdigit(ch) && count < 9)
+            {
+                cout << ch;
+                inputC_SoLuongTon[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                return;
+            }
+        }
+        cout << endl;
+
+        int inputSoLuongTon = stoi(inputC_SoLuongTon);
+
+        DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
+        insertDanhSachVatTu(ds_vt, dsvt_moi);
+        //
+        gotoxy(62, 28);
+        SetBGColor(0x4);
+        cout << "SUCCESSFUL";
+        SetNormalColor();
+        // Kiem tra muon nhap tiep hay thoat
+        gotoxy(1, 23);
+        cout << "DO YOU WANT TO CONTINUE ADD MORE VATTU (y: Continue, n: Exit)";
+        while (true)
+        {
+            ch = getch();
+            if (ch == 'y' || ch == 'Y')
+            {
+                Page = 1;
+                arr2Size = 1;
+                backToPrv = false;
+                VatTuStack *PageStack = new VatTuStack[1];
+                VatTu **firstPagePos = new VatTu *[1];
+                vtStack.sp = -1;
+                current_vt = ds_vt;
+                bodem = 0;
+                max = 15;
+                //
+                clrscr();
+                break;
+            }
+            else if (ch == 'n' || ch == 'N')
+            {
+                return;
+            }
+        }
+    }
+}
+
+// HIEU CHINH VAT TU
+//+++++++++++++++++++++++++++++++++++++++++++
+
+// Dung de ho tro ve lai vung nhap input
+void HieuChinhVatTuDrawSupport()
+{
+    // drawRectangle(79, 0, 40, 2);
+    // drawRectangle(79, 2, 15, 2);
+    // drawRectangle(94, 2, 25, 2);
+    //
+    drawRectangle(79, 0, 40, 2);
+    drawRectangle(79, 2, 40, 2);
+    gotoxy(79, 2);
+    cout << char(195);
+    gotoxy(119, 2);
+    cout << char(180);
+    gotoxy(86, 1);
+    SetColor(0xC);
+    cout << "Hieu Chinh Thong Tin Vat Tu";
+    SetColor(0xF);
+    gotoxy(85, 3);
+    cout << "Nhap ma vat tu can hieu chinh";
+    drawRectangle(79, 4, 15, 2);
+    drawRectangle(94, 4, 25, 2);
+    gotoxy(79, 4);
+    cout << char(195);
+    gotoxy(119, 4);
+    cout << char(180);
+    gotoxy(94, 4);
+    cout << char(194);
+    gotoxy(94, 6);
+    cout << char(193);
+    gotoxy(82, 5);
+    cout << "Ma Vat Tu";
+    gotoxy(96, 5);
+}
+
+// NOTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+void NoiDungVatTu(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVatTu, int &Page, int &arr2Size, VatTuStack *&PageStack, VatTu **&firstPagePos, char pageMaVTData[15][11], VatTu *&current_vt, VatTuStack &vtStack, int &bodem, int &max, int &ptrY)
+{
+    // unsigned char ch;
+    // int Page = 1;
+    // int arr2Size = 1;
+    // VatTuStack *PageStack = new VatTuStack[1];
+    // VatTu **firstPagePos = new VatTu *[1];
+    // char pageMaVTData[15][11];
+    // // bool backToPrev = false;
+    // VatTu *current_vt = ds_vt;
+    // VatTuStack vtStack;
+    // int bodem = 0;
+    // int max = 15;
+    // int ptrY = 0;
+    //
+    // clearShowVatTuBoard2();
+    while (current_vt != nullptr || !vtStack.isEmpty())
+    {
+        while (current_vt != nullptr)
+        {
+            vtStack.push(current_vt);
+            current_vt = current_vt->left;
+        }
+
+        current_vt = vtStack.pop();
+        //
+        if (Page == arr2Size && current_vt != nullptr)
+        {
+            PageStack[arr2Size - 1] = vtStack;
+            PageStack[arr2Size - 1].push(current_vt);
+            expandArray(PageStack, arr2Size, Page + 1);
+
+            firstPagePos[arr2Size - 1] = current_vt;
+            expandArray(firstPagePos, arr2Size, Page + 1);
+            arr2Size += 1;
+        }
+
+        // 15,25,15,21
+        // 0,15,40,55
+        gotoxy(2, 22 - (max - bodem));
+        cout << current_vt->maVT;
+        gotoxy(17, 22 - (max - bodem));
+        cout << current_vt->tenVT;
+        gotoxy(42, 22 - (max - bodem));
+        cout << current_vt->dVT;
+        gotoxy(57, 22 - (max - bodem));
+        cout << current_vt->soLuongTon;
+        strcpy(pageMaVTData[15 - (max - bodem)], current_vt->maVT);
+        bodem++;
+
+        if (bodem >= max || bodem > SoLuongVatTu - 1)
+        {
+            if (14 - (max - bodem) < ptrY)
+            {
+                gotoxy(0, 7 + ptrY);
+                cout << char(179) << " ";
+                ptrY = 14 - (max - bodem);
+            }
+            gotoxy(0, 7 + ptrY);
+            SetColor(0x4);
+            cout << "->";
+            SetColor(0xF);
+            break;
+            // while (true)
+            // {
+            //     ch = getch();
+            //     if (ch == 224)
+            //     {
+            //         ch = getch();
+            // if (ch == RIGHT_ARROW && max < SoLuongVatTu)
+            // {
+
+            //     bodem = max;
+            //     max = max + 15;
+            //     Page++;
+            //     clearShowVatTuBoard();
+            //     break;
+            // }
+            // else if (ch == LEFT_ARROW && Page > 1)
+            // {
+            //     Page--;
+            //     current_vt = nullptr;
+            //     vtStack = PageStack[Page - 1];
+            //     max -= 15;
+            //     bodem = max - 15;
+            //     backToPrev = true;
+            //     clearShowVatTuBoard();
+            //     break;
+            // }
+            // else if (ch == DOWN_ARROW && ptrY < 14 - (max - bodem))
+            // {
+            //     gotoxy(0, 7 + ptrY);
+            //     cout << char(179) << " ";
+            //     ptrY += 1;
+            //     gotoxy(0, 7 + ptrY);
+            //     SetColor(0x4);
+            //     cout << "->";
+            //     SetColor(0xF);
+            //     continue;
+            // }
+            // else if (ch == UP_ARROW && ptrY > 0)
+            // {
+            //     gotoxy(0, 7 + ptrY);
+            //     cout << char(179) << " ";
+            //     ptrY -= 1;
+            //     gotoxy(0, 7 + ptrY);
+            //     SetColor(0x4);
+            //     cout << "->";
+            //     SetColor(0xF);
+            //     continue;
+            // }
+            //     }
+            //     else if (ch == ESC)
+            //     {
+            //         return;
+            //     }
+            //     else if (ch == ENTER && ptrY < 15 - (max - bodem))
+            //     {
+            //         gotoxy(0, 0);
+            //         strcpy(noidung, pageMaVTData[ptrY]);
+            //         dem = strlen(noidung);
+            //         return;
+            //     }
+            // }
+            // if (backToPrev)
+            // {
+            //     backToPrev = false;
+            //     continue;
+            // }
+        }
+
+        current_vt = current_vt->right;
+    }
+}
+
+void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, char noidung[11], int &dem, int SoLuongVatTu, int &Page, int &arr2Size, VatTuStack *&PageStack, VatTu **&firstPagePos, char pageMaVTData[15][11], VatTu *&current_vt, VatTuStack &vtStack, int &bodem, int &max, int &ptrY)
+{
+    if (ds_vt == nullptr)
+    {
+        cout << "Danh Sach Dang Trong";
+        gotoxy(18, 5);
+    }
+    else
+    {
+        //
+        // gotoxy(0, 27);
+        // SetColor(0xA);
+        // cout << "ENTER:";
+        // SetColor(0xF);
+        // cout << " Choose This MaVT  ";
+        // SetColor(0xA);
+        // cout << "UP_ARROW:";
+        // SetColor(0xF);
+        // cout << " Move Up  ";
+        // SetColor(0xA);
+        // cout << "DOWN_ARROW:";
+        // SetColor(0xF);
+        // cout << " Move Down";
+        // gotoxy(0, 28);
+        // SetColor(0xA);
+        // cout << "ESC:";
+        // SetColor(0xF);
+        // cout << " Escape From Board    ";
+        // SetColor(0xA);
+        // cout << "-->:";
+        // SetColor(0xF);
+        // cout << " Next List     ";
+        // SetColor(0xA);
+        // cout << "<--:";
+        // SetColor(0xF);
+        // cout << " Previous List   ";
+        // SetColor(0xF);
+        //
+        drawRectangle(0, 0, 76, 4);
+        gotoxy(14, 2);
+        SetColor(0xC);
+        cout << "Bang Thong Tin Chi Tiet Vat Tu Dang Co";
+        SetColor(0xF);
+        drawRectangle(0, 4, 15, 2);
+        gotoxy(4, 5);
+        cout << "Ma Vat Tu";
+        drawRectangle(15, 4, 25, 2);
+        gotoxy(16, 5);
+        cout << "Ten Vat Tu";
+        drawRectangle(40, 4, 15, 2);
+        gotoxy(41, 5);
+        cout << "Don Vi Tinh";
+        drawRectangle(55, 4, 21, 2);
+        gotoxy(56, 5);
+        cout << "So Luong Ton";
+        // Phan noi dung
+        drawRectangle(0, 6, 15, 16);
+        drawRectangle(15, 6, 25, 16);
+        drawRectangle(40, 6, 15, 16);
+        drawRectangle(55, 6, 21, 16);
+        //
+        gotoxy(0, 4);
+        cout << char(195);
+        gotoxy(15, 4);
+        cout << char(194);
+        gotoxy(40, 4);
+        cout << char(194);
+        gotoxy(55, 4);
+        cout << char(194);
+        gotoxy(76, 4);
+        cout << char(180);
+        gotoxy(0, 6);
+        cout << char(195);
+        gotoxy(15, 6);
+        cout << char(197);
+        gotoxy(40, 6);
+        cout << char(197);
+        gotoxy(55, 6);
+        cout << char(197);
+        gotoxy(76, 6);
+        cout << char(180);
+        gotoxy(15, 22);
+        cout << char(193);
+        gotoxy(40, 22);
+        cout << char(193);
+        gotoxy(55, 22);
+        cout << char(193);
+        /////////////////////////
+        NoiDungVatTu(ds_vt, noidung, dem, SoLuongVatTu, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+    }
+}
+
+void HieuChinhVatTu(DanhSachVatTu &ds_vt)
+{
+
+    int Page = 1;
+    int arr2Size = 1;
+    VatTuStack *PageStack = new VatTuStack[1];
+    VatTu **firstPagePos = new VatTu *[1];
+    char pageMaVTData[15][11];
+    VatTu *current_vt = ds_vt;
+    VatTuStack vtStack;
+    int bodem = 0;
+    int max = 15;
+    int ptrY = 0;
+
+    // drawRectangle(79, 0, 40, 2);
+    // drawRectangle(79, 2, 15, 2);
+    // drawRectangle(94, 2, 25, 2);
+
+    while (true)
+    {
+        int count = 0;
+        char inputMaVT[11];
+        unsigned char ch;
+        VatTu *foundVT;
+
+        HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+        DrawAnnouncementBoard();
+        HieuChinhVatTuDrawSupport();
+        //
+        drawRectangle(79, 6, 15, 2);
+        drawRectangle(94, 6, 25, 2);
+        gotoxy(79, 6);
+        cout << char(195);
+        gotoxy(94, 6);
+        cout << char(197);
+        gotoxy(94, 8);
+        cout << char(193);
+        gotoxy(119, 6);
+        cout << char(180);
+        gotoxy(81, 7);
+        cout << "Ten VT(old)";
+        //
+        drawRectangle(79, 8, 15, 2);
+        drawRectangle(94, 8, 25, 2);
+        gotoxy(79, 8);
+        cout << char(195);
+        gotoxy(94, 8);
+        cout << char(197);
+        gotoxy(94, 10);
+        cout << char(193);
+        gotoxy(119, 8);
+        cout << char(180);
+        gotoxy(81, 9);
+        cout << "DV Tinh(old)";
+        //
+        gotoxy(96, 5);
+
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+                {
+
+                    bodem = max;
+                    max = max + 15;
+                    Page++;
+                    current_vt = current_vt->right;
+                    clearShowVatTuBoard2();
+                    HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+                    gotoxy(96 + count, 5);
+                }
+                else if (ch == LEFT_ARROW && Page > 1)
+                {
+                    Page--;
+                    current_vt = nullptr;
+                    vtStack = PageStack[Page - 1];
+                    max -= 15;
+                    bodem = max - 15;
+                    clearShowVatTuBoard2();
+                    HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+                    gotoxy(96 + count, 5);
+                }
+                else if (ch == DOWN_ARROW && ptrY < 14 - (max - bodem))
+                {
+                    gotoxy(0, 7 + ptrY);
+                    cout << char(179) << " ";
+                    ptrY += 1;
+                    gotoxy(0, 7 + ptrY);
+                    SetColor(0x4);
+                    cout << "->";
+                    SetColor(0xF);
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+                else if (ch == UP_ARROW && ptrY > 0)
+                {
+                    gotoxy(0, 7 + ptrY);
+                    cout << char(179) << " ";
+                    ptrY -= 1;
+                    gotoxy(0, 7 + ptrY);
+                    SetColor(0x4);
+                    cout << "->";
+                    SetColor(0xF);
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+            }
+            else if (ch == '*')
+            {
+                gotoxy(96, 5);
+                cout << pageMaVTData[ptrY];
+                strcpy(inputMaVT, pageMaVTData[ptrY]);
+                count = strlen(pageMaVTData[ptrY]);
+                // clrscr();
+                // HieuChinhVatTuDrawSupport();
+                // DrawAdjustVatTuContactGuide();
+                // gotoxy(18, 5);
+                // if (count != 0)
+                // {
+                //     cout << inputMaVT;
+                // }
+                continue;
+            }
+            else if (count > 0 && ch == ENTER)
+            {
+                inputMaVT[count] = '\0';
+                trim(inputMaVT);
+                //
+                if (!isContainMaVT_DanhSachVatTu(ds_vt, inputMaVT))
+                {
+                    gotoxy(62, 28);
+                    SetErrorColor();
+                    cout << "Ma vat tu [" << inputMaVT << "] khong duoc tim thay" << endl;
+                    SetNormalColor();
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+                else
+                {
+                    gotoxy(62, 28);
+                    SetErrorColor();
+                    cout << "                                                  ";
+                    SetNormalColor();
+                    foundVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
+                    gotoxy(96, 7);
+                    cout << foundVT->tenVT;
+                    gotoxy(96, 9);
+                    cout << foundVT->dVT;
+                    break;
+                }
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputMaVT[--count] = '\0';
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(62, 28);
+                SetErrorColor();
+                cout << "Quit";
+                SetNormalColor();
+                return;
+            }
+            else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputMaVT[count++] = ch;
+            }
+        }
+
+        // foundVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
+        char inputTenVT[21];
+        char inputDVT[11];
+        count = 0;
+        //
+        drawRectangle(79, 12, 15, 2);
+        drawRectangle(94, 12, 25, 2);
+        gotoxy(94, 12);
+        cout << char(194);
+        gotoxy(81, 13);
+        cout << "Ten VT(new)";
+        //
+        drawRectangle(79, 14, 15, 2);
+        drawRectangle(94, 14, 25, 2);
+        gotoxy(79, 14);
+        cout << char(195);
+        gotoxy(94, 14);
+        cout << char(197);
+        gotoxy(94, 16);
+        cout << char(193);
+        gotoxy(119, 14);
+        cout << char(180);
+        gotoxy(81, 15);
+        cout << "DV Tinh(new)";
+        //
+        gotoxy(96, 13);
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW)
+                {
+                    continue;
+                }
+                else if (ch == LEFT_ARROW)
+                {
+                    continue;
+                }
+            }
+            else if (ch == 13 && count >= 0)
+            {
+                inputTenVT[count] = '\0';
+                trim(inputTenVT);
+                if (isContainTenVT_DanhSachVatTu(ds_vt, inputTenVT))
+                {
+                    gotoxy(62, 28);
+                    SetErrorColor();
+                    cout << "Ten vat tu [" << inputTenVT << "] da ton tai" << endl;
+                    SetNormalColor();
+                    gotoxy(96 + count, 13);
+                    continue;
+                }
+                else
+                {
+                    if (count == 0)
+                    {
+                        gotoxy(96, 13);
+                        cout << foundVT->tenVT;
+                        count = strlen(foundVT->tenVT);
+                    }
+                    SetErrorColor();
+                    gotoxy(62, 28);
+                    cout << "                                                  ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputTenVT[--count] = '\0';
+            }
+            else if ((isalnum(ch) || ch == ' ') && count < 20)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputTenVT[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(62, 28);
+                SetErrorColor();
+                cout << "Quit";
+                SetNormalColor();
+                return;
+            }
+        }
+        //
+        count = 0;
+        //
+        gotoxy(96, 15);
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW)
+                {
+                    continue;
+                }
+                else if (ch == LEFT_ARROW)
+                {
+                    continue;
+                }
+            }
+            else if (ch == 13 && count >= 0)
+            {
+                inputDVT[count] = '\0';
+                trim(inputDVT);
+                if (count == 0)
+                {
+                    gotoxy(96, 15);
+                    cout << foundVT->dVT;
+                    count = strlen(foundVT->dVT);
+                }
+                break;
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputDVT[--count] = '\0';
+            }
+            else if ((isalnum(ch) || ch == ' ') && count < 10)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputDVT[count++] = ch;
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(62, 28);
+                cout << "Quit";
+                return;
+            }
+        }
+        cout << endl;
+
+        if (strlen(inputTenVT) == 0)
+        {
+            strcpy(inputTenVT, foundVT->tenVT);
+        }
+
+        if (strlen(inputDVT) == 0)
+        {
+            strcpy(inputDVT, foundVT->dVT);
+        }
+
+        int inputSoLuongTon = foundVT->soLuongTon;
+        removeFromDanhSachVatTu(foundVT->tenVT, ds_vt);
+        SoLuongVatTuGlobalCount--;
+        insertDanhSachVatTu(ds_vt, newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon));
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "Successful";
+        SetNormalColor();
+
+        // Kiem tra muon nhap tiep hay thoat
+        gotoxy(1, 23);
+        cout << "DO YOU WANT TO CONTINUE MODIFY VATTU (y: Continue, n: Exit)";
+        while (true)
+        {
+            ch = getch();
+            if (ch == 'y' || ch == 'Y')
+            {
+                Page = 1;
+                arr2Size = 1;
+                VatTuStack *PageStack = new VatTuStack[1];
+                VatTu **firstPagePos = new VatTu *[1];
+                char pageMaVTData[15][11];
+                current_vt = ds_vt;
+                vtStack.sp = -1;
+                bodem = 0;
+                max = 15;
+                ptrY = 0;
+                clrscr();
+                break;
+            }
+            else if (ch == 'n' || ch == 'N')
+            {
+                return;
+            }
+        }
+    };
+}
+
+void XoaVatTuDrawSupport()
+{
+    drawRectangle(79, 0, 40, 2);
+    drawRectangle(79, 2, 40, 2);
+    gotoxy(79, 2);
+    cout << char(195);
+    gotoxy(119, 2);
+    cout << char(180);
+    gotoxy(89, 1);
+    SetColor(0xC);
+    cout << "Xoa Thong Tin Vat Tu" << endl;
+    SetColor(0xF);
+    gotoxy(83, 3);
+    cout << "Nhap ma vat tu cua vat tu can xoa";
+    drawRectangle(79, 4, 15, 2);
+    drawRectangle(94, 4, 25, 2);
+    gotoxy(79, 4);
+    cout << char(195);
+    gotoxy(119, 4);
+    cout << char(180);
+    gotoxy(94, 4);
+    cout << char(194);
+    gotoxy(94, 6);
+    cout << char(193);
+    gotoxy(81, 5);
+    cout << "Ma Vat Tu";
+}
+
+void XoaVatTu(DanhSachVatTu &ds_vt, int &soLuongVatTu)
+{
+    int Page = 1;
+    int arr2Size = 1;
+    VatTuStack *PageStack = new VatTuStack[1];
+    VatTu **firstPagePos = new VatTu *[1];
+    char pageMaVTData[15][11];
+    bool backToPrev = false;
+    VatTu *current_vt = ds_vt;
+    VatTuStack vtStack;
+    int bodem = 0;
+    int max = 15;
+    int ptrY = 0;
+    char inputMaVT[11];
+    int count = 0;
+    unsigned char ch;
+    //
+    while (true)
+    {
+        count = 0;
+        DrawAnnouncementBoard();
+        XoaVatTuDrawSupport();
+        HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+        gotoxy(96, 5);
+        while (true)
+        {
+            ch = getch();
+            if (ch == 224)
+            {
+                ch = getch();
+                if (ch == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
+                {
+
+                    bodem = max;
+                    max = max + 15;
+                    Page++;
+                    current_vt = current_vt->right;
+                    clearShowVatTuBoard2();
+                    HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+                    gotoxy(96 + count, 5);
+                }
+                else if (ch == LEFT_ARROW && Page > 1)
+                {
+                    Page--;
+                    current_vt = nullptr;
+                    vtStack = PageStack[Page - 1];
+                    max -= 15;
+                    bodem = max - 15;
+                    clearShowVatTuBoard2();
+                    HienThiVatTuDangCoTrongHieuChinh(ds_vt, inputMaVT, count, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+                    gotoxy(96 + count, 5);
+                }
+                else if (ch == DOWN_ARROW && ptrY < 14 - (max - bodem))
+                {
+                    gotoxy(0, 7 + ptrY);
+                    cout << char(179) << " ";
+                    ptrY += 1;
+                    gotoxy(0, 7 + ptrY);
+                    SetColor(0x4);
+                    cout << "->";
+                    SetColor(0xF);
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+                else if (ch == UP_ARROW && ptrY > 0)
+                {
+                    gotoxy(0, 7 + ptrY);
+                    cout << char(179) << " ";
+                    ptrY -= 1;
+                    gotoxy(0, 7 + ptrY);
+                    SetColor(0x4);
+                    cout << "->";
+                    SetColor(0xF);
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+            }
+            else if (ch == '*')
+            {
+                gotoxy(96, 5);
+                cout << pageMaVTData[ptrY];
+                strcpy(inputMaVT, pageMaVTData[ptrY]);
+                count = strlen(pageMaVTData[ptrY]);
+                continue;
+            }
+            else if (count > 0 && ch == 13)
+            {
+                inputMaVT[count] = '\0';
+                trim(inputMaVT);
+                if (isContainMaVT_DanhSachVatTu(ds_vt, inputMaVT))
+                {
+                    // last check
+                    bool isDelete;
+                    gotoxy(1, 23);
+                    cout << "ARE YOU SURE YOU WANT TO DELETE " << inputMaVT << " (y: Delete, n: No)";
+                    while (true)
+                    {
+                        ch = getch();
+                        if (ch == 'y' || ch == 'Y')
+                        {
+                            isDelete = true;
+                            break;
+                        }
+                        else if (ch == 'n' || ch == 'N')
+                        {
+                            isDelete = false;
+                            break;
+                        }
+                    }
+                    //
+                    if (!isDelete)
+                    {
+                        gotoxy(1, 23);
+                        cout << "                                                                                ";
+                        gotoxy(62, 28);
+                        SetErrorColor();
+                        cout << "CANCELED" << endl;
+                        SetNormalColor();
+                        gotoxy(96 + count, 5);
+                        continue;
+                    }
+                    //
+                    VatTu *deletedVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
+                    removeFromDanhSachVatTu(deletedVT->tenVT, ds_vt);
+                    soLuongVatTu--;
+                    gotoxy(62, 28);
+                    SetErrorColor();
+                    cout << "                                                         ";
+                    gotoxy(62, 28);
+                    cout << "Removed " << inputMaVT << " from DanhSach";
+                    SetNormalColor();
+                    gotoxy(1, 23);
+                    cout << "                                                                                ";
+                    break;
+                }
+                else
+                {
+                    gotoxy(62, 28);
+                    SetErrorColor();
+                    cout << "Cay khong ton tai vat tu [" << inputMaVT << "]" << endl;
+                    SetNormalColor();
+                    gotoxy(96 + count, 5);
+                    continue;
+                }
+            }
+            else if (ch == '\b' && count > 0)
+            {
+                cout << "\b \b";
+                inputMaVT[--count] = '\0';
+            }
+            else if (ch == ESC)
+            {
+                gotoxy(62, 28);
+                cout << "Quit";
+                return;
+            }
+            else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
+            {
+                cout << ch;
+                ch = tolower(ch);
+                inputMaVT[count++] = ch;
+            }
+        }
+
+        // Kiem tra muon nhap tiep hay thoat
+        gotoxy(1, 23);
+        cout << "DO YOU WANT TO CONTINUE MODIFY VATTU (y: Continue, n: Exit)";
+        while (true)
+        {
+            ch = getch();
+            if (ch == 'y' || ch == 'Y')
+            {
+                Page = 1;
+                arr2Size = 1;
+                VatTuStack *PageStack = new VatTuStack[1];
+                VatTu **firstPagePos = new VatTu *[1];
+                char pageMaVTData[15][11];
+                current_vt = ds_vt;
+                vtStack.sp = -1;
+                bodem = 0;
+                max = 15;
+                ptrY = 0;
+                clrscr();
+                break;
+            }
+            else if (ch == 'n' || ch == 'N')
+            {
+                return;
+            }
+        }
+    };
+};
+
+// HIEN THI VAT TU
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 void HienThiVatTu(DanhSachVatTu root, int SoLuongVatTu)
 {
@@ -2753,14 +3386,33 @@ bool isValidDoule(const char input[])
 
 void drawCT_HoaDonUI(int choose)
 {
+    //  for (int iy = 0; iy < seccondVatTuItems; iy++)
+    // {
+    //     drawRectangle2(xUI2 - 1, yUI2 + iy * 3, 38, 2);
+    //     gotoxy(xUI2, yUI2 + iy * 3 + 1);
+    //     cout << seccondVatTuUI[iy];
+    // }
+    // SetHighLight();
+    // drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+    // gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+    // cout << seccondVatTuUI[choose2];
+    // SetNormalColor();
+
     for (int i = 0; i < thirdHoaDonItems; i++)
     {
-        gotoxy(0, 10 + i);
+        drawRectangle2(0, 10 + i * 3, 44, 2);
+        gotoxy(1, 10 + i * 3 + 1);
         cout << thirdHoaDonUI[i];
     }
 
+    // SetHighLight();
+    // drawRectangle2(xUI2 - 1, yUI2 + choose2 * 3, 38, 2);
+    // gotoxy(xUI2, yUI2 + choose2 * 3 + 1);
+    // cout << seccondVatTuUI[choose2];
+    // SetNormalColor();
     SetHighLight();
-    gotoxy(0, 10 + choose);
+    drawRectangle2(0, 10 + choose * 3, 44, 2);
+    gotoxy(1, 10 + choose * 3 + 1);
     cout << thirdHoaDonUI[choose];
     SetNormalColor();
 }
@@ -4710,10 +5362,22 @@ startLapHoaDon:
             if (ch == DOWN_ARROW && choose3 < thirdHoaDonItems - 1)
             {
                 choose3 += 1;
+                drawCT_HoaDonUI(choose3);
             }
             else if (ch == UP_ARROW && choose3 > 0)
             {
                 choose3 -= 1;
+                drawCT_HoaDonUI(choose3);
+            }
+            else if (ch == DOWN_ARROW && choose3 == thirdHoaDonItems - 1)
+            {
+                choose3 = 0;
+                drawCT_HoaDonUI(choose3);
+            }
+            else if (ch == UP_ARROW && choose3 == 0)
+            {
+                choose3 = thirdHoaDonItems - 1;
+                drawCT_HoaDonUI(choose3);
             }
         }
         else if (ch == ESC)
@@ -4745,12 +5409,14 @@ startLapHoaDon:
                 themChiTietHoaDonNhap(new_hd, ds_vt);
                 clearBottomScreen();
                 backAllow = false;
+                drawCT_HoaDonUI(choose3);
             }
             else if (choose3 == 1)
             {
                 clearBottomScreen();
                 XoaChiTietHoaDon(new_hd, ds_vt);
                 clearBottomScreen();
+                drawCT_HoaDonUI(choose3);
                 continue;
             }
             else if (choose3 == 2)
@@ -4764,6 +5430,7 @@ startLapHoaDon:
                     if (ch == 'n' || ch == 'N')
                     {
                         clearBottomScreen();
+                        drawCT_HoaDonUI(choose3);
                         break;
                     }
                     else if (ch == 'y' || ch == 'Y')
@@ -4784,6 +5451,7 @@ startLapHoaDon:
                     if (ch == 'n' || ch == 'N')
                     {
                         clearBottomScreen();
+                        drawCT_HoaDonUI(choose3);
                         break;
                     }
                     else if (ch == 'y' || ch == 'Y')
@@ -5231,9 +5899,9 @@ startLapHoaDon:
     HoaDon *new_hd = newHoaDon(inputSoHoaDon, inputDate, inputLoai, nullptr);
     //  phan nhap chi tiet hoa don xuat;
     int choose3 = 0;
+    drawCT_HoaDonUI(choose3);
     while (true)
     {
-        drawCT_HoaDonUI(choose3);
         ch = getch();
         if (ch == 224)
         {
@@ -5241,10 +5909,22 @@ startLapHoaDon:
             if (ch == DOWN_ARROW && choose3 < thirdHoaDonItems - 1)
             {
                 choose3 += 1;
+                drawCT_HoaDonUI(choose3);
             }
             else if (ch == UP_ARROW && choose3 > 0)
             {
                 choose3 -= 1;
+                drawCT_HoaDonUI(choose3);
+            }
+            else if (ch == DOWN_ARROW && choose3 == thirdHoaDonItems - 1)
+            {
+                choose3 = 0;
+                drawCT_HoaDonUI(choose3);
+            }
+            else if (ch == UP_ARROW && choose3 == 0)
+            {
+                choose3 = thirdHoaDonItems - 1;
+                drawCT_HoaDonUI(choose3);
             }
         }
         else if (ch == ESC)
@@ -5270,6 +5950,7 @@ startLapHoaDon:
                 themChiTietHoaDonXuat(new_hd, ds_vt);
                 clearBottomScreen();
                 backAllow = false;
+                drawCT_HoaDonUI(choose3);
             }
             else if (choose3 == 1)
             {
@@ -5277,6 +5958,7 @@ startLapHoaDon:
                 gotoxy(0, 20);
                 XoaChiTietHoaDon(new_hd, ds_vt);
                 clearBottomScreen();
+                drawCT_HoaDonUI(choose3);
                 continue;
             }
             else if (choose3 == 2)
@@ -5286,14 +5968,12 @@ startLapHoaDon:
                 {
                     clearBottomScreen();
                     gotoxy(0, 20);
-                    // InDanhSachCTHoaDon(new_hd->ds_ct_hoadon);
-                    // getch();
-                    // break;
                     cout << "Do you want to cancel this recipe(y:Yes, n: No): ";
                     ch = getch();
                     if (ch == 'n' || ch == 'N')
                     {
                         clearBottomScreen();
+                        drawCT_HoaDonUI(choose3);
                         break;
                     }
                     else if (ch == 'y' || ch == 'Y')
@@ -5314,6 +5994,7 @@ startLapHoaDon:
                     if (ch == 'n' || ch == 'N')
                     {
                         clearBottomScreen();
+                        drawCT_HoaDonUI(choose3);
                         break;
                     }
                     else if (ch == 'y' || ch == 'Y')
@@ -7094,6 +7775,10 @@ start:
         {
             ch = getch();
         }
+        else if (ch == ESC)
+        {
+            return;
+        }
         else if (ch == ENTER && count > 0)
         {
             charInputDate[count] = '\0';
@@ -7218,7 +7903,6 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             case 0:
             {
                 clrscr();
-                DrawVatTuContactGuide();
                 ThemVatTu(ds_vt);
                 // Sleep(2000);
                 clrscr();
@@ -7227,7 +7911,7 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             case 1:
             {
                 clrscr();
-                DrawAdjustVatTuContactGuide();
+                // DrawAdjustVatTuContactGuide();
                 HieuChinhVatTu(ds_vt);
                 Sleep(2000);
                 clrscr();
@@ -7236,9 +7920,9 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             case 2:
             {
                 clrscr();
-                DrawRemoveVatTuContactGuide();
+                // DrawRemoveVatTuContactGuide();
                 XoaVatTu(ds_vt, SoLuongVatTuGlobalCount);
-                Sleep(2000);
+                // Sleep(2000);
                 clrscr();
                 break;
             }

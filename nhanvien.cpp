@@ -41,8 +41,6 @@ void insertNhanVienToDSNV(DanhSachNhanVien &ds_nv, NhanVien *nv, int &soLuongNV)
         ds_nv[i + 1] = ds_nv[i];
     }
     ds_nv[i + 1] = nv;
-    // note
-    // ds_nv[i + 2] = nullptr;
     soLuongNV++;
 }
 
