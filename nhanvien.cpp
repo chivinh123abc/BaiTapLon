@@ -56,6 +56,28 @@ int searchNhanVienFromDSNV(DanhSachNhanVien ds_nv, const char maNV[], int soLuon
     return -1;
 }
 
+int searchMaVTFromDSNV(DanhSachNhanVien ds_nv, const char maVT[], int soLuongNV)
+{
+    for (int i = 0; i < soLuongNV; i++)
+    {
+        HoaDon *current_hd = ds_nv[i]->ds_hoadon;
+        while (current_hd != nullptr)
+        {
+            CT_HoaDon *current_ct = current_hd->ds_ct_hoadon;
+            while (current_ct != nullptr)
+            {
+                if (strcmp(current_ct->maVT, maVT) == 0)
+                {
+                    return i;
+                }
+                current_ct = current_ct->next;
+            }
+            current_hd = current_hd->next;
+        }
+    }
+    return -1;
+}
+
 bool isNhanVienInDSNV(DanhSachNhanVien ds_nv, const char maNV[], int soLuongNV)
 {
     for (int i = 0; i < soLuongNV; i++)
@@ -72,7 +94,6 @@ void removeNhanVienByMaNV(DanhSachNhanVien &ds_nv, const char maNV[], int &soLuo
 {
     if (ds_nv == nullptr || soLuongNV == 0)
     {
-        cout << "Danh Sach Nhan Vien Rong Hoac Khong Ton Tai" << endl;
         return;
     }
 
@@ -80,7 +101,6 @@ void removeNhanVienByMaNV(DanhSachNhanVien &ds_nv, const char maNV[], int &soLuo
 
     if (index == -1)
     {
-        cout << "Khong tim thay nhan vien voi MaNV: " << maNV << "\n";
         return;
     }
 

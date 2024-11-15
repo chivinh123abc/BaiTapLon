@@ -2,7 +2,7 @@
 vt-0000028|ban an|chiec|100
 vt-0000006|ban ghe|cai|100
 vt-0000029|ban tra|chiec|100
-vt-0000073|banh bao|chiec|1
+vt-0000073|banh bao|chiec|0
 vt-0000074|banh beo|chiec|1
 vt-0000072|banh xe|chiec|1
 vt-0000075|banh xeo|chiec|1
