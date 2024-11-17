@@ -702,6 +702,47 @@ void clearShowVatTuBoard2()
     }
 };
 
+void VatTuGuideDraw()
+{
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Back To Prev Part    ";
+    SetColor(0xA);
+    cout << "*:";
+    SetColor(0xF);
+    cout << " Paste Arrow Part To Field    ";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Choose             ";
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape From Board    ";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "UP_ARROW:";
+    SetColor(0xF);
+    cout << " Move Up  ";
+    SetColor(0xA);
+    cout << "       DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 29);
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "       <--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+}
+
 void DrawHienThiVatTuTable(DanhSachVatTu ds_vt)
 {
     if (ds_vt == nullptr)
@@ -711,33 +752,8 @@ void DrawHienThiVatTuTable(DanhSachVatTu ds_vt)
     }
     else
     {
-        gotoxy(0, 27);
-        SetColor(0xA);
-        cout << "ENTER:";
-        SetColor(0xF);
-        cout << " Choose This TenVT  ";
-        SetColor(0xA);
-        cout << "UP_ARROW:";
-        SetColor(0xF);
-        cout << " Move Up  ";
-        SetColor(0xA);
-        cout << "DOWN_ARROW:";
-        SetColor(0xF);
-        cout << " Move Down";
-        gotoxy(0, 28);
-        SetColor(0xA);
-        cout << "ESC:";
-        SetColor(0xF);
-        cout << " Escape From Board    ";
-        SetColor(0xA);
-        cout << "-->:";
-        SetColor(0xF);
-        cout << " Next List     ";
-        SetColor(0xA);
-        cout << "<--:";
-        SetColor(0xF);
-        cout << " Previous List   ";
-        SetColor(0xF);
+        //
+        VatTuGuideDraw();
         //
         drawRectangle(0, 0, 118, 4);
         gotoxy(40, 2);
@@ -792,6 +808,88 @@ void DrawHienThiVatTuTable(DanhSachVatTu ds_vt)
     }
 }
 
+void NhanVienGuideDraw()
+{
+    gotoxy(0, 26);
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Back To Prev Part    ";
+    SetColor(0xA);
+    cout << "*:";
+    SetColor(0xF);
+    cout << " Paste Arrow Part To Field    ";
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Choose             ";
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape     ";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "UP_ARROW:";
+    SetColor(0xF);
+    cout << " Move Up  ";
+    SetColor(0xA);
+    cout << "       DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 29);
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "       <--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+}
+
+void HoaDonGuideDraw()
+{
+    gotoxy(0, 26);
+    SetColor(0xA);
+    cout << "TAB:";
+    SetColor(0xF);
+    cout << " Back To Prev Part    ";
+    SetColor(0xA);
+    cout << "*:";
+    SetColor(0xF);
+    cout << " Paste Arrow Part To Field    ";
+    gotoxy(0, 27);
+    SetColor(0xA);
+    cout << "ENTER:";
+    SetColor(0xF);
+    cout << " Choose             ";
+    SetColor(0xA);
+    cout << "ESC:";
+    SetColor(0xF);
+    cout << " Escape    ";
+    gotoxy(0, 28);
+    SetColor(0xA);
+    cout << "UP_ARROW:";
+    SetColor(0xF);
+    cout << " Move Up  ";
+    SetColor(0xA);
+    cout << "       DOWN_ARROW:";
+    SetColor(0xF);
+    cout << " Move Down";
+    gotoxy(0, 29);
+    SetColor(0xA);
+    cout << "-->:";
+    SetColor(0xF);
+    cout << " Next List     ";
+    SetColor(0xA);
+    cout << "       <--:";
+    SetColor(0xF);
+    cout << " Previous List   ";
+    SetColor(0xF);
+}
+
 void DrawHienThiThemVatTuTable(DanhSachVatTu ds_vt)
 {
     if (ds_vt == nullptr)
@@ -801,33 +899,7 @@ void DrawHienThiThemVatTuTable(DanhSachVatTu ds_vt)
     }
     else
     {
-        gotoxy(0, 27);
-        SetColor(0xA);
-        cout << "ENTER:";
-        SetColor(0xF);
-        cout << " Choose This TenVT  ";
-        SetColor(0xA);
-        cout << "UP_ARROW:";
-        SetColor(0xF);
-        cout << " Move Up  ";
-        SetColor(0xA);
-        cout << "DOWN_ARROW:";
-        SetColor(0xF);
-        cout << " Move Down";
-        gotoxy(0, 28);
-        SetColor(0xA);
-        cout << "ESC:";
-        SetColor(0xF);
-        cout << " Escape From Board    ";
-        SetColor(0xA);
-        cout << "-->:";
-        SetColor(0xF);
-        cout << " Next List     ";
-        SetColor(0xA);
-        cout << "<--:";
-        SetColor(0xF);
-        cout << " Previous List   ";
-        SetColor(0xF);
+        VatTuGuideDraw();
         //
         drawRectangle(0, 0, 76, 4);
         gotoxy(20, 2);
@@ -1109,10 +1181,9 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         cout << char(180);
         gotoxy(81, 9);
         cout << "So luong ton";
-        //
+    //
+    nhapMaVT:
         gotoxy(96, 3);
-        // dinhDangMaVatTu(inputMaVT, "vt", idVatTuGlobalCount);
-        // cout << "maVT cua ban la " << inputMaVT << endl;
         count = 0;
         while (true)
         {
@@ -1184,14 +1255,12 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         }
 
         char inputTenVT[21];
+    nhapTenVT:
         count = 0;
         gotoxy(96, 5);
-
         while (true)
         {
-
             ch = getch();
-
             if (ch == 224)
             {
                 ch = getch();
@@ -1215,6 +1284,14 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
                 }
                 gotoxy(96 + count, 5);
                 continue;
+            }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 3);
+                cout << "                  ";
+                gotoxy(96, 5);
+                cout << "                     ";
+                goto nhapMaVT;
             }
             else if (count > 0 && ch == 13)
             {
@@ -1255,9 +1332,9 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             }
         }
         char inputDVT[11];
+    nhapDVT:
         count = 0;
         gotoxy(96, 7);
-
         while (true)
         {
             ch = getch();
@@ -1285,6 +1362,14 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
                 gotoxy(96 + count, 7);
                 continue;
             }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 5);
+                cout << "                     ";
+                gotoxy(96, 7);
+                cout << "                     ";
+                goto nhapTenVT;
+            }
             else if (ch == 13 && count > 0)
             {
                 inputDVT[count] = '\0';
@@ -1311,7 +1396,6 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         char inputC_SoLuongTon[10];
         count = 0;
         gotoxy(96, 9);
-
         while (true)
         {
             ch = getch();
@@ -1339,6 +1423,14 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
                 gotoxy(96 + count, 9);
                 continue;
             }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 7);
+                cout << "                     ";
+                gotoxy(96, 9);
+                cout << "                     ";
+                goto nhapDVT;
+            }
             else if (ch == 13 && count > 0)
             {
                 inputC_SoLuongTon[count] = '\0';
@@ -1360,19 +1452,20 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             }
         }
         cout << endl;
-
         int inputSoLuongTon = stoi(inputC_SoLuongTon);
 
         DanhSachVatTu dsvt_moi = newDanhSachVatTu(inputMaVT, inputTenVT, inputDVT, inputSoLuongTon);
         insertDanhSachVatTu(ds_vt, dsvt_moi);
         //
         gotoxy(62, 28);
-        SetBGColor(0x4);
+        SetErrorColor();
         cout << "SUCCESSFUL";
         SetNormalColor();
         // Kiem tra muon nhap tiep hay thoat
-        gotoxy(1, 23);
-        cout << "DO YOU WANT TO CONTINUE ADD MORE VATTU (y: Continue, n: Exit)";
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "DO YOU WANT TO CONTINUE (y: Continue, n: Exit)";
+        SetNormalColor();
         while (true)
         {
             ch = getch();
@@ -1501,72 +1594,6 @@ void NoiDungVatTu(DanhSachVatTu ds_vt, int SoLuongVatTu, int &Page, int &arr2Siz
             cout << "->";
             SetColor(0xF);
             break;
-            // while (true)
-            // {
-            //     ch = getch();
-            //     if (ch == 224)
-            //     {
-            //         ch = getch();
-            // if (ch == RIGHT_ARROW && max < SoLuongVatTu)
-            // {
-
-            //     bodem = max;
-            //     max = max + 15;
-            //     Page++;
-            //     clearShowVatTuBoard();
-            //     break;
-            // }
-            // else if (ch == LEFT_ARROW && Page > 1)
-            // {
-            //     Page--;
-            //     current_vt = nullptr;
-            //     vtStack = PageStack[Page - 1];
-            //     max -= 15;
-            //     bodem = max - 15;
-            //     backToPrev = true;
-            //     clearShowVatTuBoard();
-            //     break;
-            // }
-            // else if (ch == DOWN_ARROW && ptrY < 14 - (max - bodem))
-            // {
-            //     gotoxy(0, 7 + ptrY);
-            //     cout << char(179) << " ";
-            //     ptrY += 1;
-            //     gotoxy(0, 7 + ptrY);
-            //     SetColor(0x4);
-            //     cout << "->";
-            //     SetColor(0xF);
-            //     continue;
-            // }
-            // else if (ch == UP_ARROW && ptrY > 0)
-            // {
-            //     gotoxy(0, 7 + ptrY);
-            //     cout << char(179) << " ";
-            //     ptrY -= 1;
-            //     gotoxy(0, 7 + ptrY);
-            //     SetColor(0x4);
-            //     cout << "->";
-            //     SetColor(0xF);
-            //     continue;
-            // }
-            //     }
-            //     else if (ch == ESC)
-            //     {
-            //         return;
-            //     }
-            //     else if (ch == ENTER && ptrY < 15 - (max - bodem))
-            //     {
-            //         gotoxy(0, 0);
-            //         strcpy(noidung, pageMaVTData[ptrY]);
-            //         dem = strlen(noidung);
-            //         return;
-            //     }
-            // }
-            // if (backToPrev)
-            // {
-            //     backToPrev = false;
-            //     continue;
-            // }
         }
 
         current_vt = current_vt->right;
@@ -1648,18 +1675,15 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
     int bodem = 0;
     int max = 15;
     int ptrY = 0;
+    //
+    int count = 0;
 
-    // drawRectangle(79, 0, 40, 2);
-    // drawRectangle(79, 2, 15, 2);
-    // drawRectangle(94, 2, 25, 2);
+    unsigned char ch;
+    VatTu *foundVT;
 
     while (true)
     {
-        int count = 0;
         char inputMaVT[11];
-        unsigned char ch;
-        VatTu *foundVT;
-
         HienThiVatTuDangCoTrongHieuChinh(ds_vt, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
         DrawAnnouncementBoard();
         HieuChinhVatTuDrawSupport();
@@ -1690,8 +1714,30 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
         gotoxy(81, 9);
         cout << "DV Tinh(old)";
         //
+        drawRectangle(79, 12, 15, 2);
+        drawRectangle(94, 12, 25, 2);
+        gotoxy(94, 12);
+        cout << char(194);
+        gotoxy(81, 13);
+        cout << "Ten VT(new)";
+        //
+        drawRectangle(79, 14, 15, 2);
+        drawRectangle(94, 14, 25, 2);
+        gotoxy(79, 14);
+        cout << char(195);
+        gotoxy(94, 14);
+        cout << char(197);
+        gotoxy(94, 16);
+        cout << char(193);
+        gotoxy(119, 14);
+        cout << char(180);
+        gotoxy(81, 15);
+        cout << "DV Tinh(new)";
+        VatTuGuideDraw();
+    //
+    nhapMaVT:
+        count = 0;
         gotoxy(96, 5);
-
         while (true)
         {
             ch = getch();
@@ -1751,14 +1797,6 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                 cout << pageMaVTData[ptrY];
                 strcpy(inputMaVT, pageMaVTData[ptrY]);
                 count = strlen(pageMaVTData[ptrY]);
-                // clrscr();
-                // HieuChinhVatTuDrawSupport();
-                // DrawAdjustVatTuContactGuide();
-                // gotoxy(18, 5);
-                // if (count != 0)
-                // {
-                //     cout << inputMaVT;
-                // }
                 continue;
             }
             else if (count > 0 && ch == ENTER)
@@ -1813,28 +1851,9 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
         // foundVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
         char inputTenVT[21];
         char inputDVT[11];
+    //
+    nhapTenVT:
         count = 0;
-        //
-        drawRectangle(79, 12, 15, 2);
-        drawRectangle(94, 12, 25, 2);
-        gotoxy(94, 12);
-        cout << char(194);
-        gotoxy(81, 13);
-        cout << "Ten VT(new)";
-        //
-        drawRectangle(79, 14, 15, 2);
-        drawRectangle(94, 14, 25, 2);
-        gotoxy(79, 14);
-        cout << char(195);
-        gotoxy(94, 14);
-        cout << char(197);
-        gotoxy(94, 16);
-        cout << char(193);
-        gotoxy(119, 14);
-        cout << char(180);
-        gotoxy(81, 15);
-        cout << "DV Tinh(new)";
-        //
         gotoxy(96, 13);
         while (true)
         {
@@ -1889,6 +1908,18 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                     continue;
                 }
             }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 13);
+                cout << "                     ";
+                gotoxy(96, 9);
+                cout << "                     ";
+                gotoxy(96, 7);
+                cout << "                     ";
+                gotoxy(96, 5);
+                cout << "                     ";
+                goto nhapMaVT;
+            }
             else if (ch == 13 && count >= 0)
             {
                 inputTenVT[count] = '\0';
@@ -1937,9 +1968,9 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                 return;
             }
         }
-        //
+    //
+    nhapDVT:
         count = 0;
-        //
         gotoxy(96, 15);
         while (true)
         {
@@ -1994,6 +2025,14 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                     continue;
                 }
             }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 13);
+                cout << "                     ";
+                gotoxy(96, 15);
+                cout << "                     ";
+                goto nhapTenVT;
+            }
             else if (ch == 13 && count >= 0)
             {
                 inputDVT[count] = '\0';
@@ -2025,7 +2064,6 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             }
         }
         cout << endl;
-
         if (strlen(inputTenVT) == 0)
         {
             strcpy(inputTenVT, foundVT->tenVT);
@@ -2046,8 +2084,10 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
         SetNormalColor();
 
         // Kiem tra muon nhap tiep hay thoat
-        gotoxy(1, 23);
-        cout << "DO YOU WANT TO CONTINUE MODIFY VATTU (y: Continue, n: Exit)";
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "DO YOU WANT TO CONTINUE (y: Continue, n: Exit)";
+        SetNormalColor();
         while (true)
         {
             ch = getch();
@@ -2148,10 +2188,13 @@ void XoaVatTu(DanhSachVatTu &ds_vt, int &soLuongVatTu, DanhSachNhanVien ds_nv, i
     //
     while (true)
     {
-        count = 0;
+
         DrawAnnouncementBoard();
         XoaVatTuDrawSupport();
+        VatTuGuideDraw();
         HienThiVatTuDangCoTrongHieuChinh(ds_vt, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
+    nhapMaVT:
+        count = 0;
         gotoxy(96, 5);
         while (true)
         {
@@ -2265,38 +2308,36 @@ void XoaVatTu(DanhSachVatTu &ds_vt, int &soLuongVatTu, DanhSachNhanVien ds_nv, i
                     cout << deletedVT->dVT;
                     //   last check
                     bool isDelete;
-                    gotoxy(1, 23);
-                    cout << "ARE YOU SURE YOU WANT TO DELETE " << inputMaVT << " (y: Delete, n: No)";
+                    gotoxy(62, 28);
+                    SetErrorColor();
+                    cout << "ARE YOU SURE DELETE [" << inputMaVT << "] (y: Delete, n: No)";
+                    SetNormalColor();
                     while (true)
                     {
                         ch = getch();
                         if (ch == 'y' || ch == 'Y')
                         {
-                            gotoxy(96, 7);
-                            cout << "                    ";
-                            gotoxy(96, 9);
-                            cout << "                    ";
                             isDelete = true;
                             break;
                         }
                         else if (ch == 'n' || ch == 'N')
                         {
-                            gotoxy(96, 7);
-                            cout << "                    ";
-                            gotoxy(96, 9);
-                            cout << "                    ";
                             isDelete = false;
                             break;
                         }
                     }
                     if (!isDelete)
                     {
-                        gotoxy(1, 23);
-                        cout << "                                                                                ";
                         gotoxy(62, 28);
                         SetErrorColor();
+                        cout << "                                                         ";
+                        gotoxy(62, 28);
                         cout << "CANCELED" << endl;
                         SetNormalColor();
+                        gotoxy(96, 7);
+                        cout << "                 ";
+                        gotoxy(96, 9);
+                        cout << "                 ";
                         gotoxy(96 + count, 5);
                         continue;
                     }
@@ -2335,8 +2376,10 @@ void XoaVatTu(DanhSachVatTu &ds_vt, int &soLuongVatTu, DanhSachNhanVien ds_nv, i
         }
 
         // Kiem tra muon nhap tiep hay thoat
-        gotoxy(1, 23);
-        cout << "DO YOU WANT TO CONTINUE DELETE VATTU (y: Continue, n: Exit)";
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "DO YOU WANT TO CONTINUE (y: Continue, n: Exit)";
+        SetNormalColor();
         while (true)
         {
             ch = getch();
@@ -2954,7 +2997,9 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
         gotoxy(80, 10);
         cout << "(Up/Down BTN)";
 
-        //
+        NhanVienGuideDraw();
+    //
+    nhapMaNV:
         gotoxy(96, 3);
         count = 0;
         //
@@ -3018,7 +3063,8 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
                 inputMaNV[count++] = ch;
             }
         }
-        //
+    //
+    nhapHoNV:
         count = 0;
         gotoxy(96, 5);
         //
@@ -3045,6 +3091,14 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
                 gotoxy(96 + count, 5);
                 continue;
             }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 3);
+                cout << "                     ";
+                gotoxy(96, 5);
+                cout << "                     ";
+                goto nhapMaNV;
+            }
             else if (ch == ESC)
             {
                 gotoxy(62, 28);
@@ -3069,7 +3123,8 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
                 cout << ch;
             }
         }
-        //
+    //
+    nhapTenNV:
         count = 0;
         gotoxy(96, 7);
         //
@@ -3095,6 +3150,14 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
                 };
                 gotoxy(96 + count, 7);
                 continue;
+            }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 5);
+                cout << "                     ";
+                gotoxy(96, 7);
+                cout << "                     ";
+                goto nhapHoNV;
             }
             else if (ch == ESC)
             {
@@ -3174,6 +3237,16 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
                 }
                 continue;
             }
+            else if (ch == TAB)
+            {
+                gotoxy(96, 7);
+                cout << "                     ";
+                gotoxy(95, 9);
+                cout << "                        ";
+                gotoxy(95, 10);
+                cout << "                        ";
+                goto nhapTenNV;
+            }
             else if (ch == ESC)
             {
                 gotoxy(62, 28);
@@ -3197,8 +3270,10 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
         insertNhanVienToDSNV(ds_nv, new_nv, soLuongNhanVienCount);
 
         // Kiem tra muon nhap tiep hay thoat
-        gotoxy(1, 23);
-        cout << "DO YOU WANT TO CONTINUE ADD MORE NHANVIEN (y: Continue, n: Exit)";
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "DO YOU WANT TO CONTINUE (y: Continue, n: Exit)";
+        SetNormalColor();
         while (true)
         {
             ch = getch();
@@ -3332,6 +3407,8 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(180);
         gotoxy(82, 9);
         cout << "Gioi Tinh";
+
+        NhanVienGuideDraw();
         //
         ptrY = 0;
         count = 0;
@@ -3447,8 +3524,10 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                 }
 
                 // LAST CHECK MAGIC
-                gotoxy(1, 23);
+                gotoxy(62, 28);
+                SetErrorColor();
                 cout << "DELETE [" << inputMaNV << "]??? (y: YES, n: NO)";
+                SetNormalColor();
                 bool isDelete = false;
                 while (true)
                 {
@@ -3475,7 +3554,7 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                     cout << "              ";
                     SetErrorColor();
                     gotoxy(62, 28);
-                    cout << "                                                  ";
+                    cout << "                                                   ";
                     gotoxy(62, 28);
                     cout << "CANCELED";
                     SetNormalColor();
@@ -3486,8 +3565,6 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                 }
 
                 //
-                gotoxy(1, 23);
-                cout << "                                                          ";
                 gotoxy(62, 28);
                 SetErrorColor();
                 cout << "                                                  ";
@@ -3514,8 +3591,10 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             }
         }
 
-        gotoxy(1, 23);
-        cout << "DO YOU WANT TO CONTINUE DELETE NHANVIEN (y: Continue, n: Exit)";
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "DO YOU WANT TO CONTINUE (y: Continue, n: Exit)";
+        SetNormalColor();
         while (true)
         {
             ch = getch();
@@ -3614,10 +3693,46 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(180);
         gotoxy(82, 9);
         cout << "Gioi Tinh";
+        // NHAP THONG TIN MOI;
+        drawRectangle(79, 12, 15, 2);
+        drawRectangle(94, 12, 25, 2);
+        gotoxy(94, 12);
+        cout << char(194);
+        gotoxy(94, 14);
+        cout << char(193);
+        gotoxy(81, 13);
+        cout << "Ho NV (new)";
         //
+        drawRectangle(79, 14, 15, 2);
+        drawRectangle(94, 14, 25, 2);
+        gotoxy(79, 14);
+        cout << char(195);
+        gotoxy(119, 14);
+        cout << char(180);
+        gotoxy(94, 14);
+        cout << char(197);
+        gotoxy(94, 16);
+        cout << char(193);
+        gotoxy(81, 15);
+        cout << "Ten NV (new)";
+        //
+        drawRectangle(79, 16, 15, 3);
+        drawRectangle(94, 16, 25, 3);
+        gotoxy(79, 16);
+        cout << char(195);
+        gotoxy(94, 16);
+        cout << char(197);
+        gotoxy(94, 19);
+        cout << char(193);
+        gotoxy(119, 16);
+        cout << char(180);
+        gotoxy(82, 17);
+        cout << "Gioi Tinh";
+        NhanVienGuideDraw();
+    //
+    nhapMaNV:
         ptrY = 0;
         count = 0;
-        //
         gotoxy(96, 3);
         while (true)
         {
@@ -3715,7 +3830,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                 {
                     cout << "Nu";
                 }
-
                 //
                 gotoxy(1, 23);
                 cout << "                                                          ";
@@ -3742,45 +3856,8 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         // xoa dau chon
         gotoxy(0, 7 + ptrY);
         cout << char(179) << " ";
-        // NHAP THONG TIN MOI;
-
-        //
-        drawRectangle(79, 12, 15, 2);
-        drawRectangle(94, 12, 25, 2);
-        gotoxy(94, 12);
-        cout << char(194);
-        gotoxy(94, 14);
-        cout << char(193);
-        gotoxy(81, 13);
-        cout << "Ho NV (new)";
-        //
-        drawRectangle(79, 14, 15, 2);
-        drawRectangle(94, 14, 25, 2);
-        gotoxy(79, 14);
-        cout << char(195);
-        gotoxy(119, 14);
-        cout << char(180);
-        gotoxy(94, 14);
-        cout << char(197);
-        gotoxy(94, 16);
-        cout << char(193);
-        gotoxy(81, 15);
-        cout << "Ten NV (new)";
-        //
-        drawRectangle(79, 16, 15, 3);
-        drawRectangle(94, 16, 25, 3);
-        gotoxy(79, 16);
-        cout << char(195);
-        gotoxy(94, 16);
-        cout << char(197);
-        gotoxy(94, 19);
-        cout << char(193);
-        gotoxy(119, 16);
-        cout << char(180);
-        gotoxy(82, 17);
-        cout << "Gioi Tinh";
-        // Bat Dau Nhap
-        // Ho NV
+    // Ho NV
+    nhapHoNV:
         gotoxy(96, 13);
         count = 0;
         while (true)
@@ -3790,6 +3867,20 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             {
                 ch = getch();
                 continue;
+            }
+            else if (ch == TAB)
+            {
+                gotoxy(95, 3);
+                cout << "                        ";
+                gotoxy(95, 5);
+                cout << "                        ";
+                gotoxy(95, 7);
+                cout << "                        ";
+                gotoxy(95, 9);
+                cout << "                        ";
+                gotoxy(95, 13);
+                cout << "                        ";
+                goto nhapMaNV;
             }
             else if (ch == ESC)
             {
@@ -3823,7 +3914,8 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                 inputHoNV[count++] = ch;
             }
         }
-        // Ten NV
+    // Ten NV
+    nhapTenNV:
         gotoxy(96, 15);
         count = 0;
         while (true)
@@ -3833,6 +3925,14 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             {
                 ch = getch();
                 continue;
+            }
+            else if (ch == TAB)
+            {
+                gotoxy(95, 13);
+                cout << "                        ";
+                gotoxy(95, 15);
+                cout << "                        ";
+                goto nhapHoNV;
             }
             else if (ch == ESC)
             {
@@ -3866,7 +3966,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                 inputTenNV[count++] = ch;
             }
         }
-        //
         // HienThiHieuChinhNhanVienPremium(ds_nv, SoLuongNhanVien, ptrY, pos, max);
         count = 0;
         if (ds_nv[posNV]->phai == nu)
@@ -3929,6 +4028,16 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
                 }
                 continue;
             }
+            else if (ch == TAB)
+            {
+                gotoxy(95, 15);
+                cout << "                        ";
+                gotoxy(95, 17);
+                cout << "                        ";
+                gotoxy(95, 18);
+                cout << "                        ";
+                goto nhapTenNV;
+            }
             else if (ch == ESC)
             {
                 gotoxy(62, 28);
@@ -3954,8 +4063,10 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         NhanVien *newNV = newNhanVien(inputMaNV, inputHoNV, inputTenNV, inputPhai, new_hd);
         insertNhanVienToDSNV(ds_nv, newNV, SoLuongNhanVien);
         //
-        gotoxy(1, 23);
-        cout << "DO YOU WANT TO CONTINUE ADJUST NHANVIEN (y: Continue, n: Exit)";
+        gotoxy(62, 28);
+        SetErrorColor();
+        cout << "DO YOU WANT TO CONTINUE (y: Continue, n: Exit)";
+        SetNormalColor();
         while (true)
         {
             ch = getch();
@@ -6074,6 +6185,10 @@ nhapMaVT:
             {
                 gotoxy(62, 28);
                 SetErrorColor();
+                cout << "                                                  ";
+                SetNormalColor();
+                gotoxy(62, 28);
+                SetErrorColor();
                 cout << "Khong co chi tiet hoa don voi maVT nay";
                 SetNormalColor();
                 gotoxy(96 + count, 13);
@@ -6687,6 +6802,10 @@ nhapMaVT:
             {
                 gotoxy(62, 28);
                 SetErrorColor();
+                cout << "                                                  ";
+                SetNormalColor();
+                gotoxy(62, 28);
+                SetErrorColor();
                 cout << "Khong co chi tiet hoa don voi maVT nay";
                 SetNormalColor();
                 gotoxy(96 + count, 13);
@@ -7255,8 +7374,7 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
     tm *localTime = localtime(&now); // chuyen sang struct tm de truy xuat du lieu
     // Cho phep quay nguoc lai voi dieu kien la ham chua co du lieu
     bool backAllow = true;
-//
-startLapHoaDon:
+    //
     DrawAnnouncementBoard();
     DrawNhapHoaDon(inputLoai, inputSoHoaDon);
     inputDate.year = localTime->tm_year + 1900;
@@ -7264,6 +7382,7 @@ startLapHoaDon:
     inputDate.day = localTime->tm_mday;
     gotoxy(82, 5);
     cout << "So Hoa Don";
+    HoaDonGuideDraw();
     gotoxy(96, 5);
     while (true)
     {
@@ -7766,8 +7885,9 @@ startLapHoaDon:
     inputDate.month = localTime->tm_mon + 1;
     inputDate.day = localTime->tm_mday;
     //
-    gotoxy(80, 5);
+    gotoxy(82, 5);
     cout << "So Hoa Don";
+    HoaDonGuideDraw();
 soHDon:
     gotoxy(96, 5);
     while (true)
@@ -7832,8 +7952,8 @@ soHDon:
     cout << char(180);
     //
     count = 0;
-    gotoxy(80, 7);
-    cout << "Ngay Lap:";
+    gotoxy(83, 7);
+    cout << "Ngay Lap";
     gotoxy(96, 7);
     cout << setw(2) << setfill('0') << inputDate.day << "/" << setw(2) << setfill('0') << inputDate.month << "/" << setw(4) << setfill('0') << inputDate.year;
     //
@@ -9667,6 +9787,7 @@ start:
     cout << "BANG LIET KE HOA DON TRONG KHOANG THOI GIAN (dd/mm/yyyy)";
     SetColor(0xF);
 
+    SetColor(0x4);
     gotoxy(7, 11);
     cout << "So Hoa Don";
     gotoxy(27, 11);
@@ -9677,13 +9798,18 @@ start:
     cout << "Ho Va Ten Nhan Vien Lap";
     gotoxy(93, 11);
     cout << "Tri Gia Hoa Don";
+    SetColor(0xF);
 
     gotoxy(20, 9);
+    SetColor(0x4);
     cout << "TU NGAY: ";
+    SetColor(0xF);
     cout << setw(2) << setfill('0') << ngayDau.day << "/" << setw(2) << setfill('0') << ngayDau.month << "/" << setw(4) << setfill('0') << ngayDau.year;
 
     gotoxy(80, 9);
+    SetColor(0x4);
     cout << "DEN NGAY: ";
+    SetColor(0xF);
     cout << setw(2) << setfill('0') << ngayCuoi.day << "/" << setw(2) << setfill('0') << ngayCuoi.month << "/" << setw(4) << setfill('0') << ngayCuoi.year;
 
     //
@@ -9786,8 +9912,6 @@ void ThongKeDoanhThuTrong1Nam(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, DanhS
 start:
     clrscr();
     count = 0;
-
-    //
     //
     gotoxy(0, 27);
     SetColor(0xA);
@@ -9883,9 +10007,11 @@ start:
     gotoxy(59, 17);
     cout << char(193);
     gotoxy(27, 3);
+    SetColor(0x4);
     cout << "THANG";
     gotoxy(84, 3);
     cout << "DOANH THU";
+    SetColor(0xF);
     // Khai Bao Tien Xu Ly
     double doanhThuThang[12] = {0};
     // Xu Ly
@@ -9897,11 +10023,7 @@ start:
             CT_HoaDon *currentCT = currentHoaDon->ds_ct_hoadon;
             while (currentCT != nullptr)
             {
-                if (currentHoaDon->loai == n)
-                {
-                    doanhThuThang[currentHoaDon->date.month - 1] -= currentCT->soLuong * currentCT->donGia * (1 + (currentCT->vAT / 100.0));
-                }
-                else
+                if (currentHoaDon->loai == x)
                 {
                     doanhThuThang[currentHoaDon->date.month - 1] += currentCT->soLuong * currentCT->donGia * (1 + (currentCT->vAT / 100.0));
                 }
