@@ -1221,6 +1221,8 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
                 {
                     gotoxy(62, 28);
                     SetBGColor(0x4);
+                    cout << "                                                    " << endl;
+                    gotoxy(62, 28);
                     cout << "Cay da ton tai vat tu [" << inputMaVT << "]" << endl;
                     gotoxy(96 + count, 3);
                     SetNormalColor();
@@ -1248,9 +1250,30 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                          ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 3);
+                        break;
+                    }
+                }
+                continue;
             }
         }
 
@@ -1328,7 +1351,30 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                          ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 5);
+                        break;
+                    }
+                }
+                continue;
             }
         }
         char inputDVT[11];
@@ -1389,7 +1435,30 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                          ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 7);
+                        break;
+                    }
+                }
+                continue;
             }
         }
 
@@ -1448,7 +1517,30 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                          ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 9);
+                        break;
+                    }
+                }
+                continue;
             }
         }
         cout << endl;
@@ -1817,7 +1909,7 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                 {
                     gotoxy(62, 28);
                     SetErrorColor();
-                    cout << "                                                  ";
+                    cout << "                                                    ";
                     SetNormalColor();
                     foundVT = searchMaVT_DanhSachVatTu(ds_vt, inputMaVT);
                     gotoxy(96, 7);
@@ -1834,11 +1926,30 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                SetErrorColor();
-                cout << "Quit";
+                cout << "Exit will loose all data (y: Yes, n: No)";
                 SetNormalColor();
-                return;
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                          ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 5);
+                        break;
+                    }
+                }
+                continue;
             }
             else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
             {
@@ -1943,7 +2054,7 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
                     }
                     SetErrorColor();
                     gotoxy(62, 28);
-                    cout << "                                                  ";
+                    cout << "                                                     ";
                     SetNormalColor();
                     break;
                 }
@@ -1961,11 +2072,30 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                SetErrorColor();
-                cout << "Quit";
+                cout << "Exit will loose all data (y: Yes, n: No)";
                 SetNormalColor();
-                return;
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 13);
+                        break;
+                    }
+                }
+                continue;
             }
         }
     //
@@ -2028,9 +2158,9 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             else if (ch == TAB)
             {
                 gotoxy(96, 13);
-                cout << "                     ";
+                cout << "                            ";
                 gotoxy(96, 15);
-                cout << "                     ";
+                cout << "                            ";
                 goto nhapTenVT;
             }
             else if (ch == 13 && count >= 0)
@@ -2058,9 +2188,30 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 15);
+                        break;
+                    }
+                }
+                continue;
             }
         }
         cout << endl;
@@ -2363,9 +2514,30 @@ void XoaVatTu(DanhSachVatTu &ds_vt, int &soLuongVatTu, DanhSachNhanVien ds_nv, i
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 5);
+                        break;
+                    }
+                }
+                continue;
             }
             else if ((isalnum(ch) || isSpecialChar(ch)) && count < 10)
             {
@@ -3028,9 +3200,35 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 3);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -3101,9 +3299,35 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 5);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -3161,9 +3385,35 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 7);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -3249,9 +3499,34 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER)
             {
@@ -3474,9 +3749,35 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 3);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -3794,9 +4095,35 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 3);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -3884,9 +4211,35 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 13);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count >= 0)
             {
@@ -3936,9 +4289,35 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 15);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count >= 0)
             {
@@ -4040,9 +4419,34 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
             }
             else if (ch == ESC)
             {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
                 gotoxy(62, 28);
-                cout << "Quit";
-                return;
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER)
             {
@@ -4091,6 +4495,8 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
 
 void DrawHienThiNhanVienTableGuide()
 {
+    DrawAnnouncementBoard();
+    //
     drawRectangle(80, 0, 31, 4);
     gotoxy(90, 2);
     SetColor(0x2);
@@ -4141,7 +4547,6 @@ void HienThiNhanVien(DanhSachNhanVien ds_nv, int SoLuongNhanVien)
             gotoxy(57, 7 + (i - pos));
             cout << (ds_nv[i]->phai == nam ? "Nam" : "Nu");
         }
-
         while (true)
         {
             ch = getch();
@@ -4165,7 +4570,34 @@ void HienThiNhanVien(DanhSachNhanVien ds_nv, int SoLuongNhanVien)
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "You Want To Exit? (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        break;
+                    }
+                }
+                continue;
             }
         }
     }
@@ -4789,7 +5221,35 @@ nhapMaVT:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 13);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -4862,7 +5322,35 @@ nhapSoLuong:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 15);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -4957,7 +5445,35 @@ nhapDonGia:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 17);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -5058,7 +5574,35 @@ nhapDonGia:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 19);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == '\b' && count > 0)
         {
@@ -5238,7 +5782,35 @@ nhapMaVT:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 13);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -5351,9 +5923,35 @@ nhapSoLuong:
         }
         else if (ch == ESC)
         {
-            gotoxy(0, 24);
-            clearRightMiddleScreen();
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 15);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -5514,6 +6112,38 @@ nhapDonGia:
             cout << "                  ";
             goto nhapSoLuong;
         }
+        else if (ch == ESC)
+        {
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 17);
+                    break;
+                }
+            }
+            continue;
+        }
         else if (ch == ENTER && count > 0)
         {
             inputdonGia[count] = '\0';
@@ -5568,6 +6198,38 @@ nhapDonGia:
             gotoxy(96, 19);
             cout << "                  ";
             goto nhapDonGia;
+        }
+        else if (ch == ESC)
+        {
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 19);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -5660,10 +6322,35 @@ bool isNhanVien(DanhSachNhanVien ds_nv, char inputMaNV[11], int soLuongNhanVien)
         }
         else if (ch == ESC)
         {
-            gotoxy(0, 5);
-            cout << "Quit";
-            Sleep(2000);
-            return false;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return false;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(18 + counter, 3);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && counter > 0)
         {
@@ -5725,278 +6412,6 @@ void ClearCTHDTable()
         cout << "              ";
         gotoxy(46, 15 + i);
         cout << "              ";
-    }
-}
-
-bool QuickChooseXoaCTHD_2(DanhSachHoaDon ds_hd, int &soKyTu, CT_HoaDon *&ct_canxoa)
-{
-    // Khai bao bien can
-    unsigned char ch;
-    int count = 0;
-    int max = count + 10;
-    int ptrY = 0;
-    // VatTu **firstPagePos = new VatTu *[1];
-    CT_HoaDon **firstPageEl = new CT_HoaDon *[1];
-    CT_HoaDon **PageEl = new CT_HoaDon *[10];
-    int page = 1;
-    int size = 1;
-    CT_HoaDon *current = ds_hd->ds_ct_hoadon;
-    //
-    drawRectangle(0, 10, 60, 2);
-    drawRectangle(0, 12, 15, 2);
-    drawRectangle(15, 12, 15, 2);
-    drawRectangle(30, 12, 15, 2);
-    drawRectangle(45, 12, 15, 2);
-    gotoxy(0, 12);
-    cout << char(195);
-    gotoxy(15, 12);
-    cout << char(194);
-    gotoxy(15, 14);
-    cout << char(193);
-    gotoxy(30, 12);
-    cout << char(194);
-    gotoxy(30, 14);
-    cout << char(193);
-    gotoxy(45, 12);
-    cout << char(194);
-    gotoxy(45, 14);
-    cout << char(193);
-    gotoxy(60, 12);
-    cout << char(180);
-    //
-    gotoxy(7, 11);
-    cout << "Chon MaVT can xoa";
-    gotoxy(2, 13);
-    cout << "Ma Vat Tu";
-    gotoxy(18, 13);
-    cout << "So Luong";
-    gotoxy(32, 13);
-    cout << "Don Gia";
-    gotoxy(47, 13);
-    cout << "Vat";
-    //
-    drawRectangle(0, 14, 15, 11);
-    drawRectangle(15, 14, 15, 11);
-    drawRectangle(30, 14, 15, 11);
-    drawRectangle(45, 14, 15, 11);
-    gotoxy(0, 14);
-    cout << char(195);
-    gotoxy(15, 14);
-    cout << char(197);
-    gotoxy(15, 25);
-    cout << char(193);
-    gotoxy(30, 14);
-    cout << char(197);
-    gotoxy(30, 25);
-    cout << char(193);
-    gotoxy(45, 14);
-    cout << char(197);
-    gotoxy(45, 25);
-    cout << char(193);
-    gotoxy(60, 14);
-    cout << char(180);
-    //
-    if (current == nullptr)
-    {
-        return false;
-    }
-
-    while ((count < max) && current != nullptr)
-    {
-        gotoxy(2, 25 - (max - count));
-        cout << current->maVT;
-        gotoxy(18, 25 - (max - count));
-        cout << current->soLuong;
-        gotoxy(32, 25 - (max - count));
-        cout << fixed << setprecision(2) << current->donGia;
-        gotoxy(47, 25 - (max - count));
-        cout << fixed << setprecision(2) << current->vAT;
-
-        if ((max - count) == 10 && page == size)
-        {
-            firstPageEl[size - 1] = current;
-            expandArray(firstPageEl, size, size + 1);
-            size++;
-        }
-
-        PageEl[10 - (max - count)] = current;
-        //
-        current = current->next;
-        count += 1;
-
-        if (count == max || current == nullptr)
-        {
-            gotoxy(0, 15 + ptrY);
-            SetColor(0x4);
-            cout << "->";
-            SetColor(0xF);
-            while (true)
-            {
-                ch = getch();
-                if (ch == 224)
-                {
-                    ch = getch();
-                    if (ch == UP_ARROW && ptrY > 0)
-                    {
-                        gotoxy(0, 15 + ptrY);
-                        cout << char(179) << " ";
-                        ptrY -= 1;
-                        SetColor(0x4);
-                        gotoxy(0, 15 + ptrY);
-                        cout << "->";
-                        SetColor(0xF);
-                        continue;
-                    }
-                    else if (ch == DOWN_ARROW && ptrY < (9 - (max - count)))
-                    {
-                        gotoxy(0, 15 + ptrY);
-                        cout << char(179) << " ";
-                        ptrY += 1;
-                        SetColor(0x4);
-                        gotoxy(0, 15 + ptrY);
-                        cout << "->";
-                        SetColor(0xF);
-                        continue;
-                    }
-                    else if (ch == RIGHT_ARROW && current != nullptr)
-                    {
-                        count = max;
-                        max = count + 10;
-                        page++;
-                        ClearCTHDTable();
-                        break;
-                    }
-                    else if (ch == LEFT_ARROW && count > 10)
-                    {
-                        max = max - 10;
-                        count = max - 10;
-                        page--;
-                        current = firstPageEl[page - 1];
-                        ClearCTHDTable();
-                        break;
-                    }
-                }
-                else if (ch == ESC || ch == '*')
-                {
-                    return false;
-                }
-                else if (ch == ENTER && ptrY < (10 - (max - count)))
-                {
-                    ct_canxoa = PageEl[ptrY];
-                    soKyTu = strlen(ct_canxoa->maVT);
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-void XemThongTinCTVT(DanhSachHoaDon ds_hd)
-{
-    // Khai bao bien can
-    unsigned char ch;
-    int count = 0;
-    int max = count + 10;
-    // VatTu **firstPagePos = new VatTu *[1];
-    CT_HoaDon **firstPageEl = new CT_HoaDon *[1];
-    int page = 1;
-    int size = 1;
-    CT_HoaDon *current = ds_hd->ds_ct_hoadon;
-    //
-    //
-    drawRectangle(0, 10, 30, 2);
-    drawRectangle(0, 12, 15, 2);
-    drawRectangle(15, 12, 15, 2);
-    gotoxy(0, 12);
-    cout << char(195);
-    gotoxy(30, 12);
-    cout << char(180);
-    gotoxy(15, 12);
-    cout << char(194);
-    gotoxy(15, 14);
-    cout << char(193);
-    //
-    gotoxy(7, 11);
-    cout << "Xem Thong Tin";
-    gotoxy(2, 13);
-    cout << "Ma Vat Tu";
-    gotoxy(18, 13);
-    cout << "So Luong";
-    //
-    drawRectangle(0, 14, 15, 11);
-    drawRectangle(15, 14, 15, 11);
-    gotoxy(0, 14);
-    cout << char(195);
-    gotoxy(30, 14);
-    cout << char(180);
-    gotoxy(15, 14);
-    cout << char(197);
-    gotoxy(15, 25);
-    cout << char(193);
-    //
-    if (current == nullptr)
-    {
-        return;
-    }
-
-    while ((count < max) && current != nullptr)
-    {
-        gotoxy(2, 25 - (max - count));
-        cout << current->maVT;
-        gotoxy(18, 25 - (max - count));
-        cout << current->soLuong;
-
-        if ((max - count) == 10 && size == page)
-        {
-            firstPageEl[size - 1] = current;
-            expandArray(firstPageEl, size, size + 1);
-            size++;
-        }
-
-        //
-        current = current->next;
-        count += 1;
-
-        if (count == max || current == nullptr)
-        {
-            while (true)
-            {
-                ch = getch();
-                if (ch == 224)
-                {
-                    ch = getch();
-
-                    if (ch == RIGHT_ARROW && current != nullptr)
-                    {
-                        count = max;
-                        max = count + 10;
-                        page++;
-                        ClearCTHDTable();
-                        break;
-                    }
-                    else if (ch == LEFT_ARROW && count > 10)
-                    {
-                        max = max - 10;
-                        count = max - 10;
-                        page--;
-                        current = firstPageEl[page - 1];
-                        ClearCTHDTable();
-                        break;
-                    }
-                }
-                else if (ch == ESC)
-                {
-                    ClearCTHDTable();
-                    return;
-                }
-                else if (ch == '*')
-                {
-                    ClearCTHDTable();
-                    return;
-                }
-            }
-        }
     }
 }
 
@@ -6176,7 +6591,35 @@ nhapMaVT:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 13);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -6287,7 +6730,35 @@ nhapMaVT:
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 15);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -6422,7 +6893,35 @@ nhapMaVT:
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 17);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -6579,7 +7078,35 @@ nhapMaVT:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 21);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count >= 0)
         {
@@ -6654,8 +7181,6 @@ void SuaChiTietHoaDon(DanhSachHoaDon &new_ds_hd, DanhSachVatTu &ds_vt, int &pos,
     char inputVAT[16];
     //
 letDelete:
-
-    // QuickChooseXoaCTHD_2(new_ds_hd, count, ct_canxoa);
     DrawHieuChinhCTHD();
     // in VAT va Don Gia
     drawRectangle(79, 14, 15, 2);
@@ -6793,7 +7318,35 @@ nhapMaVT:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 13);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -6904,7 +7457,35 @@ nhapMaVT:
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 15);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -7038,7 +7619,35 @@ nhapMaVT:
             }
             else if (ch == ESC)
             {
-                return;
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "                                                      ";
+                gotoxy(62, 28);
+                cout << "Exit will loose all data (y: Yes, n: No)";
+                SetNormalColor();
+                while (true)
+                {
+                    ch = getch();
+                    if (ch == 'y' || ch == 'Y')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        SetNormalColor();
+                        return;
+                    }
+                    else if (ch == 'n' || ch == 'N')
+                    {
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        SetNormalColor();
+                        gotoxy(96 + count, 17);
+                        break;
+                    }
+                }
+                continue;
             }
             else if (ch == ENTER && count > 0)
             {
@@ -7196,7 +7805,35 @@ nhapDonGiaMoi:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 21);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -7295,7 +7932,35 @@ nhapDonGiaMoi:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 23);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -7395,7 +8060,35 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 15);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -7562,7 +8255,34 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER)
         {
@@ -7742,14 +8462,9 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                                 while (true)
                                 {
                                     ch = getch();
-
                                     if (ch == 224)
                                     {
                                         ch = getch();
-                                    }
-                                    else if (ch == ESC)
-                                    {
-                                        return;
                                     }
                                     else if (ch == ENTER && count > 0)
                                     {
@@ -7797,10 +8512,6 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                                     if (ch == 224)
                                     {
                                         ch = getch();
-                                    }
-                                    else if (ch == ESC)
-                                    {
-                                        return;
                                     }
                                     else if (ch == ENTER && count > 0)
                                     {
@@ -7900,8 +8611,35 @@ soHDon:
         }
         else if (ch == ESC)
         {
-            clearRightMiddleScreen();
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(96 + count, 5);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -8046,7 +8784,34 @@ soHDon:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit will loose all data (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == TAB)
         {
@@ -8278,8 +9043,9 @@ startIn:
     clrscr();
     count = 0;
     max = 15;
+    DrawAnnouncementBoard();
     //
-    gotoxy(0, 27);
+    gotoxy(0, 26);
     SetColor(0xA);
     cout << "ENTER:";
     SetColor(0xF);
@@ -8288,16 +9054,17 @@ startIn:
     cout << "TAB:";
     SetColor(0xF);
     cout << " Change SoHD  ";
+    gotoxy(0, 27);
     SetColor(0xA);
     cout << "DOWN_ARROW:";
     SetColor(0xF);
     cout << " Move Down";
-    gotoxy(0, 28);
     SetColor(0xA);
     cout << "ESC:";
     SetColor(0xF);
     cout << " Escape From Board    ";
     SetColor(0xA);
+    gotoxy(0, 28);
     cout << "-->:";
     SetColor(0xF);
     cout << " Next List     ";
@@ -8336,7 +9103,35 @@ startIn:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(32 + count, 3);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -8562,7 +9357,35 @@ startIn:
                 }
                 else if (ch == ESC)
                 {
-                    return;
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    cout << "Exit ?? (y: Yes, n: No)";
+                    SetNormalColor();
+                    while (true)
+                    {
+                        ch = getch();
+                        if (ch == 'y' || ch == 'Y')
+                        {
+                            gotoxy(61, 28);
+                            SetBGColor(0x4);
+                            cout << "                                                      ";
+                            gotoxy(62, 28);
+                            SetNormalColor();
+                            return;
+                        }
+                        else if (ch == 'n' || ch == 'N')
+                        {
+                            gotoxy(61, 28);
+                            SetBGColor(0x4);
+                            cout << "                                                      ";
+                            SetNormalColor();
+                            gotoxy(96 + count, 15);
+                            break;
+                        }
+                    }
+                    continue;
                 }
                 else if (ch == TAB)
                 {
@@ -8639,7 +9462,9 @@ void In10VatTuDoanhThuCaoNhat(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, DanhS
 start:
     clrscr();
     //
-    gotoxy(0, 27);
+    DrawAnnouncementBoard();
+    //
+    gotoxy(0, 26);
     SetColor(0xA);
     cout << "ENTER:";
     SetColor(0xF);
@@ -8648,16 +9473,17 @@ start:
     cout << "TAB:";
     SetColor(0xF);
     cout << " Change SoHD  ";
+    gotoxy(0, 27);
     SetColor(0xA);
     cout << "DOWN_ARROW:";
     SetColor(0xF);
     cout << " Move Down";
-    gotoxy(0, 28);
     SetColor(0xA);
     cout << "ESC:";
     SetColor(0xF);
     cout << " Escape From Board    ";
     SetColor(0xA);
+    gotoxy(0, 28);
     cout << "-->:";
     SetColor(0xF);
     cout << " Next List     ";
@@ -8666,6 +9492,7 @@ start:
     SetColor(0xF);
     cout << " Previous List   ";
     SetColor(0xF);
+    //
     //
     count = 0;
     drawRectangle(0, 0, 119, 2);
@@ -8695,17 +9522,39 @@ start:
         if (ch == 224)
         {
             ch = getch();
-            // TAM DUNG SU DUNG NO DE DANH NEU DU TG
-            //  if (ch == UP_ARROW)
-            //  {
-            //      dateChooseTable(inputDate);
-            //  }
             continue;
         }
         else if (ch == ESC)
         {
-            clearBottomScreen();
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(37 + count, 3);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -8736,8 +9585,35 @@ start:
                     }
                     else if (ch == ESC)
                     {
-                        clearBottomScreen();
-                        return;
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        cout << "Exit ?? (y: Yes, n: No)";
+                        SetNormalColor();
+                        while (true)
+                        {
+                            ch = getch();
+                            if (ch == 'y' || ch == 'Y')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                gotoxy(62, 28);
+                                SetNormalColor();
+                                return;
+                            }
+                            else if (ch == 'n' || ch == 'N')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                SetNormalColor();
+                                gotoxy(55 + count, 3);
+                                break;
+                            }
+                        }
+                        continue;
                     }
                     else if (ch == ENTER && count > 0)
                     {
@@ -8786,8 +9662,35 @@ start:
                                 }
                                 else if (ch == ESC)
                                 {
-                                    clearBottomScreen();
-                                    return;
+                                    gotoxy(61, 28);
+                                    SetBGColor(0x4);
+                                    cout << "                                                      ";
+                                    gotoxy(62, 28);
+                                    cout << "Exit ?? (y: Yes, n: No)";
+                                    SetNormalColor();
+                                    while (true)
+                                    {
+                                        ch = getch();
+                                        if (ch == 'y' || ch == 'Y')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            gotoxy(62, 28);
+                                            SetNormalColor();
+                                            return;
+                                        }
+                                        else if (ch == 'n' || ch == 'N')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            SetNormalColor();
+                                            gotoxy(70 + count, 3);
+                                            break;
+                                        }
+                                    }
+                                    continue;
                                 }
                                 else if (ch == ENTER && count > 0)
                                 {
@@ -8920,8 +9823,35 @@ start:
         }
         else if (ch == ESC)
         {
-            clearBottomScreen();
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(37 + count, 5);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -8952,8 +9882,35 @@ start:
                     }
                     else if (ch == ESC)
                     {
-                        clearBottomScreen();
-                        return;
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        cout << "Exit ?? (y: Yes, n: No)";
+                        SetNormalColor();
+                        while (true)
+                        {
+                            ch = getch();
+                            if (ch == 'y' || ch == 'Y')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                gotoxy(62, 28);
+                                SetNormalColor();
+                                return;
+                            }
+                            else if (ch == 'n' || ch == 'N')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                SetNormalColor();
+                                gotoxy(55 + count, 5);
+                                break;
+                            }
+                        }
+                        continue;
                     }
                     else if (ch == ENTER && count > 0)
                     {
@@ -9004,8 +9961,35 @@ start:
                                 }
                                 else if (ch == ESC)
                                 {
-                                    clearBottomScreen();
-                                    return;
+                                    gotoxy(61, 28);
+                                    SetBGColor(0x4);
+                                    cout << "                                                      ";
+                                    gotoxy(62, 28);
+                                    cout << "Exit ?? (y: Yes, n: No)";
+                                    SetNormalColor();
+                                    while (true)
+                                    {
+                                        ch = getch();
+                                        if (ch == 'y' || ch == 'Y')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            gotoxy(62, 28);
+                                            SetNormalColor();
+                                            return;
+                                        }
+                                        else if (ch == 'n' || ch == 'N')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            SetNormalColor();
+                                            gotoxy(70 + count, 5);
+                                            break;
+                                        }
+                                    }
+                                    continue;
                                 }
                                 else if (ch == ENTER && count > 0)
                                 {
@@ -9210,7 +10194,34 @@ start:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            continue;
         }
     }
 };
@@ -9252,7 +10263,9 @@ void ThongKeHoaDonTrong1KhoangTG(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, Da
 start:
     clrscr();
     //
-    gotoxy(0, 27);
+    DrawAnnouncementBoard();
+    //
+    gotoxy(0, 26);
     SetColor(0xA);
     cout << "ENTER:";
     SetColor(0xF);
@@ -9260,17 +10273,18 @@ start:
     SetColor(0xA);
     cout << "TAB:";
     SetColor(0xF);
-    cout << " Change DATE  ";
+    cout << " Change SoHD  ";
+    gotoxy(0, 27);
     SetColor(0xA);
     cout << "DOWN_ARROW:";
     SetColor(0xF);
     cout << " Move Down";
-    gotoxy(0, 28);
     SetColor(0xA);
     cout << "ESC:";
     SetColor(0xF);
     cout << " Escape From Board    ";
     SetColor(0xA);
+    gotoxy(0, 28);
     cout << "-->:";
     SetColor(0xF);
     cout << " Next List     ";
@@ -9317,8 +10331,35 @@ start:
         }
         else if (ch == ESC)
         {
-            clearBottomScreen();
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(37 + count, 3);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -9349,8 +10390,35 @@ start:
                     }
                     else if (ch == ESC)
                     {
-                        clearBottomScreen();
-                        return;
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        cout << "Exit ?? (y: Yes, n: No)";
+                        SetNormalColor();
+                        while (true)
+                        {
+                            ch = getch();
+                            if (ch == 'y' || ch == 'Y')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                gotoxy(62, 28);
+                                SetNormalColor();
+                                return;
+                            }
+                            else if (ch == 'n' || ch == 'N')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                SetNormalColor();
+                                gotoxy(55 + count, 3);
+                                break;
+                            }
+                        }
+                        continue;
                     }
                     else if (ch == ENTER && count > 0)
                     {
@@ -9399,8 +10467,35 @@ start:
                                 }
                                 else if (ch == ESC)
                                 {
-                                    clearBottomScreen();
-                                    return;
+                                    gotoxy(61, 28);
+                                    SetBGColor(0x4);
+                                    cout << "                                                      ";
+                                    gotoxy(62, 28);
+                                    cout << "Exit ?? (y: Yes, n: No)";
+                                    SetNormalColor();
+                                    while (true)
+                                    {
+                                        ch = getch();
+                                        if (ch == 'y' || ch == 'Y')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            gotoxy(62, 28);
+                                            SetNormalColor();
+                                            return;
+                                        }
+                                        else if (ch == 'n' || ch == 'N')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            SetNormalColor();
+                                            gotoxy(70 + count, 3);
+                                            break;
+                                        }
+                                    }
+                                    continue;
                                 }
                                 else if (ch == ENTER && count > 0)
                                 {
@@ -9533,8 +10628,35 @@ start:
         }
         else if (ch == ESC)
         {
-            clearBottomScreen();
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(37 + count, 5);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -9565,8 +10687,35 @@ start:
                     }
                     else if (ch == ESC)
                     {
-                        clearBottomScreen();
-                        return;
+                        gotoxy(61, 28);
+                        SetBGColor(0x4);
+                        cout << "                                                      ";
+                        gotoxy(62, 28);
+                        cout << "Exit ?? (y: Yes, n: No)";
+                        SetNormalColor();
+                        while (true)
+                        {
+                            ch = getch();
+                            if (ch == 'y' || ch == 'Y')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                gotoxy(62, 28);
+                                SetNormalColor();
+                                return;
+                            }
+                            else if (ch == 'n' || ch == 'N')
+                            {
+                                gotoxy(61, 28);
+                                SetBGColor(0x4);
+                                cout << "                                                      ";
+                                SetNormalColor();
+                                gotoxy(55 + count, 5);
+                                break;
+                            }
+                        }
+                        continue;
                     }
                     else if (ch == ENTER && count > 0)
                     {
@@ -9617,8 +10766,35 @@ start:
                                 }
                                 else if (ch == ESC)
                                 {
-                                    clearBottomScreen();
-                                    return;
+                                    gotoxy(61, 28);
+                                    SetBGColor(0x4);
+                                    cout << "                                                      ";
+                                    gotoxy(62, 28);
+                                    cout << "Exit ?? (y: Yes, n: No)";
+                                    SetNormalColor();
+                                    while (true)
+                                    {
+                                        ch = getch();
+                                        if (ch == 'y' || ch == 'Y')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            gotoxy(62, 28);
+                                            SetNormalColor();
+                                            return;
+                                        }
+                                        else if (ch == 'n' || ch == 'N')
+                                        {
+                                            gotoxy(61, 28);
+                                            SetBGColor(0x4);
+                                            cout << "                                                      ";
+                                            SetNormalColor();
+                                            gotoxy(70 + count, 5);
+                                            break;
+                                        }
+                                    }
+                                    continue;
                                 }
                                 else if (ch == ENTER && count > 0)
                                 {
@@ -9895,7 +11071,34 @@ start:
                 }
                 else if (ch == ESC)
                 {
-                    return;
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    cout << "Exit ?? (y: Yes, n: No)";
+                    SetNormalColor();
+                    while (true)
+                    {
+                        ch = getch();
+                        if (ch == 'y' || ch == 'Y')
+                        {
+                            gotoxy(61, 28);
+                            SetBGColor(0x4);
+                            cout << "                                                      ";
+                            gotoxy(62, 28);
+                            SetNormalColor();
+                            return;
+                        }
+                        else if (ch == 'n' || ch == 'N')
+                        {
+                            gotoxy(61, 28);
+                            SetBGColor(0x4);
+                            cout << "                                                      ";
+                            SetNormalColor();
+                            break;
+                        }
+                    }
+                    continue;
                 }
             }
             continue;
@@ -9913,7 +11116,9 @@ start:
     clrscr();
     count = 0;
     //
-    gotoxy(0, 27);
+    DrawAnnouncementBoard();
+    //
+    gotoxy(0, 26);
     SetColor(0xA);
     cout << "ENTER:";
     SetColor(0xF);
@@ -9921,17 +11126,18 @@ start:
     SetColor(0xA);
     cout << "TAB:";
     SetColor(0xF);
-    cout << " Change DATE  ";
+    cout << " Change SoHD  ";
+    gotoxy(0, 27);
     SetColor(0xA);
     cout << "DOWN_ARROW:";
     SetColor(0xF);
     cout << " Move Down";
-    gotoxy(0, 28);
     SetColor(0xA);
     cout << "ESC:";
     SetColor(0xF);
     cout << " Escape From Board    ";
     SetColor(0xA);
+    gotoxy(0, 28);
     cout << "-->:";
     SetColor(0xF);
     cout << " Next List     ";
@@ -9940,6 +11146,7 @@ start:
     SetColor(0xF);
     cout << " Previous List   ";
     SetColor(0xF);
+    //
     //
     drawRectangle(0, 0, 119, 2);
     gotoxy(40, 1);
@@ -9956,7 +11163,35 @@ start:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(69 + count, 1);
+                    break;
+                }
+            }
+            continue;
         }
         else if (ch == ENTER && count > 0)
         {
@@ -10050,7 +11285,34 @@ start:
         }
         else if (ch == ESC)
         {
-            return;
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    break;
+                }
+            }
+            continue;
         }
     }
 }
