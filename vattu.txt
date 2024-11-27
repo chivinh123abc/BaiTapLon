@@ -1,9 +1,16 @@
-132|12|123|123
+vt-9123|1|22|123
+132|12|123|323
+213|123123|123132|123123
+41c24|1f21f1|f121|11
+vt-0123|2123|123|123
+14kl1jl214|21f|11|12412
+1c23c11c11|23130123|1231230|23422342
 vt-0000028|ban an|chiec|100
 vt-0000006|ban ghe|cai|100
 vt-0000029|ban tra|chiec|100
 vt-0000073|banh bao|chiec|0
 vt-0000074|banh beo|chiec|1
+vt-0000100|banh cuong|cai|200
 vt-0000072|banh xe|chiec|1
 vt-0000075|banh xeo|chiec|1
 vt-0000071|bao tay|cai|1
@@ -34,6 +41,7 @@ vt-0000003|dien thoai|cai|100
 vt-0000021|dieu hoa|cai|100
 vt-0000015|dong ho|cai|100
 vt-0000048|duong|goi|1
+214|f1|21f|1241241
 vt-0000069|gang tay|cai|1
 vt-0000012|ghe sofa|cai|100
 vt-0000027|ghe xep|cai|100
@@ -42,12 +50,14 @@ vt-0000063|goi cafe|goi|1
 vt-0000050|hat nem|goi|1
 vt-0000055|hop dung thuc an|cai|1
 vt-0000056|hop giu nhiet|cai|1
+412c12c412|kalsjfkla|f11f1|124141
 vt-0000062|ke bep|cai|1
 vt-0000032|ke chua do|cai|100
 vt-0000014|ke sach|cai|100
 vt-0000025|ket sat|cai|100
 vt-0000053|khan an|cai|1
 vt-0000070|khan giay|goi|1
+vt-1231313|khan giay uot|hop|100
 vt-0000039|khay dung thuc an|cai|1
 vt-0000061|khay lam banh|cai|1
 vt-0000054|khung banh|cai|1
@@ -73,4 +83,4 @@ vt-0000008|tu lanh|cai|100
 vt-0000005|tu quang|cai|100
 vt-0000013|tu xe|cai|100
 vt-0000044|tuong ot|chai|1
-vt-0000001|xe dap|chiec|10000084
+vt-0000001|xe dap|chiec|10001297

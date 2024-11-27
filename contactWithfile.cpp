@@ -21,13 +21,13 @@ void saveVatTuToFile(DanhSachVatTu root, const char *fileName)
 
     if (!outFile.is_open())
     {
-        cout << "Khong the mo file!" << endl;
+        // cout << "Khong the mo file!" << endl;
         return;
     }
 
     saveVatTuSupporter(root, outFile);
     outFile.close();
-    cout << "Thanh cong" << endl;
+    // cout << "Thanh cong" << endl;
 }
 
 // hien tai chi tach theo tung dong
@@ -53,14 +53,14 @@ void insertVatTuByFile(DanhSachVatTu &root, const char *fileName)
 
     if (!inFile.is_open())
     {
-        cout << "Khong the mo file" << endl;
+        // cout << "Khong the mo file" << endl;
         return;
     }
 
     insertVatTuByFileSupporter(root, inFile);
 
     inFile.close();
-    cout << "Da xong" << endl;
+    // cout << "Da xong" << endl;
 }
 
 // Part1 : NHANVIEN------------------------
@@ -84,13 +84,13 @@ void saveNhanVienToFile(DanhSachNhanVien ds, const char *fileName, int soLuongNV
     ofstream outFile(fileName);
     if (!outFile.is_open())
     {
-        cout << "Khong the mo file!" << endl;
+        // cout << "Khong the mo file!" << endl;
         return;
     }
 
     saveNhanVienSupporter(ds, outFile, soLuongNV);
     outFile.close();
-    cout << "Thanh cong" << endl;
+    // cout << "Thanh cong" << endl;
 }
 
 void insertNhanVienByFileSupporter(DanhSachNhanVien &ds, ifstream &inFile, int &soLuongNV)
@@ -125,14 +125,14 @@ void insertNhanVienByFile(DanhSachNhanVien &ds, const char *fileName, int &soLuo
     ifstream inFile(fileName);
     if (!inFile.is_open())
     {
-        cout << "Khong the mo file" << endl;
+        // cout << "Khong the mo file" << endl;
         return;
     }
 
     insertNhanVienByFileSupporter(ds, inFile, soLuongNV);
 
     inFile.close();
-    cout << "Da xong" << endl;
+    // cout << "Da xong" << endl;
 }
 
 void saveAllDataSupporter(DanhSachNhanVien ds, ofstream &outFile, int soLuongNV)
@@ -168,13 +168,13 @@ void saveAllDataToFile(DanhSachNhanVien ds, const char *fileName, int soLuongNV)
     ofstream outFile(fileName);
     if (!outFile.is_open())
     {
-        cout << "Khong the mo file!" << endl;
+        // cout << "Khong the mo file!" << endl;
         return;
     }
 
     saveAllDataSupporter(ds, outFile, soLuongNV);
     outFile.close();
-    cout << "Thanh cong" << endl;
+    // cout << "Thanh cong" << endl;
 }
 
 void insertAllDataSupporter(DanhSachNhanVien &ds_nv, ifstream &inFile, int &soLuongNV, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct_hd)
@@ -268,12 +268,12 @@ void insertAllDataByFile(DanhSachNhanVien &ds_nv, const char *fileName, int &soL
     ifstream inFile(fileName);
     if (!inFile.is_open())
     {
-        cout << "Khong the mo file" << endl;
+        // cout << "Khong the mo file" << endl;
         return;
     }
 
     insertAllDataSupporter(ds_nv, inFile, soLuongNV, ds_hd, ds_ct_hd);
 
     inFile.close();
-    cout << "Da xong" << endl;
+    // cout << "Da xong" << endl;
 }

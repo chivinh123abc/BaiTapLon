@@ -42,10 +42,6 @@ bool KiemTraMaVT_CTHD(DanhSach_CT_HoaDon ds_cthoadon, const char maVT[11])
 //--------Thêm chi tiết hóa đơn vào danh sách (không trùng mã vật tư)----------
 bool Them_CTHD(DanhSach_CT_HoaDon &ds_cthoadon, const char maVT[11], int soLuong, double donGia, double vAT)
 {
-    // if (KiemTraMaVT_CTHD(ds_cthoadon, maVT) == true)
-    // {
-    //     return false;
-    // }
     DanhSach_CT_HoaDon CT_HoaDonMoi = newDanhSachCTHoaDon(maVT, soLuong, donGia, vAT);
     // Thêm chi tiết mới vào đầu danh sách liên kết
     CT_HoaDonMoi->next = ds_cthoadon;
