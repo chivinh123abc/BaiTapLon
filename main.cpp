@@ -761,17 +761,19 @@ void DrawHienThiVatTuTable(DanhSachVatTu ds_vt)
         cout << "Bang Thong Tin Chi Tiet Vat Tu Dang Co" << endl;
         SetColor(0xF);
         drawRectangle(0, 4, 16, 2);
+        drawRectangle(16, 4, 53, 2);
+        drawRectangle(69, 4, 28, 2);
+        drawRectangle(97, 4, 21, 2);
+        SetColor(0x9);
         gotoxy(4, 5);
         cout << "Ma Vat Tu";
-        drawRectangle(16, 4, 53, 2);
         gotoxy(36, 5);
         cout << "Ten Vat Tu";
-        drawRectangle(69, 4, 28, 2);
         gotoxy(78, 5);
         cout << "Don Vi Tinh";
-        drawRectangle(97, 4, 21, 2);
         gotoxy(102, 5);
         cout << "So Luong Ton";
+        SetNormalColor();
         // Phan noi dung
         drawRectangle(0, 6, 16, 16);
         drawRectangle(16, 6, 53, 16);
@@ -907,17 +909,19 @@ void DrawHienThiThemVatTuTable(DanhSachVatTu ds_vt)
         cout << "Bang Thong Tin Chi Tiet Vat Tu Dang Co" << endl;
         SetColor(0xF);
         drawRectangle(0, 4, 15, 2);
+        drawRectangle(15, 4, 25, 2);
+        drawRectangle(40, 4, 15, 2);
+        drawRectangle(55, 4, 21, 2);
+        SetColor(0x9);
         gotoxy(3, 5);
         cout << "Ma Vat Tu";
-        drawRectangle(15, 4, 25, 2);
         gotoxy(23, 5);
         cout << "Ten Vat Tu";
-        drawRectangle(40, 4, 15, 2);
         gotoxy(42, 5);
         cout << "Don Vi Tinh";
-        drawRectangle(55, 4, 21, 2);
         gotoxy(61, 5);
         cout << "So Luong Ton";
+        SetNormalColor();
         // Phan noi dung
         drawRectangle(0, 6, 15, 16);
         drawRectangle(15, 6, 25, 16);
@@ -971,17 +975,19 @@ void DrawHienThiNhanVienTable(DanhSachNhanVien ds_nv, int soLuongNhanVien)
         cout << "Bang Chi Tiet Danh Sach Nhan Vien" << endl;
         SetColor(0xF);
         drawRectangle(0, 4, 15, 2);
+        drawRectangle(15, 4, 25, 2);
+        drawRectangle(40, 4, 16, 2);
+        drawRectangle(56, 4, 7, 2);
+        SetColor(0x9);
         gotoxy(2, 5);
         cout << "Ma Nhan Vien";
-        drawRectangle(15, 4, 25, 2);
         gotoxy(27, 5);
         cout << "Ho";
-        drawRectangle(40, 4, 16, 2);
         gotoxy(47, 5);
         cout << "Ten";
-        drawRectangle(56, 4, 7, 2);
         gotoxy(58, 5);
         cout << "Phai";
+        SetNormalColor();
         // Phan noi dung
         drawRectangle(0, 6, 15, 16);
         drawRectangle(15, 6, 25, 16);
@@ -1059,46 +1065,6 @@ void InNoiDungTrangThemVT(DanhSachVatTu &current_vt, VatTuStack *&PageStack, Vat
         if (bodem >= max || bodem > SoLuongVatTuGlobalCount - 1)
         {
             break;
-            // backToPrv = false;
-            // while (true)
-            // {
-            //     c = getch();
-            //     if (c == 224)
-            //     {
-            //         c = getch();
-            //         if (c == RIGHT_ARROW && max < SoLuongVatTuGlobalCount)
-            //         {
-            //             bodem = max;
-            //             max = max + 15;
-            //             Page++;
-            //             clearShowVatTuBoard2();
-            //             break;
-            //         }
-            //         else if (c == LEFT_ARROW && Page > 1)
-            //         {
-            //             backToPrv = true;
-            //             Page--;
-            //             current_vt = nullptr;
-            //             vtStack = PageStack[Page - 1];
-            //             max -= 15;
-            //             bodem = max - 15;
-            //             clearShowVatTuBoard2();
-            //             break;
-            //         }
-            //     }
-            //     else if (c == ESC)
-            //     {
-            //         delete[] PageStack;
-            //         delete[] firstPagePos;
-            //         PageStack = nullptr;
-            //         firstPagePos = nullptr;
-            //         return;
-            //     }
-            // }
-            // if (backToPrv)
-            // {
-            //     continue;
-            // }
         }
         current_vt = current_vt->right;
     }
@@ -1141,7 +1107,9 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         int count;
         unsigned char ch;
         gotoxy(82, 3);
+        SetColor(0x6);
         cout << "Ma Vat Tu";
+        SetNormalColor();
         //
         drawRectangle(79, 4, 15, 2);
         drawRectangle(94, 4, 25, 2);
@@ -1154,7 +1122,9 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         gotoxy(94, 6);
         cout << char(193);
         gotoxy(82, 5);
+        SetColor(0x6);
         cout << "Ten Vat Tu";
+        SetNormalColor();
         //
         drawRectangle(79, 6, 15, 2);
         drawRectangle(94, 6, 25, 2);
@@ -1167,7 +1137,9 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         gotoxy(119, 6);
         cout << char(180);
         gotoxy(81, 7);
+        SetColor(0x6);
         cout << "Don Vi Tinh";
+        SetNormalColor();
         //
         drawRectangle(79, 8, 15, 2);
         drawRectangle(94, 8, 25, 2);
@@ -1180,7 +1152,9 @@ void ThemVatTu(DanhSachVatTu &ds_vt)
         gotoxy(119, 8);
         cout << char(180);
         gotoxy(81, 9);
+        SetColor(0x6);
         cout << "So luong ton";
+        SetNormalColor();
     //
     nhapMaVT:
         gotoxy(96, 3);
@@ -1618,8 +1592,10 @@ void HieuChinhVatTuDrawSupport()
     gotoxy(94, 6);
     cout << char(193);
     gotoxy(82, 5);
+    SetColor(0x6);
     cout << "Ma Vat Tu";
     gotoxy(96, 5);
+    SetNormalColor();
 }
 
 // NOTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
@@ -1708,17 +1684,19 @@ void HienThiVatTuDangCoTrongHieuChinh(DanhSachVatTu ds_vt, int SoLuongVatTu, int
         cout << "Bang Thong Tin Chi Tiet Vat Tu Dang Co";
         SetColor(0xF);
         drawRectangle(0, 4, 15, 2);
+        drawRectangle(15, 4, 25, 2);
+        drawRectangle(40, 4, 15, 2);
+        drawRectangle(55, 4, 21, 2);
+        SetColor(0x9);
         gotoxy(3, 5);
         cout << "Ma Vat Tu";
-        drawRectangle(15, 4, 25, 2);
         gotoxy(23, 5);
         cout << "Ten Vat Tu";
-        drawRectangle(40, 4, 15, 2);
         gotoxy(42, 5);
         cout << "Don Vi Tinh";
-        drawRectangle(55, 4, 21, 2);
         gotoxy(60, 5);
         cout << "So Luong Ton";
+        SetNormalColor();
         // Phan noi dung
         drawRectangle(0, 6, 15, 16);
         drawRectangle(15, 6, 25, 16);
@@ -1792,7 +1770,9 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
         gotoxy(119, 6);
         cout << char(180);
         gotoxy(81, 7);
+        SetColor(0x6);
         cout << "Ten VT(old)";
+        SetNormalColor();
         //
         drawRectangle(79, 8, 15, 2);
         drawRectangle(94, 8, 25, 2);
@@ -1805,14 +1785,18 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
         gotoxy(119, 8);
         cout << char(180);
         gotoxy(81, 9);
+        SetColor(0x6);
         cout << "DV Tinh(old)";
+        SetNormalColor();
         //
         drawRectangle(79, 12, 15, 2);
         drawRectangle(94, 12, 25, 2);
         gotoxy(94, 12);
         cout << char(194);
         gotoxy(81, 13);
+        SetColor(0x6);
         cout << "Ten VT(new)";
+        SetNormalColor();
         //
         drawRectangle(79, 14, 15, 2);
         drawRectangle(94, 14, 25, 2);
@@ -1825,7 +1809,9 @@ void HieuChinhVatTu(DanhSachVatTu &ds_vt)
         gotoxy(119, 14);
         cout << char(180);
         gotoxy(81, 15);
+        SetColor(0x6);
         cout << "DV Tinh(new)";
+        SetNormalColor();
         VatTuGuideDraw();
     //
     nhapMaVT:
@@ -2291,8 +2277,10 @@ void XoaVatTuDrawSupport()
     cout << char(194);
     gotoxy(94, 6);
     cout << char(193);
-    gotoxy(81, 5);
+    gotoxy(82, 5);
+    SetColor(0x6);
     cout << "Ma Vat Tu";
+    SetNormalColor();
     //
     drawRectangle(79, 6, 15, 2);
     drawRectangle(94, 6, 25, 2);
@@ -2304,8 +2292,10 @@ void XoaVatTuDrawSupport()
     cout << char(193);
     gotoxy(119, 6);
     cout << char(180);
-    gotoxy(81, 7);
+    gotoxy(84, 7);
+    SetColor(0x6);
     cout << "Ten VT";
+    SetNormalColor();
     //
     drawRectangle(79, 8, 15, 2);
     drawRectangle(94, 8, 25, 2);
@@ -2317,8 +2307,10 @@ void XoaVatTuDrawSupport()
     cout << char(193);
     gotoxy(119, 8);
     cout << char(180);
-    gotoxy(81, 9);
+    gotoxy(83, 9);
+    SetColor(0x6);
     cout << "DV Tinh";
+    SetNormalColor();
     //
 }
 
@@ -3165,8 +3157,6 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
         SetColor(0x4);
         cout << "Them Nhan Vien Moi" << endl;
         SetColor(0xF);
-        gotoxy(81, 3);
-        cout << "Ma Nhan Vien";
         //
         drawRectangle(79, 4, 15, 2);
         drawRectangle(94, 4, 25, 2);
@@ -3178,8 +3168,6 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
         cout << char(197);
         gotoxy(94, 6);
         cout << char(193);
-        gotoxy(81, 5);
-        cout << "Ho Nhan Vien";
         //
 
         drawRectangle(79, 6, 15, 2);
@@ -3192,8 +3180,6 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
         cout << char(197);
         gotoxy(94, 8);
         cout << char(193);
-        gotoxy(80, 7);
-        cout << "Ten Nhan Vien";
         //
         drawRectangle(79, 8, 15, 3);
         drawRectangle(94, 8, 25, 3);
@@ -3205,11 +3191,18 @@ void ThemNhanVien(DanhSachNhanVien &ds_nv, int &soLuongNhanVienCount)
         cout << char(193);
         gotoxy(119, 8);
         cout << char(180);
+        SetColor(0x6);
+        gotoxy(81, 3);
+        cout << "Ma Nhan Vien";
+        gotoxy(81, 5);
+        cout << "Ho Nhan Vien";
+        gotoxy(80, 7);
+        cout << "Ten Nhan Vien";
         gotoxy(82, 9);
         cout << "Gioi Tinh";
         gotoxy(80, 10);
         cout << "(Up/Down BTN)";
-
+        SetNormalColor();
         NhanVienGuideDraw();
     //
     nhapMaNV:
@@ -3671,9 +3664,6 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         SetColor(0x4);
         cout << "Xoa Nhan Vien" << endl;
         SetColor(0xF);
-        gotoxy(81, 3);
-        cout << "Ma Nhan Vien";
-        //
         //
         drawRectangle(79, 4, 15, 2);
         drawRectangle(94, 4, 25, 2);
@@ -3685,10 +3675,7 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(197);
         gotoxy(94, 6);
         cout << char(193);
-        gotoxy(81, 5);
-        cout << "Ho Nhan Vien";
         //
-
         drawRectangle(79, 6, 15, 2);
         drawRectangle(94, 6, 25, 2);
         gotoxy(79, 6);
@@ -3699,8 +3686,6 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(197);
         gotoxy(94, 8);
         cout << char(193);
-        gotoxy(80, 7);
-        cout << "Ten Nhan Vien";
         //
         drawRectangle(79, 8, 15, 2);
         drawRectangle(94, 8, 25, 2);
@@ -3712,8 +3697,16 @@ void XoaNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(193);
         gotoxy(119, 8);
         cout << char(180);
+        SetColor(0x6);
+        gotoxy(81, 3);
+        cout << "Ma Nhan Vien";
+        gotoxy(81, 5);
+        cout << "Ho Nhan Vien";
+        gotoxy(80, 7);
+        cout << "Ten Nhan Vien";
         gotoxy(82, 9);
         cout << "Gioi Tinh";
+        SetNormalColor();
 
         NhanVienGuideDraw();
         //
@@ -3987,8 +3980,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         SetColor(0x4);
         cout << "Hieu Chinh Nhan Vien" << endl;
         SetColor(0xF);
-        gotoxy(81, 3);
-        cout << "Ma Nhan Vien";
         //
         drawRectangle(79, 4, 15, 2);
         drawRectangle(94, 4, 25, 2);
@@ -4000,8 +3991,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(197);
         gotoxy(94, 6);
         cout << char(193);
-        gotoxy(81, 5);
-        cout << "Ho NV (old)";
         //
 
         drawRectangle(79, 6, 15, 2);
@@ -4014,8 +4003,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(197);
         gotoxy(94, 8);
         cout << char(193);
-        gotoxy(81, 7);
-        cout << "Ten NV (old)";
         //
         drawRectangle(79, 8, 15, 2);
         drawRectangle(94, 8, 25, 2);
@@ -4027,8 +4014,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(193);
         gotoxy(119, 8);
         cout << char(180);
-        gotoxy(82, 9);
-        cout << "Gioi Tinh";
         // NHAP THONG TIN MOI;
         drawRectangle(79, 12, 15, 2);
         drawRectangle(94, 12, 25, 2);
@@ -4036,8 +4021,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(194);
         gotoxy(94, 14);
         cout << char(193);
-        gotoxy(81, 13);
-        cout << "Ho NV (new)";
         //
         drawRectangle(79, 14, 15, 2);
         drawRectangle(94, 14, 25, 2);
@@ -4049,8 +4032,6 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(197);
         gotoxy(94, 16);
         cout << char(193);
-        gotoxy(81, 15);
-        cout << "Ten NV (new)";
         //
         drawRectangle(79, 16, 15, 3);
         drawRectangle(94, 16, 25, 3);
@@ -4062,8 +4043,24 @@ void HieuChinhNhanVien(DanhSachNhanVien &ds_nv, int &SoLuongNhanVien)
         cout << char(193);
         gotoxy(119, 16);
         cout << char(180);
+        //
+        SetColor(0x6);
+        gotoxy(81, 3);
+        cout << "Ma Nhan Vien";
+        gotoxy(81, 5);
+        cout << "Ho NV (old)";
+        gotoxy(81, 7);
+        cout << "Ten NV (old)";
+        gotoxy(82, 9);
+        cout << "Gioi Tinh";
+        gotoxy(81, 13);
+        cout << "Ho NV (new)";
+        gotoxy(81, 15);
+        cout << "Ten NV (new)";
         gotoxy(82, 17);
         cout << "Gioi Tinh";
+        SetNormalColor();
+        //
         NhanVienGuideDraw();
     //
     nhapMaNV:
@@ -4735,9 +4732,10 @@ void DrawNhapHoaDon(LoaiHoaDon loai, const char maHoaDon[])
     {
         cout << "XUAT";
     }
-    SetColor(0xF);
+    SetColor(0x6);
     gotoxy(90, 3);
     cout << "Loai Hoa Don: ";
+    SetNormalColor();
     if (loai == n)
     {
         cout << "Nhap";
@@ -5128,6 +5126,7 @@ void QuickChooseCTHoaDonPremium(DanhSachHoaDon ds_hd, int &count, int &max, int 
     SetColor(0x4);
     cout << "Bang Thong Tin CT Hoa Don Hien Tai";
     SetColor(0xF);
+    SetColor(0x9);
     gotoxy(3, 3);
     cout << "Ma Vat Tu";
     gotoxy(19, 3);
@@ -5136,6 +5135,7 @@ void QuickChooseCTHoaDonPremium(DanhSachHoaDon ds_hd, int &count, int &max, int 
     cout << "Don Gia";
     gotoxy(64, 3);
     cout << "Vat";
+    SetNormalColor();
     //
     drawRectangle(0, 4, 15, 11);
     drawRectangle(15, 4, 15, 11);
@@ -5198,8 +5198,6 @@ void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 12);
     cout << char(180);
-    gotoxy(82, 13);
-    cout << "Ma Vat Tu";
     //
     drawRectangle(79, 14, 15, 2);
     drawRectangle(94, 14, 25, 2);
@@ -5211,8 +5209,6 @@ void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 14);
     cout << char(180);
-    gotoxy(83, 15);
-    cout << "So Luong";
     //
     drawRectangle(79, 16, 15, 2);
     drawRectangle(94, 16, 25, 2);
@@ -5224,8 +5220,6 @@ void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 16);
     cout << char(180);
-    gotoxy(83, 17);
-    cout << "Don Gia";
     //
     drawRectangle(79, 18, 15, 2);
     drawRectangle(94, 18, 25, 2);
@@ -5237,8 +5231,17 @@ void themChiTietHoaDonNhap(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 18);
     cout << char(180);
+    //
+    SetColor(0x6);
+    gotoxy(82, 13);
+    cout << "Ma Vat Tu";
+    gotoxy(83, 15);
+    cout << "So Luong";
+    gotoxy(83, 17);
+    cout << "Don Gia";
     gotoxy(83, 19);
     cout << "VAT (%)";
+    SetNormalColor();
     HienThiVatTuDangCoTrongHieuChinh(ds_vt, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
 //
 nhapMaVT:
@@ -5862,8 +5865,6 @@ void themChiTietHoaDonXuat(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 12);
     cout << char(180);
-    gotoxy(82, 13);
-    cout << "Ma Vat Tu";
     drawRectangle(79, 14, 15, 2);
     drawRectangle(94, 14, 25, 2);
     gotoxy(79, 14);
@@ -5874,8 +5875,6 @@ void themChiTietHoaDonXuat(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 14);
     cout << char(180);
-    gotoxy(83, 15);
-    cout << "So Luong";
     drawRectangle(79, 16, 15, 2);
     drawRectangle(94, 16, 25, 2);
     gotoxy(79, 16);
@@ -5886,8 +5885,6 @@ void themChiTietHoaDonXuat(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 16);
     cout << char(180);
-    gotoxy(83, 17);
-    cout << "Don Gia";
     drawRectangle(79, 18, 15, 2);
     drawRectangle(94, 18, 25, 2);
     gotoxy(79, 18);
@@ -5898,8 +5895,16 @@ void themChiTietHoaDonXuat(HoaDon *&hoadon, DanhSachVatTu &ds_vt)
     cout << char(193);
     gotoxy(119, 18);
     cout << char(180);
+    SetColor(0x6);
+    gotoxy(82, 13);
+    cout << "Ma Vat Tu";
+    gotoxy(83, 15);
+    cout << "So Luong";
+    gotoxy(83, 17);
+    cout << "Don Gia";
     gotoxy(83, 19);
     cout << "VAT (%)";
+    SetNormalColor();
     HienThiVatTuDangCoTrongHieuChinh(ds_vt, SoLuongVatTuGlobalCount, Page, arr2Size, PageStack, firstPagePos, pageMaVTData, current_vt, vtStack, bodem, max, ptrY);
 //
 nhapMaVT:
@@ -6651,9 +6656,10 @@ void DrawXoaCTHD()
     gotoxy(89, 11);
     SetColor(0x4);
     cout << "Nhap MaVT Ban Can Xoa";
-    SetNormalColor();
+    SetColor(0x6);
     gotoxy(82, 13);
     cout << "Ma Vat Tu";
+    SetNormalColor();
 }
 
 void DrawHieuChinhCTHD()
@@ -6673,9 +6679,10 @@ void DrawHieuChinhCTHD()
     gotoxy(86, 11);
     SetColor(0x4);
     cout << "Nhap MaVT Ban Can Hieu Chinh";
-    SetNormalColor();
+    SetColor(0x6);
     gotoxy(82, 13);
     cout << "Ma Vat Tu";
+    SetNormalColor();
 }
 
 void XoaChiTietHoaDon(DanhSachHoaDon &new_ds_hd, DanhSachVatTu &ds_vt, int &pos, int &max, int &ptrY, CT_HoaDon **&firstPageEl, CT_HoaDon **&PageEl, int page, int &size, CT_HoaDon *&current_CTHD_Run)
@@ -6703,8 +6710,6 @@ letDelete:
     cout << char(193);
     gotoxy(94, 14);
     cout << char(197);
-    gotoxy(83, 15);
-    cout << "Don Gia";
     //
     drawRectangle(79, 16, 15, 2);
     drawRectangle(94, 16, 25, 2);
@@ -6716,8 +6721,6 @@ letDelete:
     cout << char(193);
     gotoxy(94, 16);
     cout << char(197);
-    gotoxy(85, 17);
-    cout << "VAT";
     //
     drawRectangle(79, 18, 40, 2);
     drawRectangle(79, 20, 15, 2);
@@ -6736,10 +6739,17 @@ letDelete:
     cout << char(193);
     gotoxy(94, 22);
     cout << char(193);
+    SetColor(0x4);
     gotoxy(85, 19);
     cout << "Nhap So Luong Ban Muon Bo Di";
+    SetColor(0x6);
+    gotoxy(83, 15);
+    cout << "Don Gia";
+    gotoxy(85, 17);
+    cout << "VAT";
     gotoxy(83, 21);
     cout << "So Luong";
+    SetNormalColor();
 //
 nhapMaVT:
     count = 0;
@@ -7061,8 +7071,6 @@ letDelete:
     cout << char(193);
     gotoxy(94, 14);
     cout << char(197);
-    gotoxy(83, 15);
-    cout << "Don Gia";
     //
     drawRectangle(79, 16, 15, 2);
     drawRectangle(94, 16, 25, 2);
@@ -7074,8 +7082,6 @@ letDelete:
     cout << char(193);
     gotoxy(94, 16);
     cout << char(197);
-    gotoxy(85, 17);
-    cout << "VAT";
     // Xu li sau
     drawRectangle(79, 18, 40, 2);
     drawRectangle(79, 20, 15, 2);
@@ -7095,9 +7101,9 @@ letDelete:
     gotoxy(94, 22);
     cout << char(193);
     gotoxy(90, 19);
+    SetColor(0x4);
     cout << "Chinh Sua Thong Tin";
-    gotoxy(81, 21);
-    cout << "Don Gia(new)";
+    SetNormalColor();
     //
     drawRectangle(79, 22, 15, 2);
     drawRectangle(94, 22, 25, 2);
@@ -7109,9 +7115,17 @@ letDelete:
     cout << char(193);
     gotoxy(94, 22);
     cout << char(197);
+    //
+    SetColor(0x6);
+    gotoxy(83, 15);
+    cout << "Don Gia";
+    gotoxy(85, 17);
+    cout << "VAT";
+    gotoxy(81, 21);
+    cout << "Don Gia(new)";
     gotoxy(83, 23);
     cout << "VAT(new)";
-    //
+    SetNormalColor();
     //
     gotoxy(0, 5 + ptrY);
     SetColor(0x4);
@@ -7565,13 +7579,16 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
     inputDate.year = localTime->tm_year + 1900;
     inputDate.month = localTime->tm_mon + 1;
     inputDate.day = localTime->tm_mday;
+    SetColor(0x6);
     gotoxy(82, 5);
     cout << "So Hoa Don";
+    SetNormalColor();
     HoaDonGuideDraw();
     gotoxy(96, 5);
     while (true)
     {
     soHDon:
+        showCursor();
         ch = getch();
         if (ch == 224)
         {
@@ -7643,7 +7660,9 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
             // f
             count = 0;
             gotoxy(83, 7);
+            SetColor(0x6);
             cout << "Ngay Lap";
+            SetNormalColor();
             gotoxy(96, 7);
             cout << setw(2) << setfill('0') << inputDate.day << "/" << setw(2) << setfill('0') << inputDate.month << "/" << setw(4) << setfill('0') << inputDate.year;
             break;
@@ -7667,6 +7686,8 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
     //  phan nhap chi tiet hoa don;
     int choose3 = 0;
     drawCT_HoaDonUI(choose3);
+    //
+    hideCursor();
     while (true)
     {
         ch = getch();
@@ -7811,6 +7832,7 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
             {
                 clearRightMiddleScreen();
                 clearHalfScreen();
+                showCursor();
                 themChiTietHoaDonNhap(new_hd, ds_vt);
                 //
                 clearHalfScreen();
@@ -7826,9 +7848,11 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                 clearRightMiddleScreen();
                 backAllow = false;
                 drawCT_HoaDonUI(choose3);
+                hideCursor();
             }
             else if (choose3 == 1)
             {
+                showCursor();
                 clearRightMiddleScreen();
                 XoaChiTietHoaDon(new_hd, ds_vt, pos, max, ptrY, firstPageEl, PageEl, Page, arrSize, current_CTHD_Run);
                 current_CTHD_Run = new_hd->ds_ct_hoadon;
@@ -7842,10 +7866,12 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                 NoiDungCTHoaDonPre(pos, max, current_CTHD_Run, firstPageEl, Page, arrSize, PageEl, ptrY);
                 clearRightMiddleScreen();
                 drawCT_HoaDonUI(choose3);
+                hideCursor();
                 continue;
             }
             else if (choose3 == 2)
             {
+                showCursor();
                 clearRightMiddleScreen();
                 SuaChiTietHoaDon(new_hd, ds_vt, pos, max, ptrY, firstPageEl, PageEl, Page, arrSize, current_CTHD_Run);
                 current_CTHD_Run = new_hd->ds_ct_hoadon;
@@ -7859,6 +7885,7 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                 NoiDungCTHoaDonPre(pos, max, current_CTHD_Run, firstPageEl, Page, arrSize, PageEl, ptrY);
                 clearRightMiddleScreen();
                 drawCT_HoaDonUI(choose3);
+                hideCursor();
                 continue;
             }
             else if (choose3 == 3)
@@ -7946,12 +7973,17 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                         {
                             if (!isContainMaVT_DanhSachVatTu(ds_vt, current->maVT))
                             {
+                                showCursor();
                                 DanhSachVatTu new_vattu = new VatTu;
                                 drawRectangle(0, 18, 70, 3);
                                 gotoxy(1, 19);
-                                cout << current->maVT << " la vat tu moi duoc them vao!!";
+                                SetColor(0x3);
+                                cout << current->maVT;
+                                SetColor(0x4);
+                                cout << " la vat tu moi duoc them vao!!";
                                 gotoxy(1, 20);
                                 cout << "Vui long cung cap them thong tin cua vat tu nay";
+                                SetNormalColor();
                                 char inputTenVT[21];
                                 //
                                 drawRectangle(0, 21, 15, 2);
@@ -7976,10 +8008,12 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                                 gotoxy(70, 23);
                                 cout << char(180);
                                 //
-                                gotoxy(1, 22);
+                                SetColor(0x2);
+                                gotoxy(3, 22);
                                 cout << "Ten Vat Tu";
-                                gotoxy(1, 24);
+                                gotoxy(2, 24);
                                 cout << "Don Vi Tinh";
+                                SetNormalColor();
                                 count = 0;
                                 gotoxy(18, 22);
                                 while (true)
@@ -8056,6 +8090,7 @@ void LapHoaDonNhap(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSachNhanVien
                                 new_vattu = newDanhSachVatTu(current->maVT, inputTenVT, inputDonViTinh, current->soLuong);
                                 insertDanhSachVatTu(ds_vt, new_vattu);
                                 clearBottomScreen2();
+                                hideCursor();
                             }
                             else
                             {
@@ -8119,10 +8154,13 @@ startLapHoaDon:
     inputDate.month = localTime->tm_mon + 1;
     inputDate.day = localTime->tm_mday;
     //
+    SetColor(0x6);
     gotoxy(82, 5);
     cout << "So Hoa Don";
+    SetNormalColor();
     HoaDonGuideDraw();
 soHDon:
+    showCursor();
     gotoxy(96, 5);
     while (true)
     {
@@ -8214,8 +8252,10 @@ soHDon:
     cout << char(180);
     //
     count = 0;
+    SetColor(0x6);
     gotoxy(83, 7);
     cout << "Ngay Lap";
+    SetNormalColor();
     gotoxy(96, 7);
     cout << setw(2) << setfill('0') << inputDate.day << "/" << setw(2) << setfill('0') << inputDate.month << "/" << setw(4) << setfill('0') << inputDate.year;
     //
@@ -8223,6 +8263,7 @@ soHDon:
     //  phan nhap chi tiet hoa don xuat;
     int choose3 = 0;
     drawCT_HoaDonUI(choose3);
+    hideCursor();
     while (true)
     {
         ch = getch();
@@ -8365,6 +8406,7 @@ soHDon:
         {
             if (choose3 == 0)
             {
+                showCursor();
                 clearRightMiddleScreen();
                 clearHalfScreen();
                 themChiTietHoaDonXuat(new_hd, ds_vt);
@@ -8382,9 +8424,11 @@ soHDon:
                 clearRightMiddleScreen();
                 backAllow = false;
                 drawCT_HoaDonUI(choose3);
+                hideCursor();
             }
             else if (choose3 == 1)
             {
+                showCursor();
                 clearRightMiddleScreen();
                 XoaChiTietHoaDon(new_hd, ds_vt, pos, max, ptrY, firstPageEl, PageEl, Page, arrSize, current_CTHD_Run);
                 current_CTHD_Run = new_hd->ds_ct_hoadon;
@@ -8398,10 +8442,12 @@ soHDon:
                 NoiDungCTHoaDonPre(pos, max, current_CTHD_Run, firstPageEl, Page, arrSize, PageEl, ptrY);
                 clearRightMiddleScreen();
                 drawCT_HoaDonUI(choose3);
+                hideCursor();
                 continue;
             }
             else if (choose3 == 2)
             {
+                showCursor();
                 clearRightMiddleScreen();
                 SuaChiTietHoaDon(new_hd, ds_vt, pos, max, ptrY, firstPageEl, PageEl, Page, arrSize, current_CTHD_Run);
                 current_CTHD_Run = new_hd->ds_ct_hoadon;
@@ -8415,6 +8461,7 @@ soHDon:
                 NoiDungCTHoaDonPre(pos, max, current_CTHD_Run, firstPageEl, Page, arrSize, PageEl, ptrY);
                 clearRightMiddleScreen();
                 drawCT_HoaDonUI(choose3);
+                hideCursor();
                 continue;
             }
             else if (choose3 == 3)
@@ -8557,20 +8604,8 @@ void clearHoaDonTable()
     }
 }
 
-void InHoaDonTheoSoHoaDon(DanhSachHoaDon ds_hd, DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, int soLuongNV)
+void VeInHoaDonTheoSoHoaDon()
 {
-    int max = 15;
-    unsigned char ch;
-    char inputSoHD[21];
-    int count;
-
-startIn:
-    //
-    clrscr();
-    count = 0;
-    max = 15;
-    DrawAnnouncementBoard();
-    //
     gotoxy(0, 26);
     SetColor(0xA);
     cout << "ENTER:";
@@ -8615,78 +8650,10 @@ startIn:
     cout << char(193);
     gotoxy(119, 2);
     cout << char(180);
-
     gotoxy(2, 3);
+    SetColor(0x6);
     cout << "Nhap So Hoa Don Ban Muon In";
-    gotoxy(32, 3);
-
-    while (true)
-    {
-        ch = getch();
-        if (ch == 224)
-        {
-            ch = getch();
-        }
-        else if (ch == ESC)
-        {
-            gotoxy(61, 28);
-            SetBGColor(0x4);
-            cout << "                                                      ";
-            gotoxy(62, 28);
-            cout << "Exit ?? (y: Yes, n: No)";
-            SetNormalColor();
-            while (true)
-            {
-                ch = getch();
-                if (ch == 'y' || ch == 'Y')
-                {
-                    gotoxy(61, 28);
-                    SetBGColor(0x4);
-                    cout << "                                                      ";
-                    gotoxy(62, 28);
-                    SetNormalColor();
-                    return;
-                }
-                else if (ch == 'n' || ch == 'N')
-                {
-                    gotoxy(61, 28);
-                    SetBGColor(0x4);
-                    cout << "                                                      ";
-                    SetNormalColor();
-                    gotoxy(32 + count, 3);
-                    break;
-                }
-            }
-            continue;
-        }
-        else if (ch == ENTER && count > 0)
-        {
-            inputSoHD[count] = '\0';
-            if (!isContainSoHoaDon(ds_hd, inputSoHD))
-            {
-                gotoxy(0, 5);
-                cout << "Khong Ton Tai So Hoa Don Nay Nen Khong The Truy Xuat";
-                gotoxy(32 + count, 3);
-                continue;
-            }
-            gotoxy(0, 5);
-            cout << "                                                     ";
-            break;
-        }
-        else if (ch == '\b' && count > 0)
-        {
-            cout << "\b \b";
-            inputSoHD[--count] = '\0';
-        }
-        else if ((isalnum(ch) || isSpecialChar(ch)) && count < 20)
-        {
-            cout << ch;
-            ch = tolower(ch);
-            inputSoHD[count++] = ch;
-        }
-    }
-    //
-
+    SetNormalColor();
     //
     drawRectangle(0, 4, 11, 2);
     drawRectangle(11, 4, 32, 2);
@@ -8695,7 +8662,7 @@ startIn:
     drawRectangle(69, 4, 11, 2);
     drawRectangle(80, 4, 17, 2);
     drawRectangle(97, 4, 22, 2);
-    SetColor(0xB);
+    SetColor(0x9);
     gotoxy(4, 5);
     cout << "Ngay";
     gotoxy(23, 5);
@@ -8775,6 +8742,97 @@ startIn:
     cout << char(194);
     gotoxy(15, 24);
     cout << char(193);
+    gotoxy(4, 23);
+    SetColor(0x4);
+    cout << "Tong HD";
+    SetNormalColor();
+}
+
+void InHoaDonTheoSoHoaDon(DanhSachHoaDon ds_hd, DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, int soLuongNV)
+{
+    int max = 15;
+    unsigned char ch;
+    char inputSoHD[21];
+    int count;
+
+startIn:
+    //
+    clrscr();
+    count = 0;
+    max = 15;
+    DrawAnnouncementBoard();
+    VeInHoaDonTheoSoHoaDon();
+    //
+    gotoxy(32, 3);
+    while (true)
+    {
+        ch = getch();
+        if (ch == 224)
+        {
+            ch = getch();
+        }
+        else if (ch == ESC)
+        {
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                      ";
+            gotoxy(62, 28);
+            cout << "Exit ?? (y: Yes, n: No)";
+            SetNormalColor();
+            while (true)
+            {
+                ch = getch();
+                if (ch == 'y' || ch == 'Y')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    gotoxy(62, 28);
+                    SetNormalColor();
+                    return;
+                }
+                else if (ch == 'n' || ch == 'N')
+                {
+                    gotoxy(61, 28);
+                    SetBGColor(0x4);
+                    cout << "                                                      ";
+                    SetNormalColor();
+                    gotoxy(32 + count, 3);
+                    break;
+                }
+            }
+            continue;
+        }
+        else if (ch == ENTER && count > 0)
+        {
+            inputSoHD[count] = '\0';
+            if (!isContainSoHoaDon(ds_hd, inputSoHD))
+            {
+                gotoxy(61, 28);
+                SetBGColor(0x4);
+                cout << "Khong Ton Tai So Hoa Don Nay Nen Khong The Truy Xuat";
+                SetNormalColor();
+                gotoxy(32 + count, 3);
+                continue;
+            }
+            gotoxy(61, 28);
+            SetBGColor(0x4);
+            cout << "                                                     ";
+            SetNormalColor();
+            break;
+        }
+        else if (ch == '\b' && count > 0)
+        {
+            cout << "\b \b";
+            inputSoHD[--count] = '\0';
+        }
+        else if ((isalnum(ch) || isSpecialChar(ch)) && count < 20)
+        {
+            cout << ch;
+            ch = tolower(ch);
+            inputSoHD[count++] = ch;
+        }
+    }
     // Noi Dung
     HoaDon *HoaDon = searchSoHoaDon(ds_hd, inputSoHD);
     CT_HoaDon *current = HoaDon->ds_ct_hoadon;
@@ -8791,9 +8849,6 @@ startIn:
         sumOfHD += current->donGia * current->soLuong * (1 + (current->vAT / 100.0));
         current = current->next;
     }
-
-    gotoxy(4, 23);
-    cout << "Tong HD";
     gotoxy(18, 23);
     cout << fixed << setprecision(2) << sumOfHD;
     // Dat lai
@@ -8920,24 +8975,6 @@ startIn:
             }
         }
     }
-
-    // TEST
-    // gotoxy(1, 7);
-    // cout << "20/10/2024";
-    // gotoxy(12, 7);
-    // cout << "Luong Chi Vinh Junior Ryan Ngok";
-    // gotoxy(44, 7);
-    // cout << "Xuat";
-    // gotoxy(49, 7);
-    // cout << "Banh xe vo dich kkkk";
-    // gotoxy(71, 7);
-    // cout << "999999999";
-    // gotoxy(82, 7);
-    // cout << "123456789123456";
-    // gotoxy(99, 7);
-    // cout << "1234567891234567";
-
-    getch();
     return;
 }
 
@@ -8982,12 +9019,8 @@ void In10VatTuDoanhThuCaoNhat(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, DanhS
     tm *localTime = localtime(&now);
     bool backAllow = true;
     //
-
-    //
-//
 start:
     clrscr();
-    //
     DrawAnnouncementBoard();
     //
     gotoxy(0, 26);
@@ -9019,7 +9052,6 @@ start:
     cout << " Previous List   ";
     SetColor(0xF);
     //
-    //
     count = 0;
     drawRectangle(0, 0, 119, 2);
     gotoxy(40, 1);
@@ -9037,9 +9069,59 @@ start:
     gotoxy(119, 2);
     cout << char(180);
     gotoxy(2, 3);
+    SetColor(0x6);
     cout << "Nhap Ngay Thu Nhat";
+    SetNormalColor();
     gotoxy(32, 3);
     cout << "Nam:           |Thang:         |Ngay:         ";
+    drawRectangle(0, 4, 30, 2);
+    drawRectangle(30, 4, 89, 2);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(30, 4);
+    cout << char(197);
+    gotoxy(30, 6);
+    cout << char(193);
+    gotoxy(119, 4);
+    cout << char(180);
+    count = 0;
+    gotoxy(2, 5);
+    SetColor(0x6);
+    cout << "Nhap Ngay Thu Hai";
+    SetNormalColor();
+    gotoxy(32, 5);
+    cout << "Nam:           |Thang:         |Ngay:         ";
+    drawRectangle(0, 7, 30, 2);
+    drawRectangle(30, 7, 40, 2);
+    drawRectangle(70, 7, 49, 2);
+    drawRectangle(0, 9, 30, 11);
+    drawRectangle(30, 9, 40, 11);
+    drawRectangle(70, 9, 49, 11);
+    gotoxy(0, 9);
+    cout << char(195);
+    gotoxy(30, 7);
+    cout << char(194);
+    gotoxy(70, 7);
+    cout << char(194);
+    gotoxy(119, 9);
+    cout << char(180);
+    gotoxy(30, 9);
+    cout << char(197);
+    gotoxy(70, 9);
+    cout << char(197);
+    gotoxy(30, 20);
+    cout << char(193);
+    gotoxy(70, 20);
+    cout << char(193);
+    SetColor(0x9);
+    gotoxy(11, 8);
+    cout << "Ma Vat Tu";
+    gotoxy(47, 8);
+    cout << "Ten VT";
+    gotoxy(90, 8);
+    cout << "Doanh Thu";
+    SetNormalColor();
+    //
     gotoxy(37, 3);
     while (true)
     {
@@ -9086,7 +9168,7 @@ start:
         {
             charInputDate[count] = '\0';
             ngayDau.year = stoi(charInputDate);
-            if (ngayDau.year <= localTime->tm_year + 1900) // nam bat dau tu 1900 nen +1900 vao
+            if ((ngayDau.year <= localTime->tm_year + 1900) && (ngayDau.year > 0)) // nam bat dau tu 1900 nen +1900 vao
             {
                 gotoxy(55, 3);
                 count = 0;
@@ -9145,7 +9227,7 @@ start:
                     {
                         charInputDate[count] = '\0';
                         ngayDau.month = stoi(charInputDate);
-                        if ((ngayDau.year == localTime->tm_year + 1900) && ngayDau.month > localTime->tm_mon + 1)
+                        if ((ngayDau.year == localTime->tm_year + 1900) && (ngayDau.month > localTime->tm_mon + 1))
                         {
                             gotoxy(55, 3);
                             cout << "  ";
@@ -9153,7 +9235,7 @@ start:
                             count = 0;
                             continue;
                         }
-                        else if (ngayDau.month > 12)
+                        else if ((ngayDau.month > 12) || (ngayDau.month <= 0))
                         {
                             gotoxy(55, 3);
                             cout << "  ";
@@ -9224,11 +9306,11 @@ start:
                                     ngayDau.day = stoi(charInputDate);
                                     if (ngayDau.month == 2)
                                     {
-                                        if (isNamNhuan(ngayDau.year) && ngayDau.day <= 29)
+                                        if (isNamNhuan(ngayDau.year) && ngayDau.day <= 29 && ngayDau.day > 0)
                                         {
                                             break;
                                         }
-                                        else if (!isNamNhuan(ngayDau.year) && ngayDau.day <= 28)
+                                        else if (!isNamNhuan(ngayDau.year) && ngayDau.day <= 28 && ngayDau.day > 0)
                                         {
                                             break;
                                         }
@@ -9241,11 +9323,11 @@ start:
                                             continue;
                                         }
                                     }
-                                    else if (ngayDau.day <= 30 && (ngayDau.month == 4 || ngayDau.month == 6 || ngayDau.month == 9 || ngayDau.month == 11))
+                                    else if (ngayDau.day > 0 && ngayDau.day <= 30 && (ngayDau.month == 4 || ngayDau.month == 6 || ngayDau.month == 9 || ngayDau.month == 11))
                                     {
                                         break;
                                     }
-                                    else if (ngayDau.day <= 31)
+                                    else if (ngayDau.day > 0 && ngayDau.day <= 31)
                                     {
                                         break;
                                     }
@@ -9307,21 +9389,7 @@ start:
     }
 
     // Input 2
-    drawRectangle(0, 4, 30, 2);
-    drawRectangle(30, 4, 89, 2);
-    gotoxy(0, 4);
-    cout << char(195);
-    gotoxy(30, 4);
-    cout << char(197);
-    gotoxy(30, 6);
-    cout << char(193);
-    gotoxy(119, 4);
-    cout << char(180);
     count = 0;
-    gotoxy(2, 5);
-    cout << "Nhap Ngay Thu Hai";
-    gotoxy(32, 5);
-    cout << "Nam:           |Thang:         |Ngay:         ";
     gotoxy(37, 5);
     while (true)
     {
@@ -9383,7 +9451,7 @@ start:
         {
             charInputDate[count] = '\0';
             ngayCuoi.year = stoi(charInputDate);
-            if (ngayCuoi.year <= localTime->tm_year + 1900 && ngayCuoi.year >= ngayDau.year) // nam bat dau tu 1900 nen +1900 vao
+            if (ngayCuoi.year <= localTime->tm_year + 1900 && ngayCuoi.year >= ngayDau.year && ngayCuoi.year > 0) // nam bat dau tu 1900 nen +1900 vao
             {
                 gotoxy(55, 5);
                 count = 0;
@@ -9452,7 +9520,7 @@ start:
                             count = 0;
                             continue;
                         }
-                        else if (ngayCuoi.month > 12)
+                        else if ((ngayCuoi.month > 12) || (ngayCuoi.month <= 0))
                         {
                             gotoxy(55, 5);
                             cout << "  ";
@@ -9523,17 +9591,17 @@ start:
                                     ngayCuoi.day = stoi(charInputDate);
                                     if (ngayCuoi.month == 2)
                                     {
-                                        if ((isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 29) &&
+                                        if ((isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 29 && ngayCuoi.day > 0) &&
                                             (ngayCuoi.year > ngayDau.year ||
                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
-                                             (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                             (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day && ngayCuoi.day > 0)))
                                         {
                                             break;
                                         }
-                                        else if ((!isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 28) &&
+                                        else if ((!isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 28 && ngayCuoi.day > 0) &&
                                                  (ngayCuoi.year > ngayDau.year ||
                                                   (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
-                                                  (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
+                                                  (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day && ngayCuoi.day > 0)))
                                         {
                                             break;
                                         }
@@ -9546,14 +9614,14 @@ start:
                                             continue;
                                         }
                                     }
-                                    else if ((ngayCuoi.day <= 30 && (ngayCuoi.month == 4 || ngayCuoi.month == 6 || ngayCuoi.month == 9 || ngayCuoi.month == 11)) &&
+                                    else if ((ngayCuoi.day > 0 && ngayCuoi.day <= 30 && (ngayCuoi.month == 4 || ngayCuoi.month == 6 || ngayCuoi.month == 9 || ngayCuoi.month == 11)) &&
                                              (ngayCuoi.year > ngayDau.year ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
                                     {
                                         break;
                                     }
-                                    else if (ngayCuoi.day <= 31 &&
+                                    else if (ngayCuoi.day > 0 && ngayCuoi.day <= 31 &&
                                              (ngayCuoi.year > ngayDau.year ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
@@ -9616,37 +9684,6 @@ start:
             cout << ch;
         }
     }
-    //
-    drawRectangle(0, 7, 30, 2);
-    drawRectangle(30, 7, 40, 2);
-    drawRectangle(70, 7, 49, 2);
-    drawRectangle(0, 9, 30, 11);
-    drawRectangle(30, 9, 40, 11);
-    drawRectangle(70, 9, 49, 11);
-
-    gotoxy(0, 9);
-    cout << char(195);
-    gotoxy(30, 7);
-    cout << char(194);
-    gotoxy(70, 7);
-    cout << char(194);
-    gotoxy(119, 9);
-    cout << char(180);
-    gotoxy(30, 9);
-    cout << char(197);
-    gotoxy(70, 9);
-    cout << char(197);
-    gotoxy(30, 20);
-    cout << char(193);
-    gotoxy(70, 20);
-    cout << char(193);
-
-    gotoxy(1, 8);
-    cout << "Ma Vat Tu";
-    gotoxy(31, 8);
-    cout << "Ten VT";
-    gotoxy(71, 8);
-    cout << "Doanh Thu";
     // Xu Ly LOGIC
     DoanhThuVT doanhThu[soLuongVatTu];
     int soLuongVTCoDoanhThu = 0;
@@ -9785,7 +9822,6 @@ void ThongKeHoaDonTrong1KhoangTG(DanhSachVatTu ds_vt, DanhSachNhanVien ds_nv, Da
     tm *localTime = localtime(&now);
     bool backAllow = true;
 //
-//
 start:
     clrscr();
     //
@@ -9836,10 +9872,115 @@ start:
     cout << char(193);
     gotoxy(119, 2);
     cout << char(180);
+    drawRectangle(0, 4, 30, 2);
+    drawRectangle(30, 4, 89, 2);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(30, 4);
+    cout << char(197);
+    gotoxy(30, 6);
+    cout << char(193);
+    gotoxy(119, 4);
+    cout << char(180);
+    drawRectangle(0, 6, 119, 2);
+    drawRectangle(0, 8, 59, 2);
+    drawRectangle(59, 8, 60, 2);
+    drawRectangle(0, 10, 24, 2);
+    drawRectangle(24, 10, 14, 2);
+    drawRectangle(38, 10, 8, 2);
+    drawRectangle(46, 10, 36, 2);
+    drawRectangle(82, 10, 37, 2);
+    drawRectangle(0, 12, 24, 14);
+    drawRectangle(24, 12, 14, 14);
+    drawRectangle(38, 12, 8, 14);
+    drawRectangle(46, 12, 36, 14);
+    drawRectangle(82, 12, 37, 14);
+    gotoxy(0, 6);
+    cout << char(195);
+    gotoxy(0, 8);
+    cout << char(195);
+    gotoxy(0, 10);
+    cout << char(195);
+    gotoxy(0, 12);
+    cout << char(195);
+    gotoxy(119, 6);
+    cout << char(180);
+    gotoxy(119, 8);
+    cout << char(180);
+    gotoxy(119, 10);
+    cout << char(180);
+    gotoxy(119, 12);
+    cout << char(180);
+    gotoxy(30, 6);
+    cout << char(193);
+    gotoxy(59, 8);
+    cout << char(194);
+    gotoxy(59, 10);
+    cout << char(193);
+    gotoxy(24, 10);
+    cout << char(194);
+    gotoxy(38, 10);
+    cout << char(194);
+    gotoxy(46, 10);
+    cout << char(194);
+    gotoxy(82, 10);
+    cout << char(194);
+    gotoxy(24, 12);
+    cout << char(197);
+    gotoxy(38, 12);
+    cout << char(197);
+    gotoxy(46, 12);
+    cout << char(197);
+    gotoxy(82, 12);
+    cout << char(197);
+    gotoxy(24, 26);
+    cout << char(193);
+    gotoxy(38, 26);
+    cout << char(193);
+    gotoxy(46, 26);
+    cout << char(193);
+    gotoxy(82, 26);
+    cout << char(193);
+    // Số HĐ 20		Ngày lập xx/xx/xxxx 10     Loại HĐ 4		Họ tên NV lập 31		Trị giá hóa đơn 30
+    // DRAW
     gotoxy(2, 3);
+    SetColor(0x6);
     cout << "Nhap Ngay Thu Nhat";
+    SetNormalColor();
     gotoxy(32, 3);
     cout << "Nam:           |Thang:         |Ngay:         ";
+    gotoxy(2, 5);
+    SetColor(0x6);
+    cout << "Nhap Ngay Thu Hai";
+    SetNormalColor();
+    gotoxy(32, 5);
+    cout << "Nam:           |Thang:         |Ngay:         ";
+    gotoxy(34, 7);
+    SetColor(0x4);
+    cout << "BANG LIET KE HOA DON TRONG KHOANG THOI GIAN (dd/mm/yyyy)";
+    SetColor(0xF);
+    //
+    SetColor(0x9);
+    gotoxy(7, 11);
+    cout << "So Hoa Don";
+    gotoxy(27, 11);
+    cout << "Ngay Lap";
+    gotoxy(39, 11);
+    cout << "Loai HD";
+    gotoxy(52, 11);
+    cout << "Ho Va Ten Nhan Vien Lap";
+    gotoxy(93, 11);
+    cout << "Tri Gia Hoa Don";
+    SetColor(0xF);
+    gotoxy(20, 9);
+    SetColor(0x4);
+    cout << "TU NGAY: ";
+    SetColor(0xF);
+    gotoxy(80, 9);
+    SetColor(0x4);
+    cout << "DEN NGAY: ";
+    SetColor(0xF);
+    //
     gotoxy(37, 3);
     while (true)
     {
@@ -9891,7 +10032,7 @@ start:
         {
             charInputDate[count] = '\0';
             ngayDau.year = stoi(charInputDate);
-            if (ngayDau.year <= localTime->tm_year + 1900) // nam bat dau tu 1900 nen +1900 vao
+            if (ngayDau.year <= localTime->tm_year + 1900 && ngayDau.year > 0) // nam bat dau tu 1900 nen +1900 vao
             {
                 gotoxy(55, 3);
                 count = 0;
@@ -9950,7 +10091,7 @@ start:
                     {
                         charInputDate[count] = '\0';
                         ngayDau.month = stoi(charInputDate);
-                        if ((ngayDau.year == localTime->tm_year + 1900) && ngayDau.month > localTime->tm_mon + 1)
+                        if ((ngayDau.year == localTime->tm_year + 1900) && (ngayDau.month > localTime->tm_mon + 1))
                         {
                             gotoxy(55, 3);
                             cout << "  ";
@@ -9958,7 +10099,7 @@ start:
                             count = 0;
                             continue;
                         }
-                        else if (ngayDau.month > 12)
+                        else if (ngayDau.month > 12 || ngayDau.month <= 0)
                         {
                             gotoxy(55, 3);
                             cout << "  ";
@@ -10029,11 +10170,11 @@ start:
                                     ngayDau.day = stoi(charInputDate);
                                     if (ngayDau.month == 2)
                                     {
-                                        if (isNamNhuan(ngayDau.year) && ngayDau.day <= 29)
+                                        if (isNamNhuan(ngayDau.year) && ngayDau.day <= 29 && ngayDau.day > 0)
                                         {
                                             break;
                                         }
-                                        else if (!isNamNhuan(ngayDau.year) && ngayDau.day <= 28)
+                                        else if (!isNamNhuan(ngayDau.year) && ngayDau.day <= 28 && ngayDau.day > 0)
                                         {
                                             break;
                                         }
@@ -10046,11 +10187,11 @@ start:
                                             continue;
                                         }
                                     }
-                                    else if (ngayDau.day <= 30 && (ngayDau.month == 4 || ngayDau.month == 6 || ngayDau.month == 9 || ngayDau.month == 11))
+                                    else if (ngayDau.day > 0 && ngayDau.day <= 30 && (ngayDau.month == 4 || ngayDau.month == 6 || ngayDau.month == 9 || ngayDau.month == 11))
                                     {
                                         break;
                                     }
-                                    else if (ngayDau.day <= 31)
+                                    else if (ngayDau.day <= 31 && ngayDau.day > 0)
                                     {
                                         break;
                                     }
@@ -10112,21 +10253,7 @@ start:
     }
 
     // Input 2
-    drawRectangle(0, 4, 30, 2);
-    drawRectangle(30, 4, 89, 2);
-    gotoxy(0, 4);
-    cout << char(195);
-    gotoxy(30, 4);
-    cout << char(197);
-    gotoxy(30, 6);
-    cout << char(193);
-    gotoxy(119, 4);
-    cout << char(180);
     count = 0;
-    gotoxy(2, 5);
-    cout << "Nhap Ngay Thu Hai";
-    gotoxy(32, 5);
-    cout << "Nam:           |Thang:         |Ngay:         ";
     gotoxy(37, 5);
     while (true)
     {
@@ -10188,7 +10315,7 @@ start:
         {
             charInputDate[count] = '\0';
             ngayCuoi.year = stoi(charInputDate);
-            if (ngayCuoi.year <= localTime->tm_year + 1900 && ngayCuoi.year >= ngayDau.year) // nam bat dau tu 1900 nen +1900 vao
+            if (ngayCuoi.year <= localTime->tm_year + 1900 && ngayCuoi.year >= ngayDau.year && ngayCuoi.year > 0) // nam bat dau tu 1900 nen +1900 vao
             {
                 gotoxy(55, 5);
                 count = 0;
@@ -10257,7 +10384,7 @@ start:
                             count = 0;
                             continue;
                         }
-                        else if (ngayCuoi.month > 12)
+                        else if (ngayCuoi.month > 12 || ngayCuoi.month <= 0)
                         {
                             gotoxy(55, 5);
                             cout << "  ";
@@ -10328,14 +10455,14 @@ start:
                                     ngayCuoi.day = stoi(charInputDate);
                                     if (ngayCuoi.month == 2)
                                     {
-                                        if ((isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 29) &&
+                                        if ((isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 29 && ngayCuoi.day > 0) &&
                                             (ngayCuoi.year > ngayDau.year ||
                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
                                              (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
                                         {
                                             break;
                                         }
-                                        else if ((!isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 28) &&
+                                        else if ((!isNamNhuan(ngayCuoi.year) && ngayCuoi.day <= 28 && ngayCuoi.day > 0) &&
                                                  (ngayCuoi.year > ngayDau.year ||
                                                   (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
                                                   (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
@@ -10351,14 +10478,14 @@ start:
                                             continue;
                                         }
                                     }
-                                    else if ((ngayCuoi.day <= 30 && (ngayCuoi.month == 4 || ngayCuoi.month == 6 || ngayCuoi.month == 9 || ngayCuoi.month == 11)) &&
+                                    else if ((ngayCuoi.day > 0 && ngayCuoi.day <= 30 && (ngayCuoi.month == 4 || ngayCuoi.month == 6 || ngayCuoi.month == 9 || ngayCuoi.month == 11)) &&
                                              (ngayCuoi.year > ngayDau.year ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
                                     {
                                         break;
                                     }
-                                    else if (ngayCuoi.day <= 31 &&
+                                    else if (ngayCuoi.day <= 31 && ngayCuoi.day > 0 &&
                                              (ngayCuoi.year > ngayDau.year ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month > ngayDau.month) ||
                                               (ngayCuoi.year == ngayDau.year && ngayCuoi.month == ngayDau.month && ngayCuoi.day >= ngayDau.day)))
@@ -10422,99 +10549,19 @@ start:
         }
     }
     // XU Li
-    drawRectangle(0, 6, 119, 2);
-    drawRectangle(0, 8, 59, 2);
-    drawRectangle(59, 8, 60, 2);
-    drawRectangle(0, 10, 24, 2);
-    drawRectangle(24, 10, 14, 2);
-    drawRectangle(38, 10, 8, 2);
-    drawRectangle(46, 10, 36, 2);
-    drawRectangle(82, 10, 37, 2);
-    drawRectangle(0, 12, 24, 14);
-    drawRectangle(24, 12, 14, 14);
-    drawRectangle(38, 12, 8, 14);
-    drawRectangle(46, 12, 36, 14);
-    drawRectangle(82, 12, 37, 14);
-    gotoxy(0, 6);
-    cout << char(195);
-    gotoxy(0, 8);
-    cout << char(195);
-    gotoxy(0, 10);
-    cout << char(195);
-    gotoxy(0, 12);
-    cout << char(195);
-    gotoxy(119, 6);
-    cout << char(180);
-    gotoxy(119, 8);
-    cout << char(180);
-    gotoxy(119, 10);
-    cout << char(180);
-    gotoxy(119, 12);
-    cout << char(180);
-    gotoxy(30, 6);
-    cout << char(193);
-    gotoxy(59, 8);
-    cout << char(194);
-    gotoxy(59, 10);
-    cout << char(193);
-    gotoxy(24, 10);
-    cout << char(194);
-    gotoxy(38, 10);
-    cout << char(194);
-    gotoxy(46, 10);
-    cout << char(194);
-    gotoxy(82, 10);
-    cout << char(194);
-    gotoxy(24, 12);
-    cout << char(197);
-    gotoxy(38, 12);
-    cout << char(197);
-    gotoxy(46, 12);
-    cout << char(197);
-    gotoxy(82, 12);
-    cout << char(197);
-    gotoxy(24, 26);
-    cout << char(193);
-    gotoxy(38, 26);
-    cout << char(193);
-    gotoxy(46, 26);
-    cout << char(193);
-    gotoxy(82, 26);
-    cout << char(193);
-
-    // Số HĐ 20		Ngày lập xx/xx/xxxx 10     Loại HĐ 4		Họ tên NV lập 31		Trị giá hóa đơn 30
-    //
-    gotoxy(34, 7);
-    SetColor(0x4);
-    cout << "BANG LIET KE HOA DON TRONG KHOANG THOI GIAN (dd/mm/yyyy)";
-    SetColor(0xF);
-
-    SetColor(0x4);
-    gotoxy(7, 11);
-    cout << "So Hoa Don";
-    gotoxy(27, 11);
-    cout << "Ngay Lap";
-    gotoxy(39, 11);
-    cout << "Loai HD";
-    gotoxy(52, 11);
-    cout << "Ho Va Ten Nhan Vien Lap";
-    gotoxy(93, 11);
-    cout << "Tri Gia Hoa Don";
-    SetColor(0xF);
-
     gotoxy(20, 9);
     SetColor(0x4);
     cout << "TU NGAY: ";
     SetColor(0xF);
     cout << setw(2) << setfill('0') << ngayDau.day << "/" << setw(2) << setfill('0') << ngayDau.month << "/" << setw(4) << setfill('0') << ngayDau.year;
-
+    //
     gotoxy(80, 9);
     SetColor(0x4);
     cout << "DEN NGAY: ";
     SetColor(0xF);
     cout << setw(2) << setfill('0') << ngayCuoi.day << "/" << setw(2) << setfill('0') << ngayCuoi.month << "/" << setw(4) << setfill('0') << ngayCuoi.year;
-
     //
+    int SoLuongHoaDon = 0; // dem de xac nhan so luong
     count = 0;
     int max = 13;
     HoaDon *currentHoaDon = ds_hd;
@@ -10529,6 +10576,7 @@ start:
             this_nhanvien = TimNhanVienTheoSoHD(ds_nv, soLuongNV, currentHoaDon->soHD);
             CT_HoaDon *current_CT = currentHoaDon->ds_ct_hoadon;
             double tongTriGia = 0;
+            SoLuongHoaDon++;
 
             if (Page == sizeARR && currentHoaDon != nullptr)
             {
@@ -10567,6 +10615,20 @@ start:
 
         if (count >= max || currentHoaDon == nullptr)
         {
+            if (SoLuongHoaDon == 0)
+            {
+                gotoxy(2, 26 - (max - count));
+                cout << "NONE";
+                gotoxy(26, 26 - (max - count));
+                cout << "NONE";
+                gotoxy(40, 26 - (max - count));
+                cout << "NONE";
+                gotoxy(48, 26 - (max - count));
+                cout << "NONE";
+                gotoxy(84, 26 - (max - count));
+                cout << "NONE";
+            };
+
             while (true)
             {
                 ch = getch();
@@ -10593,6 +10655,7 @@ start:
                 }
                 else if (ch == TAB)
                 {
+                    soLuongVatTu = 0;
                     goto start;
                 }
                 else if (ch == ESC)
@@ -10673,12 +10736,36 @@ start:
     cout << " Previous List   ";
     SetColor(0xF);
     //
-    //
     drawRectangle(0, 0, 119, 2);
     gotoxy(40, 1);
     SetColor(0x4);
     cout << "BANG THONG KE DOANH THU NAM: ";
     SetColor(0xF);
+    drawRectangle(0, 2, 59, 2);
+    drawRectangle(59, 2, 60, 2);
+    drawRectangle(0, 4, 59, 13);
+    drawRectangle(59, 4, 60, 13);
+    gotoxy(0, 2);
+    cout << char(195);
+    gotoxy(119, 2);
+    cout << char(180);
+    gotoxy(0, 4);
+    cout << char(195);
+    gotoxy(119, 4);
+    cout << char(180);
+    gotoxy(59, 2);
+    cout << char(194);
+    gotoxy(59, 4);
+    cout << char(197);
+    gotoxy(59, 17);
+    cout << char(193);
+    gotoxy(27, 3);
+    SetColor(0x9);
+    cout << "THANG";
+    gotoxy(84, 3);
+    cout << "DOANH THU";
+    SetColor(0xF);
+    //
     gotoxy(69, 1);
     while (true)
     {
@@ -10748,31 +10835,6 @@ start:
             cout << ch;
         }
     }
-    //
-    drawRectangle(0, 2, 59, 2);
-    drawRectangle(59, 2, 60, 2);
-    drawRectangle(0, 4, 59, 13);
-    drawRectangle(59, 4, 60, 13);
-    gotoxy(0, 2);
-    cout << char(195);
-    gotoxy(119, 2);
-    cout << char(180);
-    gotoxy(0, 4);
-    cout << char(195);
-    gotoxy(119, 4);
-    cout << char(180);
-    gotoxy(59, 2);
-    cout << char(194);
-    gotoxy(59, 4);
-    cout << char(197);
-    gotoxy(59, 17);
-    cout << char(193);
-    gotoxy(27, 3);
-    SetColor(0x4);
-    cout << "THANG";
-    gotoxy(84, 3);
-    cout << "DOANH THU";
-    SetColor(0xF);
     // Khai Bao Tien Xu Ly
     double doanhThuThang[12] = {0};
     // Xu Ly
@@ -10868,21 +10930,27 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             case 0:
             {
                 clrscr();
+                showCursor();
                 ThemVatTu(ds_vt);
+                hideCursor();
                 clrscr();
                 break;
             }
             case 1:
             {
                 clrscr();
+                showCursor();
                 HieuChinhVatTu(ds_vt);
+                hideCursor();
                 clrscr();
                 break;
             }
             case 2:
             {
                 clrscr();
+                showCursor();
                 XoaVatTu(ds_vt, SoLuongVatTuGlobalCount, ds_nv, soLuongNhanVienCount);
+                hideCursor();
                 clrscr();
                 break;
             }
@@ -10898,7 +10966,9 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             {
                 clrscr();
                 gotoxy(0, 0);
+                showCursor();
                 In10VatTuDoanhThuCaoNhat(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
+                hideCursor();
                 clrscr();
                 break;
             }
@@ -10922,32 +10992,27 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
             {
                 gotoxy(0, 0);
                 clrscr();
+                showCursor();
                 ThemNhanVien(ds_nv, soLuongNhanVienGlobalCount);
-                // if (isAdministrative())
-                // {
-                //     clrscr();
-                //     ThemNhanVien(ds_nv, soLuongNhanVienGlobalCount);
-                // }
-                // else
-                // {
-                //     gotoxy(20, 20);
-                //     cout << "NONONONONO";
-                //     Sleep(3000);
-                // }
+                hideCursor();
                 clrscr();
                 break;
             }
             case 1:
             {
                 clrscr();
+                showCursor();
                 XoaNhanVien(ds_nv, soLuongNhanVienCount);
+                hideCursor();
                 clrscr();
                 break;
             }
             case 2:
             {
                 clrscr();
+                showCursor();
                 HieuChinhNhanVien(ds_nv, soLuongNhanVienCount);
+                hideCursor();
                 clrscr();
                 break;
             }
@@ -10973,12 +11038,15 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         {
             char inputMaNV[11];
             //
+            showCursor();
             if (!isNhanVien(ds_nv, inputMaNV, soLuongNhanVienGlobalCount))
             {
                 clrscr();
                 DrawFirstUI(choose1);
+                hideCursor();
                 break;
             }
+            hideCursor();
             ////////////////////////
             choose2 = 0;
             while (true)
@@ -10990,7 +11058,9 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 gotoxy(30, 10);
                 if (choose2 == 0)
                 {
+                    showCursor();
                     LapHoaDonNhap(ds_vt, ds_hd, ds_nv, soLuongNhanVienCount, inputMaNV);
+                    hideCursor();
                     saveVatTuToFile(ds_vt, "vattu.txt");
                     saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
                     clrscr();
@@ -10998,7 +11068,9 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 }
                 else if (choose2 == 1)
                 {
+                    showCursor();
                     LapHoaDonXuat(ds_vt, ds_hd, ds_nv, soLuongNhanVienCount, inputMaNV);
+                    hideCursor();
                     saveVatTuToFile(ds_vt, "vattu.txt");
                     saveAllDataToFile(ds_nv, "data.txt", soLuongNhanVienGlobalCount);
                     clrscr();
@@ -11006,13 +11078,17 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
                 }
                 else if (choose2 == 2)
                 {
+                    showCursor();
                     InHoaDonTheoSoHoaDon(ds_hd, ds_vt, ds_nv, soLuongNhanVienCount);
+                    hideCursor();
                     clrscr();
                     continue;
                 }
                 else if (choose2 == 3)
                 {
+                    showCursor();
                     ThongKeHoaDonTrong1KhoangTG(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
+                    hideCursor();
                     clrscr();
                     continue;
                 }
@@ -11029,7 +11105,9 @@ void menu(DanhSachVatTu &ds_vt, DanhSachHoaDon &ds_hd, DanhSach_CT_HoaDon &ds_ct
         case 3:
         {
             clrscr();
+            showCursor();
             ThongKeDoanhThuTrong1Nam(ds_vt, ds_nv, ds_hd, SoLuongVatTuGlobalCount, soLuongNhanVienCount);
+            hideCursor();
             clrscr();
             DrawFirstUI(choose1);
             break;
@@ -11086,6 +11164,7 @@ int main()
     {
         if (isAdministrative())
         {
+            hideCursor();
             break;
         }
         else
@@ -11131,6 +11210,6 @@ int main()
     }
 
     menu(ds_vt, ds_hd, ds_cthd, ds_nv, soLuongNhanVienGlobalCount);
-
+    showCursor();
     return 0;
 }

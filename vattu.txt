@@ -5,6 +5,8 @@ vt-9123|1|22|123
 vt-0123|2123|123|123
 14kl1jl214|21f|11|12412
 1c23c11c11|23130123|1231230|23422342
+asdf|afsd|asdf|141
+khongcongi|asdfk|asdf|123
 vt-0000028|ban an|chiec|100
 vt-0000006|ban ghe|cai|100
 vt-0000029|ban tra|chiec|100
@@ -42,6 +44,7 @@ vt-0000021|dieu hoa|cai|100
 vt-0000015|dong ho|cai|100
 vt-0000048|duong|goi|1
 214|f1|21f|1241241
+asdkfjalka|fasdfas|asdfasdf|32141214
 vt-0000069|gang tay|cai|1
 vt-0000012|ghe sofa|cai|100
 vt-0000027|ghe xep|cai|100

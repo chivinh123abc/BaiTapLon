@@ -167,10 +167,14 @@ void removeFromDanhSachVatTu(char tenVT[], DanhSachVatTu &root)
         if (rp->right == nullptr)
         {
             root = rp->left;
+            // nếu có lỗi thì quay lại xóa
+            delete rp;
         }
         else if (rp->left == nullptr)
         {
             root = rp->right;
+            // nếu có lỗi thì quay lại xóa
+            delete rp;
         }
         else
         {
