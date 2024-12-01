@@ -180,213 +180,213 @@ void InDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon)
     }
 }
 
-//----------Merge Sort------Của Chi tiết hóa đơn-----------------------------------------------
-/*Dễ triển khai với danh sách liên kết: Không cần phải truy cập trực tiếp vào các chỉ số (index) như trong mảng. Ta chỉ cần so sánh và hoán đổi con trỏ trong danh sách.
-Đơn giản và dễ hiểu: */
+// //----------Merge Sort------Của Chi tiết hóa đơn-----------------------------------------------
+// /*Dễ triển khai với danh sách liên kết: Không cần phải truy cập trực tiếp vào các chỉ số (index) như trong mảng. Ta chỉ cần so sánh và hoán đổi con trỏ trong danh sách.
+// Đơn giản và dễ hiểu: */
 
-// Hàm tìm vị trí giữa của danh sách liên kết
-CT_HoaDon *TimViTriGiua(CT_HoaDon *head)
-{
+// // Hàm tìm vị trí giữa của danh sách liên kết
+// CT_HoaDon *TimViTriGiua(CT_HoaDon *head)
+// {
 
-    if (head == nullptr || head->next == nullptr)
-        return head;
+//     if (head == nullptr || head->next == nullptr)
+//         return head;
 
-    CT_HoaDon *slow = head;       // Con trỏ slow đi từng bước một
-    CT_HoaDon *fast = head->next; // Con trỏ fast đi hai bước. Khi fast đến cuối danh sách, slow sẽ nằm ở giữa.
+//     CT_HoaDon *slow = head;       // Con trỏ slow đi từng bước một
+//     CT_HoaDon *fast = head->next; // Con trỏ fast đi hai bước. Khi fast đến cuối danh sách, slow sẽ nằm ở giữa.
 
-    // Di chuyển fast nhanh hơn slow
-    while (fast != nullptr && fast->next != nullptr)
-    {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-    return slow;
-}
-//------------Merge Sort theo mã vật tư-------------------
-// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo tiêu chí mã vật tư
-CT_HoaDon *HopNhatTheoMaVT(CT_HoaDon *trai, CT_HoaDon *phai)
-{
-    // Trường hợp cơ bản
-    if (trai == nullptr)
-        return phai;
-    if (phai == nullptr)
-        return trai;
+//     // Di chuyển fast nhanh hơn slow
+//     while (fast != nullptr && fast->next != nullptr)
+//     {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+//     return slow;
+// }
+// //------------Merge Sort theo mã vật tư-------------------
+// // Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo tiêu chí mã vật tư
+// CT_HoaDon *HopNhatTheoMaVT(CT_HoaDon *trai, CT_HoaDon *phai)
+// {
+//     // Trường hợp cơ bản
+//     if (trai == nullptr)
+//         return phai;
+//     if (phai == nullptr)
+//         return trai;
 
-    // So sánh mã vật tư và gộp lại
-    if (strcmp(trai->maVT, phai->maVT) <= 0)
-    {
-        trai->next = HopNhatTheoMaVT(trai->next, phai);
-        return trai;
-    }
-    else
-    {
-        phai->next = HopNhatTheoMaVT(trai, phai->next);
-        return phai;
-    }
-}
+//     // So sánh mã vật tư và gộp lại
+//     if (strcmp(trai->maVT, phai->maVT) <= 0)
+//     {
+//         trai->next = HopNhatTheoMaVT(trai->next, phai);
+//         return trai;
+//     }
+//     else
+//     {
+//         phai->next = HopNhatTheoMaVT(trai, phai->next);
+//         return phai;
+//     }
+// }
 
-CT_HoaDon *MergeSortTheoMaVT(CT_HoaDon *head)
-{
-    // Trường hợp cơ bản: danh sách rỗng hoặc có 1 phần tử
-    if (head == nullptr || head->next == nullptr)
-        return head;
+// CT_HoaDon *MergeSortTheoMaVT(CT_HoaDon *head)
+// {
+//     // Trường hợp cơ bản: danh sách rỗng hoặc có 1 phần tử
+//     if (head == nullptr || head->next == nullptr)
+//         return head;
 
-    // Tìm vị trí giữa của danh sách
-    CT_HoaDon *giua = TimViTriGiua(head);
-    CT_HoaDon *nuaSau = giua->next;
-    giua->next = nullptr; // Chia danh sách
+//     // Tìm vị trí giữa của danh sách
+//     CT_HoaDon *giua = TimViTriGiua(head);
+//     CT_HoaDon *nuaSau = giua->next;
+//     giua->next = nullptr; // Chia danh sách
 
-    // Đệ quy gọi MergeSort trên hai nửa
-    CT_HoaDon *trai = MergeSortTheoMaVT(head);
-    CT_HoaDon *phai = MergeSortTheoMaVT(nuaSau);
+//     // Đệ quy gọi MergeSort trên hai nửa
+//     CT_HoaDon *trai = MergeSortTheoMaVT(head);
+//     CT_HoaDon *phai = MergeSortTheoMaVT(nuaSau);
 
-    // Gộp hai nửa đã sắp xếp lại với nhau
-    return HopNhatTheoMaVT(trai, phai);
-}
-//------------Merge Sort theo số lượng----------------
-// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo số lượng
-CT_HoaDon *HopNhatTheoSoLuong(CT_HoaDon *trai, CT_HoaDon *phai)
-{
-    if (trai == nullptr)
-        return phai;
-    if (phai == nullptr)
-        return trai;
+//     // Gộp hai nửa đã sắp xếp lại với nhau
+//     return HopNhatTheoMaVT(trai, phai);
+// }
+// //------------Merge Sort theo số lượng----------------
+// // Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo số lượng
+// CT_HoaDon *HopNhatTheoSoLuong(CT_HoaDon *trai, CT_HoaDon *phai)
+// {
+//     if (trai == nullptr)
+//         return phai;
+//     if (phai == nullptr)
+//         return trai;
 
-    if (trai->soLuong <= phai->soLuong)
-    {
-        trai->next = HopNhatTheoSoLuong(trai->next, phai);
-        return trai;
-    }
-    else
-    {
-        phai->next = HopNhatTheoSoLuong(trai, phai->next);
-        return phai;
-    }
-}
+//     if (trai->soLuong <= phai->soLuong)
+//     {
+//         trai->next = HopNhatTheoSoLuong(trai->next, phai);
+//         return trai;
+//     }
+//     else
+//     {
+//         phai->next = HopNhatTheoSoLuong(trai, phai->next);
+//         return phai;
+//     }
+// }
 
-CT_HoaDon *MergeSortTheoSoLuong(CT_HoaDon *head)
-{
-    if (head == nullptr || head->next == nullptr)
-        return head;
+// CT_HoaDon *MergeSortTheoSoLuong(CT_HoaDon *head)
+// {
+//     if (head == nullptr || head->next == nullptr)
+//         return head;
 
-    CT_HoaDon *giua = TimViTriGiua(head);
-    CT_HoaDon *nuaSau = giua->next;
-    giua->next = nullptr;
+//     CT_HoaDon *giua = TimViTriGiua(head);
+//     CT_HoaDon *nuaSau = giua->next;
+//     giua->next = nullptr;
 
-    CT_HoaDon *trai = MergeSortTheoSoLuong(head);
-    CT_HoaDon *phai = MergeSortTheoSoLuong(nuaSau);
+//     CT_HoaDon *trai = MergeSortTheoSoLuong(head);
+//     CT_HoaDon *phai = MergeSortTheoSoLuong(nuaSau);
 
-    return HopNhatTheoSoLuong(trai, phai);
-}
-//----------Merge Sort theo đơn giá-----------
-// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo đơn giá
-CT_HoaDon *HopNhatTheoDonGia(CT_HoaDon *trai, CT_HoaDon *phai)
-{
-    if (trai == nullptr)
-        return phai;
-    if (phai == nullptr)
-        return trai;
+//     return HopNhatTheoSoLuong(trai, phai);
+// }
+// //----------Merge Sort theo đơn giá-----------
+// // Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo đơn giá
+// CT_HoaDon *HopNhatTheoDonGia(CT_HoaDon *trai, CT_HoaDon *phai)
+// {
+//     if (trai == nullptr)
+//         return phai;
+//     if (phai == nullptr)
+//         return trai;
 
-    if (trai->donGia <= phai->donGia)
-    {
-        trai->next = HopNhatTheoDonGia(trai->next, phai);
-        return trai;
-    }
-    else
-    {
-        phai->next = HopNhatTheoDonGia(trai, phai->next);
-        return phai;
-    }
-}
+//     if (trai->donGia <= phai->donGia)
+//     {
+//         trai->next = HopNhatTheoDonGia(trai->next, phai);
+//         return trai;
+//     }
+//     else
+//     {
+//         phai->next = HopNhatTheoDonGia(trai, phai->next);
+//         return phai;
+//     }
+// }
 
-CT_HoaDon *MergeSortTheoDonGia(CT_HoaDon *head)
-{
-    if (head == nullptr || head->next == nullptr)
-        return head;
+// CT_HoaDon *MergeSortTheoDonGia(CT_HoaDon *head)
+// {
+//     if (head == nullptr || head->next == nullptr)
+//         return head;
 
-    CT_HoaDon *giua = TimViTriGiua(head);
-    CT_HoaDon *nuaSau = giua->next;
-    giua->next = nullptr;
+//     CT_HoaDon *giua = TimViTriGiua(head);
+//     CT_HoaDon *nuaSau = giua->next;
+//     giua->next = nullptr;
 
-    CT_HoaDon *trai = MergeSortTheoDonGia(head);
-    CT_HoaDon *phai = MergeSortTheoDonGia(nuaSau);
+//     CT_HoaDon *trai = MergeSortTheoDonGia(head);
+//     CT_HoaDon *phai = MergeSortTheoDonGia(nuaSau);
 
-    return HopNhatTheoDonGia(trai, phai);
-}
+//     return HopNhatTheoDonGia(trai, phai);
+// }
 
-//------------Merge Sort theo VAT--------------------
-// Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo VAT
-CT_HoaDon *HopNhatTheoVAT(CT_HoaDon *trai, CT_HoaDon *phai)
-{
-    if (trai == nullptr)
-        return phai;
-    if (phai == nullptr)
-        return trai;
+// //------------Merge Sort theo VAT--------------------
+// // Hàm hợp nhất (merge) hai danh sách đã sắp xếp theo VAT
+// CT_HoaDon *HopNhatTheoVAT(CT_HoaDon *trai, CT_HoaDon *phai)
+// {
+//     if (trai == nullptr)
+//         return phai;
+//     if (phai == nullptr)
+//         return trai;
 
-    if (trai->vAT <= phai->vAT)
-    {
-        trai->next = HopNhatTheoVAT(trai->next, phai);
-        return trai;
-    }
-    else
-    {
-        phai->next = HopNhatTheoVAT(trai, phai->next);
-        return phai;
-    }
-}
+//     if (trai->vAT <= phai->vAT)
+//     {
+//         trai->next = HopNhatTheoVAT(trai->next, phai);
+//         return trai;
+//     }
+//     else
+//     {
+//         phai->next = HopNhatTheoVAT(trai, phai->next);
+//         return phai;
+//     }
+// }
 
-CT_HoaDon *MergeSortTheoVAT(CT_HoaDon *head)
-{
-    if (head == nullptr || head->next == nullptr)
-        return head;
+// CT_HoaDon *MergeSortTheoVAT(CT_HoaDon *head)
+// {
+//     if (head == nullptr || head->next == nullptr)
+//         return head;
 
-    CT_HoaDon *giua = TimViTriGiua(head);
-    CT_HoaDon *nuaSau = giua->next;
-    giua->next = nullptr;
+//     CT_HoaDon *giua = TimViTriGiua(head);
+//     CT_HoaDon *nuaSau = giua->next;
+//     giua->next = nullptr;
 
-    CT_HoaDon *trai = MergeSortTheoVAT(head);
-    CT_HoaDon *phai = MergeSortTheoVAT(nuaSau);
+//     CT_HoaDon *trai = MergeSortTheoVAT(head);
+//     CT_HoaDon *phai = MergeSortTheoVAT(nuaSau);
 
-    return HopNhatTheoVAT(trai, phai);
-}
-//------------Hàm tổng quát sắp xếp theo tiêu chí được chọn----------
-DanhSach_CT_HoaDon SapXepDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon, int tieuChi)
-{
-    switch (tieuChi)
-    {
-    case 1:
-        return MergeSortTheoMaVT(ds_cthoadon);
-    case 2:
-        return MergeSortTheoSoLuong(ds_cthoadon);
-    case 3:
-        return MergeSortTheoDonGia(ds_cthoadon);
-    case 4:
-        return MergeSortTheoVAT(ds_cthoadon);
-    default:
-        cout << "Tieu chi sap xep khong hop le!" << endl;
-        return ds_cthoadon;
-    }
-}
+//     return HopNhatTheoVAT(trai, phai);
+// }
+// //------------Hàm tổng quát sắp xếp theo tiêu chí được chọn----------
+// DanhSach_CT_HoaDon SapXepDanhSachCTHoaDon(DanhSach_CT_HoaDon ds_cthoadon, int tieuChi)
+// {
+//     switch (tieuChi)
+//     {
+//     case 1:
+//         return MergeSortTheoMaVT(ds_cthoadon);
+//     case 2:
+//         return MergeSortTheoSoLuong(ds_cthoadon);
+//     case 3:
+//         return MergeSortTheoDonGia(ds_cthoadon);
+//     case 4:
+//         return MergeSortTheoVAT(ds_cthoadon);
+//     default:
+//         cout << "Tieu chi sap xep khong hop le!" << endl;
+//         return ds_cthoadon;
+//     }
+// }
 
-// Hàm đảo ngược danh sách CT_HoaDon
-DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
-{
-    DanhSach_CT_HoaDon prev = nullptr;
-    DanhSach_CT_HoaDon current = head;
-    DanhSach_CT_HoaDon next = nullptr;
+// // Hàm đảo ngược danh sách CT_HoaDon
+// DanhSach_CT_HoaDon DaoNguocDanhSach(DanhSach_CT_HoaDon head)
+// {
+//     DanhSach_CT_HoaDon prev = nullptr;
+//     DanhSach_CT_HoaDon current = head;
+//     DanhSach_CT_HoaDon next = nullptr;
 
-    while (current != nullptr)
-    {
-        next = current->next;
-        current->next = prev;
-        prev = current;
-        current = next;
-    }
+//     while (current != nullptr)
+//     {
+//         next = current->next;
+//         current->next = prev;
+//         prev = current;
+//         current = next;
+//     }
 
-    return prev; // Trả về đầu danh sách đã bị đảo ngược
-}
+//     return prev; // Trả về đầu danh sách đã bị đảo ngược
+// }
 
-//-------------******************************************************************************************************************-------------------------------------------------------------------------------------------------------------------
+// //-------------******************************************************************************************************************-------------------------------------------------------------------------------------------------------------------
 // khoi tao danh sach Hoa Don moi
 
 DanhSachHoaDon newHoaDon(const char soHD[], Date date, LoaiHoaDon loai, DanhSach_CT_HoaDon ds_ct_hoadon)
