@@ -788,190 +788,190 @@ void quickSortDoanhThu(DoanhThuVT arr[], int low, int high)
         quickSortDoanhThu(arr, pi + 1, high);
     }
 }
-bool NamTrongKhoangTG(Date date1, Date date2, Date date3) {
-    // Kiểm tra năm đầu tiên
-    if (date1.year < date2.year || date1.year > date3.year) {
-        return false;
-    }
+// bool NamTrongKhoangTG(Date date1, Date date2, Date date3) {
+//     // Kiểm tra năm đầu tiên
+//     if (date1.year < date2.year || date1.year > date3.year) {
+//         return false;
+//     }
 
-    // Kiểm tra năm, tháng
-    if (date1.year == date2.year && date1.month < date2.month) {
-        return false;
-    }
-    if (date1.year == date3.year && date1.month > date3.month) {
-        return false;
-    }
+//     // Kiểm tra năm, tháng
+//     if (date1.year == date2.year && date1.month < date2.month) {
+//         return false;
+//     }
+//     if (date1.year == date3.year && date1.month > date3.month) {
+//         return false;
+//     }
 
-    // Kiểm tra năm, tháng, ngày
-    if (date1.year == date2.year && date1.month == date2.month && date1.day < date2.day) {
-        return false;
-    }
-    if (date1.year == date3.year && date1.month == date3.month && date1.day > date3.day) {
-        return false;
-    }
+//     // Kiểm tra năm, tháng, ngày
+//     if (date1.year == date2.year && date1.month == date2.month && date1.day < date2.day) {
+//         return false;
+//     }
+//     if (date1.year == date3.year && date1.month == date3.month && date1.day > date3.day) {
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
-void InHoaDonTheoDate(DanhSachNhanVien ds_nv, DanhSachVatTu ds_vt, Date date2, Date date3){
-	bool kt=false;
-	for(int i=0;i<soLuongNhanVienGlobalCount;i++){
-		DanhSachHoaDon tmp=	ds_nv[i]->ds_hoadon;
-		while(tmp!=NULL){
-			if(NamTrongKhoangTG(tmp->date, date2, date3)==true){
-				cout<<tmp->soHD<<endl;
-				cout<<tmp->date.day<<"/"<<tmp->date.month<<"/"<<tmp->date.year<<endl;
-				cout<<(tmp->loai == n ? "Nhap" : "Xuat")<<endl;
-				cout<<ds_nv[i]->ho<<" "<<ds_nv[i]->ten<<endl;
-				//Tinh tri gia 
-				CT_HoaDon *current_ct = tmp->ds_ct_hoadon;
-            if (current_ct == nullptr)
-            {
-                cout << "Hoa don CT rong" << endl;
-                return;
-            }  else{
+// void InHoaDonTheoDate(DanhSachNhanVien ds_nv, DanhSachVatTu ds_vt, Date date2, Date date3){
+// 	bool kt=false;
+// 	for(int i=0;i<soLuongNhanVienGlobalCount;i++){
+// 		DanhSachHoaDon tmp=	ds_nv[i]->ds_hoadon;
+// 		while(tmp!=NULL){
+// 			if(NamTrongKhoangTG(tmp->date, date2, date3)==true){
+// 				cout<<tmp->soHD<<endl;
+// 				cout<<tmp->date.day<<"/"<<tmp->date.month<<"/"<<tmp->date.year<<endl;
+// 				cout<<(tmp->loai == n ? "Nhap" : "Xuat")<<endl;
+// 				cout<<ds_nv[i]->ho<<" "<<ds_nv[i]->ten<<endl;
+// 				//Tinh tri gia 
+// 				CT_HoaDon *current_ct = tmp->ds_ct_hoadon;
+//             if (current_ct == nullptr)
+//             {
+//                 cout << "Hoa don CT rong" << endl;
+//                 return;
+//             }  else{
             	
-            	 int tongTriGia = 0;
-            	  while (current_ct != nullptr)
-            {
-                VatTu *vattu = searchMaVT_DanhSachVatTu(ds_vt, current_ct->maVT);
-                if (vattu != nullptr)
-                {
-                    int triGia = current_ct->soLuong * current_ct->donGia;
-                    tongTriGia += triGia;
-                }
-                else
-                {
-                    cout << "Vat tu voi ma " << current_ct->maVT << " khong ton tai" << endl;
-                }
+//             	 int tongTriGia = 0;
+//             	  while (current_ct != nullptr)
+//             {
+//                 VatTu *vattu = searchMaVT_DanhSachVatTu(ds_vt, current_ct->maVT);
+//                 if (vattu != nullptr)
+//                 {
+//                     int triGia = current_ct->soLuong * current_ct->donGia;
+//                     tongTriGia += triGia;
+//                 }
+//                 else
+//                 {
+//                     cout << "Vat tu voi ma " << current_ct->maVT << " khong ton tai" << endl;
+//                 }
                 
-                current_ct = current_ct->next;
+//                 current_ct = current_ct->next;
                 
-            }
+//             }
 
-            cout << "------------------------------------------------" << endl;
-            cout << "Tong Tri Gia Hoa Don: " << tongTriGia << endl;
-            cout << "------------------------------------------------" << endl;
-			}
+//             cout << "------------------------------------------------" << endl;
+//             cout << "Tong Tri Gia Hoa Don: " << tongTriGia << endl;
+//             cout << "------------------------------------------------" << endl;
+// 			}
             
-				cout<<endl;
-				kt=true;
-			}
-			tmp=tmp->next;
-		}
-	}
-	if(kt==false){
-		cout<<"Khong tim thay!\n";
-	}
-}
+// 				cout<<endl;
+// 				kt=true;
+// 			}
+// 			tmp=tmp->next;
+// 		}
+// 	}
+// 	if(kt==false){
+// 		cout<<"Khong tim thay!\n";
+// 	}
+// }
 
-void swap(DoanhThuVT& a, DoanhThuVT& b) {
-    DoanhThuVT temp = a;
-    a = b;
-    b = temp;
-}
+// // void swap(DoanhThuVT& a, DoanhThuVT& b) {
+// //     DoanhThuVT temp = a;
+// //     a = b;
+// //     b = temp;
+// // }
 
-int partition(DoanhThuVT arr[], int low, int high) {
-    long long pivot = arr[high].doanhthu; // Chọn phần tử cuối làm pivot
-    int i = low - 1; // Chỉ số cho phần tử nhỏ hơn
+// // int partition(DoanhThuVT arr[], int low, int high) {
+// //     long long pivot = arr[high].doanhthu; // Chọn phần tử cuối làm pivot
+// //     int i = low - 1; // Chỉ số cho phần tử nhỏ hơn
 
-    for (int j = low; j < high; j++) {
-        if (arr[j].doanhthu <= pivot) { // Nếu phần tử nhỏ hơn hoặc bằng pivot
-            i++; // Tăng chỉ số cho phần tử nhỏ hơn
-            swap(arr[i], arr[j]); // Hoán đổi
-        }
-    }
-    swap(arr[i + 1], arr[high]); // Đưa pivot về vị trí đúng
-    return i + 1; // Trả về chỉ số của pivot
-}
+// //     for (int j = low; j < high; j++) {
+// //         if (arr[j].doanhthu <= pivot) { // Nếu phần tử nhỏ hơn hoặc bằng pivot
+// //             i++; // Tăng chỉ số cho phần tử nhỏ hơn
+// //             swap(arr[i], arr[j]); // Hoán đổi
+// //         }
+// //     }
+// //     swap(arr[i + 1], arr[high]); // Đưa pivot về vị trí đúng
+// //     return i + 1; // Trả về chỉ số của pivot
+// // }
 
-void quickSort(DoanhThuVT arr[], int low, int high) {
-    if (low < high) {
-        long long pivot = arr[high].doanhthu; // Chọn phần tử cuối làm pivot
-        int i = low - 1; // Chỉ số cho phần tử nhỏ hơn
+// // void quickSort(DoanhThuVT arr[], int low, int high) {
+// //     if (low < high) {
+// //         long long pivot = arr[high].doanhthu; // Chọn phần tử cuối làm pivot
+// //         int i = low - 1; // Chỉ số cho phần tử nhỏ hơn
 
-        // Phân vùng mảng
-        for (int j = low; j < high; j++) {
-            if (arr[j].doanhthu <= pivot) { // Nếu phần tử nhỏ hơn hoặc bằng pivot
-                i++; // Tăng chỉ số cho phần tử nhỏ hơn
-                swap(arr[i], arr[j]); // Hoán đổi
-            }
-        }
-        swap(arr[i + 1], arr[high]); // Đưa pivot về vị trí đúng
-        int pi = i + 1; // Chỉ số của pivot
+// //         // Phân vùng mảng
+// //         for (int j = low; j < high; j++) {
+// //             if (arr[j].doanhthu <= pivot) { // Nếu phần tử nhỏ hơn hoặc bằng pivot
+// //                 i++; // Tăng chỉ số cho phần tử nhỏ hơn
+// //                 swap(arr[i], arr[j]); // Hoán đổi
+// //             }
+// //         }
+// //         swap(arr[i + 1], arr[high]); // Đưa pivot về vị trí đúng
+// //         int pi = i + 1; // Chỉ số của pivot
 
-        // Đệ quy sắp xếp các phần bên trái và bên phải
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
+// //         // Đệ quy sắp xếp các phần bên trái và bên phải
+// //         quickSort(arr, low, pi - 1);
+// //         quickSort(arr, pi + 1, high);
+// //     }
+// // }
 
-void InTop10VT(DanhSachNhanVien ds_nv, DanhSachVatTu ds_vt, Date date2, Date date3){
-	//KT dau vao
-	if(ds_vt==NULL) {
-		cout<<"DS vat tu rong!\n";
-		return;
-	}
-	if (soLuongNhanVienGlobalCount == 0){
-		cout<<"DS nhan vien rong!\n";
-		return;
-	}
+// void InTop10VT(DanhSachNhanVien ds_nv, DanhSachVatTu ds_vt, Date date2, Date date3){
+// 	//KT dau vao
+// 	if(ds_vt==NULL) {
+// 		cout<<"DS vat tu rong!\n";
+// 		return;
+// 	}
+// 	if (soLuongNhanVienGlobalCount == 0){
+// 		cout<<"DS nhan vien rong!\n";
+// 		return;
+// 	}
 	
-	DoanhThuVT doanhthu[idVatTuGlobalCount];//cap phat vua du so luong;
-	int soLuongVatTuDoanhThu=0;//reset bien soluong 
-	//duyet hoa don
-	for(int i=0;i<soLuongNhanVienGlobalCount;i++){
-		DanhSachHoaDon tmp=	ds_nv[i]->ds_hoadon;
-		while(tmp!=NULL){
-			if(NamTrongKhoangTG(tmp->date, date2, date3)==true&&tmp->loai=='x'){
-				//Tinh tri gia 
-				CT_HoaDon *current_ct = tmp->ds_ct_hoadon;
-//				if (current_ct == nullptr)           Khong kiem tra tai neu no ko co thi thang khac co
-//            {
-//                cout << "Hoa don CT rong" << endl;
-//                return;//Nen ko return cho nay
-//            }        	
-//            	 int tongTriGia = 0;
-            	  while (current_ct != nullptr)
-            {
-                VatTu *vattu = searchMaVT_DanhSachVatTu(ds_vt, current_ct->maVT);
-                if (vattu != nullptr)
-                {
-                    double triGia = current_ct->soLuong * current_ct->donGia * (1-current_ct->vAT/100);
-//                    tongTriGia += triGia;
-                    //insert vao doanhthu			
-						bool kt=false;//Kiem tra xem co trung ko neu ko trung thi false se them moi vao
-						for (int i=0; i<soLuongVatTuDoanhThu;i++){//Kiem tra co trung ko neu trung thi doanhthu[i].doanhthu+=trigia;
-							if(strcmp(vattu->tenVT, doanhthu[i].ten)==0){
-								doanhthu[i].doanhthu+=triGia;
-								kt=true;
-								break;//sau khi tim dc roi thi thoat ko can tim nua
-							}
-						}
-						if (kt==false) {
-						doanhthu[soLuongVatTuDoanhThu].doanhthu=triGia;
-                    	strcpy(doanhthu[soLuongVatTuDoanhThu].ten, vattu->tenVT);
-                    	soLuongVatTuDoanhThu++;//cap nhat bien toan cuc 
-					}
-           		}
-                else
-                {
-                    cout << "Vat tu voi ma " << current_ct->maVT << " khong ton tai" << endl;
-                }          
-               	 current_ct = current_ct->next; 
+// 	DoanhThuVT doanhthu[idVatTuGlobalCount];//cap phat vua du so luong;
+// 	int soLuongVatTuDoanhThu=0;//reset bien soluong 
+// 	//duyet hoa don
+// 	for(int i=0;i<soLuongNhanVienGlobalCount;i++){
+// 		DanhSachHoaDon tmp=	ds_nv[i]->ds_hoadon;
+// 		while(tmp!=NULL){
+// 			if(NamTrongKhoangTG(tmp->date, date2, date3)==true&&tmp->loai=='x'){
+// 				//Tinh tri gia 
+// 				CT_HoaDon *current_ct = tmp->ds_ct_hoadon;
+// //				if (current_ct == nullptr)           Khong kiem tra tai neu no ko co thi thang khac co
+// //            {
+// //                cout << "Hoa don CT rong" << endl;
+// //                return;//Nen ko return cho nay
+// //            }        	
+// //            	 int tongTriGia = 0;
+//             	  while (current_ct != nullptr)
+//             {
+//                 VatTu *vattu = searchMaVT_DanhSachVatTu(ds_vt, current_ct->maVT);
+//                 if (vattu != nullptr)
+//                 {
+//                     double triGia = current_ct->soLuong * current_ct->donGia * (1-current_ct->vAT/100);
+// //                    tongTriGia += triGia;
+//                     //insert vao doanhthu			
+// 						bool kt=false;//Kiem tra xem co trung ko neu ko trung thi false se them moi vao
+// 						for (int i=0; i<soLuongVatTuDoanhThu;i++){//Kiem tra co trung ko neu trung thi doanhthu[i].doanhthu+=trigia;
+// 							if(strcmp(vattu->tenVT, doanhthu[i].ten)==0){
+// 								doanhthu[i].doanhthu+=triGia;
+// 								kt=true;
+// 								break;//sau khi tim dc roi thi thoat ko can tim nua
+// 							}
+// 						}
+// 						if (kt==false) {
+// 						doanhthu[soLuongVatTuDoanhThu].doanhthu=triGia;
+//                     	strcpy(doanhthu[soLuongVatTuDoanhThu].ten, vattu->tenVT);
+//                     	soLuongVatTuDoanhThu++;//cap nhat bien toan cuc 
+// 					}
+//            		}
+//                 else
+//                 {
+//                     cout << "Vat tu voi ma " << current_ct->maVT << " khong ton tai" << endl;
+//                 }          
+//                	 current_ct = current_ct->next; 
            		
-			}			
-		}
-		tmp=tmp->next;//chay qua cai ke tiep
-		}
-	}
-	if(soLuongVatTuDoanhThu==0) cout<<"Khong co hoa don nao thoa theo yeu cau!"<<endl;
-	//sau do bat dau sap xep
-	quickSort(doanhthu, 0, soLuongVatTuDoanhThu-1);
-	int cnt=10;
-	if(cnt>soLuongVatTuDoanhThu) cnt=soLuongVatTuDoanhThu;
-	for (int i=cnt-1 ; i>=0;i--){
-		cout<<"Ten VT: "<<doanhthu[i].ten<<endl;
-		cout<<"Doanh thu: "<<doanhthu[i].doanhthu<<endl;
-	}
-}
+// 			}			
+// 		}
+// 		tmp=tmp->next;//chay qua cai ke tiep
+// 		}
+// 	}
+// 	if(soLuongVatTuDoanhThu==0) cout<<"Khong co hoa don nao thoa theo yeu cau!"<<endl;
+// 	//sau do bat dau sap xep
+// 	quickSort(doanhthu, 0, soLuongVatTuDoanhThu-1);
+// 	int cnt=10;
+// 	if(cnt>soLuongVatTuDoanhThu) cnt=soLuongVatTuDoanhThu;
+// 	for (int i=cnt-1 ; i>=0;i--){
+// 		cout<<"Ten VT: "<<doanhthu[i].ten<<endl;
+// 		cout<<"Doanh thu: "<<doanhthu[i].doanhthu<<endl;
+// 	}
+// }
